@@ -28,6 +28,7 @@ The **next turn** command will advance the game to the next turn.
 
 When the game is advanced to the next turn, the current level state will be output, along with some other useful information about the turn.
 
+Each turn, 25 sun points are added to the sun point balance (passive income).
 ![](images/turn.png?raw=true)
 
 
