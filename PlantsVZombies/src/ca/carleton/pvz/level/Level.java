@@ -2,6 +2,7 @@ package ca.carleton.pvz.level;
 
 import java.awt.Dimension;
 import java.awt.Point;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 import ca.carleton.pvz.actor.Actor;
@@ -70,9 +71,7 @@ public class Level {
 
 		// initialize grid (playable area)
 		for (Actor[] row : grid) {
-			for (Actor cell : row) {
-				cell = null;
-			}
+			Arrays.fill(row, null);
 		}
 	}
 
