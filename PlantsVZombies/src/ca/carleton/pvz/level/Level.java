@@ -106,6 +106,24 @@ public class Level {
 	}
 
 	/**
+	 * Returns whether the head wave is defeated.
+	 *
+	 * @return true if the head wave is defeated, false otherwise.
+	 */
+	public boolean isWaveDefeated() {
+		return getWave().isDefeated();
+	}
+
+	/**
+	 * Returns whether this level is beat.
+	 *
+	 * @return true if this level is beat, false otherwise.
+	 */
+	public boolean isBeat() {
+		return isWaveDefeated() && waves.size() < 2;
+	}
+
+	/**
 	 * Gets the current turn.
 	 *
 	 * @return The current turn.

@@ -11,7 +11,7 @@ import ca.carleton.pvz.actor.Zombie;
  *
  */
 public class Wave {
-	
+
 	private static Random r;
 	private int remainingZombies;
 	private int waveNumber;
@@ -26,6 +26,15 @@ public class Wave {
 		this.waveNumber = waveNumber;
 		remainingZombies = numZombies;
 		r = new Random();
+	}
+
+	/**
+	 * Returns whether this wave is defeated.
+	 *
+	 * @return true if this wave is defeated, false otherwise.
+	 */
+	public boolean isDefeated() {
+		return remainingZombies == 0;
 	}
 
 	/**
