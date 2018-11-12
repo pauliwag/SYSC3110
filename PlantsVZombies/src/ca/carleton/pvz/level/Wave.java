@@ -55,7 +55,7 @@ public class Wave {
 	 *
 	 * @return This wave's number.
 	 */
-	public int getWaveNumber() {
+	public int getNum() {
 		return waveNumber;
 	}
 
