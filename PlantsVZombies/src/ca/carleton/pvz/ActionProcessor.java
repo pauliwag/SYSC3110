@@ -39,17 +39,17 @@ public class ActionProcessor {
 		++turn;
 
 		// wave logic
-		if (wave.getWaveNumber() == 1 && waveDefeated) {
+		if (wave.getNum() == 1 && waveDefeated) {
 			game.print(Presets.WAVE_COMPLETE);
 			return;
 		}
 
-		if (wave.getWaveNumber() == 2 && waveDefeated) {
+		if (wave.getNum() == 2 && waveDefeated) {
 			game.print(Presets.WAVE_COMPLETE);
 			return;
 		}
 
-		if (wave.getWaveNumber() >= 3 && waveDefeated) {
+		if (wave.getNum() >= 3 && waveDefeated) {
 			game.print("Congrats! You finished the first level of Plants vs. Zombies");
 			game.print("Please type \"restart\" if you wish to play again");
 			return;
@@ -69,7 +69,7 @@ public class ActionProcessor {
 			sunPoints += 25;
 		}
 
-		if (wave.getWaveNumber() >= 1) {
+		if (wave.getNum() >= 1) {
 			for (int i = 0; i < game.getWorld().getCurrentLevel().getDimension().height; ++i) {
 				for (int j = 0; j < game.getWorld().getCurrentLevel().getDimension().width; ++j) {
 					Actor o = game.getWorld().getCurrentLevel().getCell(i, j);
@@ -88,20 +88,20 @@ public class ActionProcessor {
 																	// each turn
 		}
 
-		if (wave.getWaveNumber() == 1 && turn >= 3 && wave.getRemainingZombies() > 0) { // zombies spawn after turn
+		if (wave.getNum() == 1 && turn >= 3 && wave.getRemainingZombies() > 0) { // zombies spawn after turn
 																						// == 3 for first wave
 			game.print(Presets.ZOMBIES_SPAWNING);
 			game.getWorld().updateCurrentLevel(Wave.spawnZombieOnLevel(game.getWorld().getCurrentLevel()));
 			wave.setRemainingZombies(wave.getRemainingZombies() - 1);
 		}
 
-		if (wave.getWaveNumber() == 2 && turn >= 3 && wave.getRemainingZombies() > 0) {
+		if (wave.getNum() == 2 && turn >= 3 && wave.getRemainingZombies() > 0) {
 			game.print(Presets.ZOMBIES_SPAWNING);
 			game.getWorld().updateCurrentLevel(Wave.spawnZombieOnLevel(game.getWorld().getCurrentLevel()));
 			wave.setRemainingZombies(wave.getRemainingZombies() - 1);
 		}
 
-		if (wave.getWaveNumber() == 3 && turn >= 3 && wave.getRemainingZombies() > 0) {
+		if (wave.getNum() == 3 && turn >= 3 && wave.getRemainingZombies() > 0) {
 			game.print(Presets.ZOMBIES_SPAWNING);
 			game.getWorld().updateCurrentLevel(Wave.spawnZombieOnLevel(game.getWorld().getCurrentLevel()));
 			wave.setRemainingZombies(wave.getRemainingZombies() - 1);
@@ -119,8 +119,8 @@ public class ActionProcessor {
 			}
 		}
 
-		if ((wave.getWaveNumber() == 1 && turn >= 6) || (wave.getWaveNumber() == 2 && turn >= 8)
-				|| (wave.getWaveNumber() == 3 && turn >= 10)) {
+		if ((wave.getNum() == 1 && turn >= 6) || (wave.getNum() == 2 && turn >= 8)
+				|| (wave.getNum() == 3 && turn >= 10)) {
 			waveDefeated = true;
 			for (int i = 0; i < game.getWorld().getCurrentLevel().getDimension().height; ++i) {
 				for (int j = 0; j < game.getWorld().getCurrentLevel().getDimension().width; ++j) {
@@ -142,7 +142,7 @@ public class ActionProcessor {
 			return;
 		}
 
-		if (wave.getWaveNumber() == 1 && waveDefeated) {
+		if (wave.getNum() == 1 && waveDefeated) {
 			waveDefeated = false;
 			wave.setRemainingZombies(5);
 			turn = 0;
@@ -151,7 +151,7 @@ public class ActionProcessor {
 			return;
 		}
 
-		if (wave.getWaveNumber() == 2 && waveDefeated) {
+		if (wave.getNum() == 2 && waveDefeated) {
 			waveDefeated = false;
 			wave.setRemainingZombies(7);
 			turn = 0;
@@ -160,7 +160,7 @@ public class ActionProcessor {
 			return;
 		}
 
-		if (wave.getWaveNumber() >= 3 && waveDefeated) {
+		if (wave.getNum() >= 3 && waveDefeated) {
 			game.print("Congrats! You finished the first level of Plants vs. Zombies.");
 			game.print("Please type 'restart' if you wish to play again.");
 		}

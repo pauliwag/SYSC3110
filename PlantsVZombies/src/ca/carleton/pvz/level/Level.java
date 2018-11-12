@@ -2,23 +2,41 @@ package ca.carleton.pvz.level;
 
 import java.awt.Dimension;
 import java.awt.Point;
-import java.util.ArrayList;
-
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.PriorityQueue;
 import ca.carleton.pvz.actor.Actor;
-import ca.carleton.pvz.actor.PlantManager;
 
 /**
- * An abstract class from which all the levels in the game inherit.
+ * The class from which all game levels inherit.
  *
  */
 public class Level {
 
+	/** The name of this level; e.g., "Level 1". */
 	private String levelName;
+
+	/**
+	 * A Dimension object comprising the height and width, in cells, of this
+	 * level's grid.
+	 */
 	private Dimension levelDimension;
-	protected Actor[][] grid; // the grid in which one can place plants
-	private PlantManager plantManager;
-	private int turn; // the current turn
-	private ArrayList<Wave> waves; // the zombie waves comprising this level
+
+	/**
+	 * A 2-D array representing this level's grid. Each grid cell can hold a
+	 * concrete extender of Actor.
+	 */
+	protected Actor[][] grid;
+
+	// private PlantManager plantManager;
+
+	/** The current turn. */
+	private int turn;
+
+	/**
+	 * A queue that stores this level's waves in ascending order of wave number.
+	 */
+	private PriorityQueue<Wave> waves;
 
 	/**
 	 * Initializes the fields of a level object.
@@ -32,23 +50,36 @@ public class Level {
 		this.levelName = levelName;
 		levelDimension = new Dimension(width, height);
 		grid = new Actor[width][height];
-		plantManager = new PlantManager();
+		// plantManager = new PlantManager();
 		turn = 0;
-		waves = new ArrayList<>();
+
+		// initialize waves queue such that a lower wave number is prioritized
+		waves = new PriorityQueue<>(11, new Comparator<Wave>() {
+
+			@Override
+			public int compare(Wave wave1, Wave wave2) {
+
+				int wave1Num = wave1.getNum();
+				int wave2Num = wave2.getNum();
+
+				return wave1Num > wave2Num ? 1
+						: wave1Num == wave2Num ? 0
+						: -1;
+
+			}
+		});
 
 		// initialize grid (playable area)
 		for (Actor[] row : grid) {
-			for (Actor cell : row) {
-				cell = null;
-			}
+			Arrays.fill(row, null);
 		}
 	}
 
 	/**
-	 * Adds the given wave(s) to this level's collection of waves. This method
-	 * is needed for level subclasses to be able to augment the waves field.
+	 * Adds the given wave(s) to this level's queue of waves. This method is
+	 * needed for level subclasses to be able to augment the waves queue.
 	 *
-	 * @param waves The wave(s) to be added to this level's collection of waves.
+	 * @param waves The wave(s) to be added to this level's queue of waves.
 	 */
 	public void addWaves(Wave... waves) {
 		if (waves.length > 0) {
@@ -56,6 +87,22 @@ public class Level {
 				this.waves.add(wave);
 			}
 		}
+	}
+
+	/**
+	 * Gets the wave at the head of the queue.
+	 *
+	 * @return The wave at the head of the queue.
+	 */
+	public Wave getWave() {
+		return waves.peek();
+	}
+
+	/**
+	 * Dequeues the head of the waves queue.
+	 */
+	public void dequeueWave() {
+		waves.poll();
 	}
 
 	/**
@@ -84,7 +131,7 @@ public class Level {
 	}
 
 	/**
-	 * Get the cell located at the given coordinates.
+	 * Gets the cell located at the given coordinates.
 	 *
 	 * @param x The x-coordinate (column number).
 	 * @param y The y-coordinate (row number).
@@ -99,7 +146,7 @@ public class Level {
 	}
 
 	/**
-	 * Place a plant or zombie at the given point.
+	 * Places a plant or zombie at the given point.
 	 *
 	 * @param a A plant or zombie object to be placed.
 	 * @param p The point at which to place the given object.
@@ -111,9 +158,11 @@ public class Level {
 	}
 
 	/**
-	 * Returns the Dimension object comprising the width and height of the grid.
+	 * Returns the Dimension object comprising the width and height of this
+	 * level's grid.
 	 *
-	 * @return The Dimension object comprising the width and height of the grid.
+	 * @return The Dimension object comprising the width and height of this
+	 *         level's grid.
 	 */
 	public Dimension getDimension() {
 		return levelDimension;
@@ -129,7 +178,7 @@ public class Level {
 	}
 
 	/**
-	 * Check if the given point is a valid position on the grid.
+	 * Checks if the given point is a valid position on the grid.
 	 *
 	 * @param p The point whose validity will be evaluated.
 	 * @return true if valid, false otherwise.
@@ -139,9 +188,9 @@ public class Level {
 	}
 
 	/**
-	 * Returns the game grid as a String.
+	 * Returns this level's grid as a String.
 	 *
-	 * @return The game grid as a String.
+	 * @return This level's grid as a String.
 	 */
 	@Override
 	public String toString() {
