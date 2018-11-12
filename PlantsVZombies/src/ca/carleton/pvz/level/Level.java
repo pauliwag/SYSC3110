@@ -28,8 +28,6 @@ public class Level {
 	 */
 	protected Actor[][] grid;
 
-	// private PlantManager plantManager;
-
 	/** The current turn. */
 	private int turn;
 
@@ -38,19 +36,24 @@ public class Level {
 	 */
 	private PriorityQueue<Wave> waves;
 
+	/** The player's unspent sun points in this level. */
+	private int sunPoints;
+
 	/**
 	 * Initializes the fields of a level object.
 	 *
 	 * @param levelName The name of the level.
 	 * @param width The width (number of horizontal cells) of the level.
 	 * @param height The height (number of vertical cells) of the level.
+	 * @param startingSunPoints The sun points the player has at the start of
+	 *            the level.
 	 */
-	public Level(String levelName, int width, int height) {
+	public Level(String levelName, int width, int height, int startingSunPoints) {
 
 		this.levelName = levelName;
 		levelDimension = new Dimension(width, height);
+		sunPoints = startingSunPoints;
 		grid = new Actor[width][height];
-		// plantManager = new PlantManager();
 		turn = 0;
 
 		// initialize waves queue such that a lower wave number is prioritized
@@ -87,6 +90,14 @@ public class Level {
 				this.waves.add(wave);
 			}
 		}
+	}
+
+	/**
+	 * Deploys the wave at the head of the waves queue.
+	 */
+	public void deployWave() {
+		Wave wave = getWave();
+		// TODO : implement ...
 	}
 
 	/**
@@ -226,4 +237,5 @@ public class Level {
 		}
 		return s;
 	}
+
 }

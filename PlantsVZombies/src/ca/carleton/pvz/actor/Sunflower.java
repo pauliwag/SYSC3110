@@ -12,14 +12,12 @@ import javafx.scene.image.Image;
  */
 public class Sunflower extends Plant {
 
-	public static final int SUNFLOWER_COOLDOWN = 2; // two turns
 	private int turnPlaced; // the turn this sunflower was planted
 
 	/**
 	 * Creates a new sunflower.
 	 */
 	public Sunflower() {
-		super(SUNFLOWER_COOLDOWN);
 		turnPlaced = 0;
 	}
 
