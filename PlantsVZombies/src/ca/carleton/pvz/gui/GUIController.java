@@ -18,7 +18,6 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -26,14 +25,14 @@ import javafx.scene.layout.GridPane;
 
 /**
  * This class controls the JavaFX fxml user interface.
- * 
+ *
  * @author Group 5
  *
  */
 public class GUIController {
 	private PlantsVZombies game;
 	private Plant selectedPlant;
-	
+
 	@FXML
 	private ResourceBundle resources;
 
@@ -45,13 +44,13 @@ public class GUIController {
 
 	@FXML
 	private Button nextTurnButton;
-	
+
 	@FXML
 	private Button sunflowerButton;
-	
+
 	@FXML
 	private Button peashooterButton;
-	
+
 	@FXML
 	private Label sunflowerCooldown;
 
@@ -60,7 +59,7 @@ public class GUIController {
 
 	@FXML
 	private Group plantGroup;
-	
+
 	@FXML
 	public void initialize() {
 		assert peashooterCooldown != null : "fx:id=\"peashooterCooldown\" was not injected: check your FXML file 'pvzgui.fxml'.";
@@ -92,10 +91,10 @@ public class GUIController {
 	public GUIController() {
 
 	}
-	
+
 	/**
-	 * Sets up plant button event handlers. 
-	 * When button is pressed, sets currently selected plant object to correct type.
+	 * Sets up plant button event handlers. When button is pressed, sets
+	 * currently selected plant object to correct type.
 	 */
 	private void setupPlantSelectionButtons() {
 		selectedPlant = new Sunflower();
@@ -105,18 +104,19 @@ public class GUIController {
 				selectedPlant = new Sunflower();
 			}
 		});
-		
+
 		peashooterButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
 				selectedPlant = new PeaShooter();
 			}
 		});
-		
+
 	}
-	
+
 	/**
-	 * Initializes the game grid to grass images and adds event handlers to each grid slot.
+	 * Initializes the game grid to grass images and adds event handlers to each
+	 * grid slot.
 	 */
 	private void initGameGrid() {
 		ObservableList<Node> children = gameGrid.getChildren();
@@ -127,31 +127,31 @@ public class GUIController {
 				ImageView imgView = (ImageView) child;
 				imgView.setImage(grass);
 				imgView.setPreserveRatio(false);
-				
+
 				imgView.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
-				     @Override
-				     public void handle(MouseEvent event) {
-				    	 int row, column;
-				    	 
-				    	 if (GridPane.getRowIndex(imgView) != null && GridPane.getColumnIndex(imgView) != null) {
-								row = GridPane.getRowIndex(imgView);
-								column = GridPane.getColumnIndex(imgView);
-								if(game.getWorld().getCurrentLevel().getCell(column, row) == null) {
-									//TODO Check cooldown before placing!
-									game.getWorld().getCurrentLevel().placeActor(selectedPlant, new Point(column, row));
-								} else {
-									System.out.println("there's already something placed here!");
-								}
-				    	 }
-				    	 updateGameGrid();
-				         event.consume();
-				     }
+					@Override
+					public void handle(MouseEvent event) {
+						int row, column;
+
+						if (GridPane.getRowIndex(imgView) != null && GridPane.getColumnIndex(imgView) != null) {
+							row = GridPane.getRowIndex(imgView);
+							column = GridPane.getColumnIndex(imgView);
+							if (game.getWorld().getCurrentLevel().getCell(column, row) == null) {
+								// TODO Check cooldown before placing!
+								game.getWorld().getCurrentLevel().placeActor(selectedPlant, new Point(column, row));
+							} else {
+								System.out.println("there's already something placed here!");
+							}
+						}
+						updateGameGrid();
+						event.consume();
+					}
 				});
 			}
 		}
 	}
-	
+
 	/**
 	 * Sets up the game grid sprites to represent the current level's state.
 	 */
@@ -185,19 +185,18 @@ public class GUIController {
 	public void disableNextTurn() {
 		nextTurnButton.setDisable(true);
 	}
-	
+
 	/**
 	 * Enable the next turn button
 	 */
 	public void enableNextTurn() {
 		nextTurnButton.setDisable(false);
 	}
-	
+
 	/**
 	 * Set the game that this controller controls
-	 * 
-	 * @param game
-	 *            to control
+	 *
+	 * @param game to control
 	 */
 	public void setGame(PlantsVZombies game) {
 		this.game = game;
