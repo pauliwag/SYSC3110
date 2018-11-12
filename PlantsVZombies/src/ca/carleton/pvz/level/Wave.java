@@ -3,7 +3,6 @@ package ca.carleton.pvz.level;
 import java.awt.Point;
 import java.util.Random;
 
-import ca.carleton.pvz.PlantsVZombies;
 import ca.carleton.pvz.actor.Zombie;
 
 /**

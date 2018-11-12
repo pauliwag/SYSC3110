@@ -12,7 +12,6 @@ import javafx.scene.image.Image;
  */
 public class PeaShooter extends Plant {
 
-	public static final int PEASHOOTER_COOLDOWN = 2; // two turns
 	private int hits; // number of hits on zombies
 
 	/**
@@ -20,7 +19,6 @@ public class PeaShooter extends Plant {
 	 * zombies.
 	 */
 	public PeaShooter() {
-		super(PEASHOOTER_COOLDOWN);
 		hits = 0;
 	}
 

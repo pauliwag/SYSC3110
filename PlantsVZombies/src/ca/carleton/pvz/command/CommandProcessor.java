@@ -1,13 +1,11 @@
 package ca.carleton.pvz.command;
 
 import java.awt.Point;
-import java.util.Random;
 import ca.carleton.pvz.PlantsVZombies;
 import ca.carleton.pvz.actor.Actor;
 import ca.carleton.pvz.actor.PeaShooter;
 import ca.carleton.pvz.actor.Sunflower;
 import ca.carleton.pvz.actor.Zombie;
-import ca.carleton.pvz.level.Wave;
 
 /**
  * Processes the user-inputed command and advances the game accordingly.
@@ -21,8 +19,7 @@ public class CommandProcessor {
 	/**
 	 * Constructs a CommandProcessor for game state advancement.
 	 *
-	 * @param game
-	 *            The PvZ game whose states will be advanced by this
+	 * @param game The PvZ game whose states will be advanced by this
 	 *            CommandProcessor.
 	 */
 	public CommandProcessor(PlantsVZombies game) {
@@ -81,8 +78,7 @@ public class CommandProcessor {
 	/**
 	 * Tells the user how to use the valid commands.
 	 *
-	 * @param command
-	 *            The given command.
+	 * @param command The given command.
 	 */
 	private void processHelp(Command command) {
 
@@ -116,8 +112,7 @@ public class CommandProcessor {
 	/**
 	 * Advances the game to the next state (turn) based on the current state.
 	 *
-	 * @param command
-	 *            The given command.
+	 * @param command The given command.
 	 */
 	private void processNext(Command command) {
 
@@ -137,15 +132,15 @@ public class CommandProcessor {
 	/**
 	 * Processes the placement of a plant.
 	 *
-	 * @param command
-	 *            The given command.
+	 * @param command The given command.
 	 */
 	private void processPlace(Command command) {
 
 		/*
-		 * if (wave.getWaveNumber() >= 3 && waveDefeated) {
-		 * game.print("\nCongrats! You finished the first level of Plants vs. Zombies\n"
-		 * ); game.print("\nPlease type \"restart\" if you wish to play again.\n");
+		 * if (wave.getWaveNumber() >= 3 && waveDefeated) { game.
+		 * print("\nCongrats! You finished the first level of Plants vs. Zombies\n"
+		 * );
+		 * game.print("\nPlease type \"restart\" if you wish to play again.\n");
 		 * return; }
 		 */
 
