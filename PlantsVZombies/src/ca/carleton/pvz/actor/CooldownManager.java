@@ -12,6 +12,9 @@ public final class CooldownManager {
 	private static int sunTimeLeftOnCD;
 	private static int peaTimeLeftOnCD;
 
+	// render this class as uninstantiable
+	private CooldownManager() {}
+
 	/**
 	 * Decrements all global cooldowns by one.
 	 */
@@ -19,6 +22,16 @@ public final class CooldownManager {
 
 		if (sunTimeLeftOnCD > 0) --sunTimeLeftOnCD;
 		if (peaTimeLeftOnCD > 0) --peaTimeLeftOnCD;
+
+	}
+
+	/**
+	 * Resets all global cooldowns; e.g., for starting a new level.
+	 */
+	public static void resetCDs() {
+
+		sunTimeLeftOnCD = 0;
+		peaTimeLeftOnCD = 0;
 
 	}
 

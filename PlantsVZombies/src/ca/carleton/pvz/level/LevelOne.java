@@ -27,4 +27,9 @@ public class LevelOne extends Level {
 		return super.toString();
 	}
 
+	@Override
+	public void initWaves() {
+		// TODO Auto-generated method stub
+	}
+
 }

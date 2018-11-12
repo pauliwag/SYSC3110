@@ -8,10 +8,10 @@ import java.util.PriorityQueue;
 import ca.carleton.pvz.actor.Actor;
 
 /**
- * The class from which all game levels inherit.
+ * The abstract class from which all game levels inherit.
  *
  */
-public class Level {
+public abstract class Level {
 
 	/** The name of this level; e.g., "Level 1". */
 	private String levelName;
@@ -91,6 +91,11 @@ public class Level {
 			}
 		}
 	}
+
+	/**
+	 * Initializes waves queue via subclass.
+	 */
+	public abstract void initWaves();
 
 	/**
 	 * Deploys the wave at the head of the waves queue.
