@@ -106,6 +106,13 @@ public abstract class Level {
 	}
 
 	/**
+	 * Clears the waves queue.
+	 */
+	public void clearWaves() {
+		waves.clear();
+	}
+
+	/**
 	 * Gets the wave at the head of the queue.
 	 *
 	 * @return The wave at the head of the queue.
@@ -162,6 +169,7 @@ public abstract class Level {
 	 */
 	public int getPrevTurn() {
 		return turn - 1;
+		// TODO : implement properly (meld w/ Abdi's logic) ...
 	}
 
 	/**

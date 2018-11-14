@@ -27,9 +27,23 @@ public class LevelOne extends Level {
 		return super.toString();
 	}
 
+	/**
+	 * Populates the waves priority queue with level-specific waves.
+	 */
 	@Override
 	public void initWaves() {
-		// TODO Auto-generated method stub
+
+		// ensure no residual waves (non-issue for 1st level)
+		clearWaves();
+
+		// specify this level's waves
+		Wave wave1 = new Wave(1, 2);
+		Wave wave2 = new Wave(2, 3);
+		Wave wave3 = new Wave(3, 4);
+
+		// populate the queue
+		addWaves(wave1, wave2, wave3);
+
 	}
 
 }
