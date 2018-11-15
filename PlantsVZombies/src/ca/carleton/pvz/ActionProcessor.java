@@ -13,11 +13,11 @@ public class ActionProcessor {
 	private int previousTurn;
 	private int peaShooterCooldown;
 	private int sunflowerCooldown;
-	private boolean peaShooterOnCooldown;
-	private boolean sunflowerOnCooldown;
+	public boolean peaShooterOnCooldown;
+	public boolean sunflowerOnCooldown;
 	private boolean waveDefeated;
 	private int sunPoints; // in-game currency spent on plants
-	private int turn;
+	public int turn;
 
 	private Wave wave;
 	private PlantsVZombies game;
@@ -33,6 +33,47 @@ public class ActionProcessor {
 		peaShooterOnCooldown = false;
 		sunflowerOnCooldown = false;
 		waveDefeated = false;
+	}
+
+	public int getSunpoints() {
+		return sunPoints;
+	}
+
+	public void setSunpoints(int i) {
+		sunPoints += i;
+	}
+
+	public boolean processPeaShooterCooldown() {
+
+		if (peaShooterOnCooldown && turn - peaShooterCooldown == 2) {
+			peaShooterOnCooldown = false;
+		}
+
+		return peaShooterOnCooldown;
+
+	}
+
+	public boolean processSunflowerCooldown() {
+
+		if (sunflowerOnCooldown && turn - sunflowerCooldown == 2) {
+			sunflowerOnCooldown = false;
+		}
+
+		return sunflowerOnCooldown;
+
+	}
+
+	public boolean isGameOver() {
+		if (turn > 6) { // searching for any zombies that made it to end game
+			for (int j = 0; j < game.getWorld().getCurrentLevel().getDimension().width; ++j) {
+				Actor o = game.getWorld().getCurrentLevel().getCell(0, j);
+				if (o instanceof Zombie) {
+					return true;
+				}
+			}
+
+		}
+		return false;
 	}
 
 	public void processNextTurn() {
@@ -55,13 +96,9 @@ public class ActionProcessor {
 			return;
 		}
 
-		if (sunflowerOnCooldown && turn - sunflowerCooldown == 2) {
-			sunflowerOnCooldown = false;
-		}
+		processSunflowerCooldown();
 
-		if (peaShooterOnCooldown && turn - peaShooterCooldown == 2) {
-			peaShooterOnCooldown = false;
-		}
+		processPeaShooterCooldown();
 
 		// passive sun point logic -- every three turns, increase sun points by 25
 		if (turn - previousTurn == 3) {
@@ -89,7 +126,7 @@ public class ActionProcessor {
 		}
 
 		if (wave.getNum() == 1 && turn >= 3 && wave.getRemainingZombies() > 0) { // zombies spawn after turn
-																						// == 3 for first wave
+																					// == 3 for first wave
 			game.print(Presets.ZOMBIES_SPAWNING);
 			game.getWorld().updateCurrentLevel(Wave.spawnZombieOnLevel(game.getWorld().getCurrentLevel()));
 			wave.setRemainingZombies(wave.getRemainingZombies() - 1);
@@ -107,16 +144,13 @@ public class ActionProcessor {
 			wave.setRemainingZombies(wave.getRemainingZombies() - 1);
 		}
 
-		if (turn > 6) { // searching for any zombies that made it to end game
-			for (int j = 0; j < game.getWorld().getCurrentLevel().getDimension().width; ++j) {
-				Actor o = game.getWorld().getCurrentLevel().getCell(0, j);
-				if (o instanceof Zombie) {
-					game.printGame();
-					game.print(Presets.GAME_OVER);
-					game.setGameOver();
-					return;
-				}
-			}
+		isGameOver();
+
+		if (isGameOver()) {
+			game.printGame();
+			game.print(Presets.GAME_OVER);
+			game.setGameOver();
+			return;
 		}
 
 		if ((wave.getNum() == 1 && turn >= 6) || (wave.getNum() == 2 && turn >= 8)
@@ -184,6 +218,7 @@ public class ActionProcessor {
 				peaShooterCooldown = turn;
 				game.print("\nYou currently have " + sunPoints + " sun points.\n");
 				game.printGame();
+
 			}
 		} else if (actor instanceof Sunflower) {
 			plantType = "sunflower";
