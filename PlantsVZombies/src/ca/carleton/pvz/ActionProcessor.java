@@ -9,11 +9,11 @@ import ca.carleton.pvz.actor.Sunflower;
 import ca.carleton.pvz.actor.Zombie;
 import ca.carleton.pvz.command.Presets;
 import ca.carleton.pvz.level.Wave;
+import javafx.scene.control.Alert.AlertType;
 
 public class ActionProcessor {
 	private int previousTurn;
 	private boolean waveDefeated;
-	private int sunPoints; // in-game currency spent on plants
 	public int turn;
 
 	private Wave wave;
@@ -22,19 +22,11 @@ public class ActionProcessor {
 	public ActionProcessor(PlantsVZombies game) {
 		this.game = game;
 		previousTurn = 0;
-		sunPoints = 500;
 		turn = 0;
 		wave = new Wave(1, 3);
 		waveDefeated = false;
 	}
 
-	public int getSunpoints() {
-		return sunPoints;
-	}
-
-	public void setSunpoints(int i) {
-		sunPoints += i;
-	}
 
 	public boolean isGameOver() {
 		if (turn > 6) { // searching for any zombies that made it to end game
@@ -74,7 +66,7 @@ public class ActionProcessor {
 		// passive sun point logic -- every three turns, increase sun points by 25
 		if (turn - previousTurn == 3) {
 			previousTurn = turn;
-			sunPoints += 25;
+			game.getWorld().getCurrentLevel().addToSunpoints(25);
 		}
 
 		if (wave.getNum() >= 1) {
@@ -83,7 +75,7 @@ public class ActionProcessor {
 					Actor o = game.getWorld().getCurrentLevel().getCell(i, j);
 					if (o instanceof Sunflower) {
 						if ((turn - ((Sunflower) o).getTurnPlaced()) % 2 == 0) {
-							sunPoints += 25;
+							game.getWorld().getCurrentLevel().addToSunpoints(25);;
 						}
 					}
 				}
@@ -137,7 +129,6 @@ public class ActionProcessor {
 			}
 		}
 
-		game.print("\nYou currently have " + sunPoints + " sun points.\n");
 		game.printGame();
 
 		if (game.isGameOver()) {
@@ -173,39 +164,43 @@ public class ActionProcessor {
 
 	public void processPlaceActor(Actor actor, int xPos, int yPos) {
 		String plantType;
-
-		if (actor instanceof PeaShooter) {
-			plantType = "peashooter";
-			if (CooldownManager.isPeaOnCD()) {
-				game.print("\n" + plantType + Presets.PLANTTYPE_COOLDOWN); 
-				
-			} else if (sunPoints - 100 < 0) {
-				game.print(Presets.NOT_ENOUGH_SUNPOINTS + plantType + "\n");
-			} else {
-				game.getWorld().getCurrentLevel().placeActor(new PeaShooter(), new Point(xPos, yPos));
-				sunPoints -= 100;
-				CooldownManager.startPeaCD();
-				game.print("\nYou currently have " + sunPoints + " sun points.\n");
-				game.printGame();
-
+		if (game.getWorld().getCurrentLevel().getCell(xPos, yPos) == null) {
+			
+			if (actor instanceof PeaShooter) {
+				plantType = "peashooter";
+				if (CooldownManager.isPeaOnCD()) {
+					game.print("\n" + plantType + Presets.PLANTTYPE_COOLDOWN); 
+					
+				} else if (game.getWorld().getCurrentLevel().getSunpoints() - 100 < 0) {
+					game.print(Presets.NOT_ENOUGH_SUNPOINTS + plantType + "\n");
+				} else {
+					game.getWorld().getCurrentLevel().placeActor(new PeaShooter(), new Point(xPos, yPos));
+					game.getWorld().getCurrentLevel().subtractFromSunpoints(100);
+					CooldownManager.startPeaCD();
+					game.printGame();
+	
+				}
+			} else if (actor instanceof Sunflower) {
+				plantType = "sunflower";
+				if (CooldownManager.isSunOnCD()) {
+					game.print("\n" + plantType + Presets.PLANTTYPE_COOLDOWN); 
+	
+				} else if (game.getWorld().getCurrentLevel().getSunpoints() - 50 < 0) {
+					game.print(Presets.NOT_ENOUGH_SUNPOINTS + plantType + "\n");
+	
+				} else {
+					Sunflower plantToPlace = new Sunflower();
+					plantToPlace.setTurnPlaced(turn);
+					game.getWorld().getCurrentLevel().placeActor(plantToPlace, new Point(xPos, yPos));
+					game.getWorld().getCurrentLevel().subtractFromSunpoints(50);
+					CooldownManager.startSunCD();
+					game.printGame();
+				}
 			}
-		} else if (actor instanceof Sunflower) {
-			plantType = "sunflower";
-			if (CooldownManager.isSunOnCD()) {
-				game.print("\n" + plantType + Presets.PLANTTYPE_COOLDOWN); 
-
-			} else if (sunPoints - 50 < 0) {
-				game.print(Presets.NOT_ENOUGH_SUNPOINTS + plantType + "\n");
-
-			} else {
-				Sunflower plantToPlace = new Sunflower();
-				plantToPlace.setTurnPlaced(turn);
-				game.getWorld().getCurrentLevel().placeActor(plantToPlace, new Point(xPos, yPos));
-				sunPoints -= 50;
-				CooldownManager.startSunCD();
-				game.print("\nYou currently have " + sunPoints + " sun points.\n");
-				game.printGame();
-			}
+		} else {
+			// grid position already in use, show alert to user
+			game.getController().showAlert("No room!", null, "There's already something placed here!",
+					AlertType.INFORMATION);
 		}
 	}
 }
