@@ -21,7 +21,7 @@ public class World {
 
 	/**
 	 * Adds a level to the stack.
-	 * 
+	 *
 	 * @param level The level to be added to the stack.
 	 */
 	public void addLevel(Level level) {
@@ -31,12 +31,15 @@ public class World {
 	}
 
 	/**
-	 * Get the current level.
-	 * 
+	 * Gets the current level.
+	 *
 	 * @return The current level.
 	 */
 	public Level getCurrentLevel() {
 		return levels.peek();
 	}
 
+	public void updateCurrentLevel(Level level) {
+		levels.set(0, level);
+	}
 }
