@@ -1,6 +1,5 @@
 package ca.carleton.pvz.gui;
 
-import java.awt.Point;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -44,9 +43,6 @@ public class GUIController {
 
 	@FXML
 	private URL location;
-
-	// @FXML
-	// private Label sunpoints;
 
 	@FXML
 	private Label peashooterCooldown;
@@ -265,7 +261,10 @@ public class GUIController {
 		updateSunpointLabel();
 		updateCooldownDisplay();
 	}
-
+	
+	/**
+	 * Called when game is over. Disables buttons we don't want pressed and alerts user.
+	 */
 	public void notifyGameOver() {
 		updateGameGrid();
 		nextTurnButton.setDisable(true);
