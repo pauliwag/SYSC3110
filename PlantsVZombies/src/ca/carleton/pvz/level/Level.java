@@ -77,6 +77,8 @@ public abstract class Level {
 		for (Actor[] row : grid) {
 			Arrays.fill(row, null);
 		}
+		
+		initWaves();
 	}
 
 	/**
