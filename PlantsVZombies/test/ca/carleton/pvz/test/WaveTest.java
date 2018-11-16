@@ -1,4 +1,4 @@
-package ca.carleton.pvz.level;
+package ca.carleton.pvz.test;
 
 import static org.junit.Assert.*;
 
@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class LevelOneTest {
+public class WaveTest {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
