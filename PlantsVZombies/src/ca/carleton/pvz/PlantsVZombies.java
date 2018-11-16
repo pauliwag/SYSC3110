@@ -49,12 +49,8 @@ public class PlantsVZombies extends Application {
 	public PlantsVZombies() {
 		gameWorld = new World();
 		actionProcessor = new ActionProcessor(this);
-		// commandProcessor = new CommandProcessor(this);
 		gameWorld.addLevel(new LevelOne());
 		gameOver = false;
-
-		// playGame();
-
 	}
 
 	// TODO We likely won't need this playGame method anymore... as we don't
