@@ -3,6 +3,7 @@ package ca.carleton.pvz;
 import java.awt.Point;
 
 import ca.carleton.pvz.actor.Actor;
+import ca.carleton.pvz.actor.CooldownManager;
 import ca.carleton.pvz.actor.PeaShooter;
 import ca.carleton.pvz.actor.Sunflower;
 import ca.carleton.pvz.actor.Zombie;
@@ -11,27 +12,19 @@ import ca.carleton.pvz.level.Wave;
 
 public class ActionProcessor {
 	private int previousTurn;
-	private int peaShooterCooldown;
-	private int sunflowerCooldown;
-	public boolean peaShooterOnCooldown;
-	public boolean sunflowerOnCooldown;
 	private boolean waveDefeated;
 	private int sunPoints; // in-game currency spent on plants
 	public int turn;
 
 	private Wave wave;
 	private PlantsVZombies game;
-
+	
 	public ActionProcessor(PlantsVZombies game) {
 		this.game = game;
 		previousTurn = 0;
-		peaShooterCooldown = 0;
-		sunflowerCooldown = 0;
 		sunPoints = 500;
 		turn = 0;
 		wave = new Wave(1, 3);
-		peaShooterOnCooldown = false;
-		sunflowerOnCooldown = false;
 		waveDefeated = false;
 	}
 
@@ -41,26 +34,6 @@ public class ActionProcessor {
 
 	public void setSunpoints(int i) {
 		sunPoints += i;
-	}
-
-	public boolean processPeaShooterCooldown() {
-
-		if (peaShooterOnCooldown && turn - peaShooterCooldown == 2) {
-			peaShooterOnCooldown = false;
-		}
-
-		return peaShooterOnCooldown;
-
-	}
-
-	public boolean processSunflowerCooldown() {
-
-		if (sunflowerOnCooldown && turn - sunflowerCooldown == 2) {
-			sunflowerOnCooldown = false;
-		}
-
-		return sunflowerOnCooldown;
-
 	}
 
 	public boolean isGameOver() {
@@ -78,7 +51,9 @@ public class ActionProcessor {
 
 	public void processNextTurn() {
 		++turn;
-
+		
+		CooldownManager.decTimeOnCD();
+		
 		// wave logic
 		if (wave.getNum() == 1 && waveDefeated) {
 			game.print(Presets.WAVE_COMPLETE);
@@ -95,10 +70,6 @@ public class ActionProcessor {
 			game.print("Please type \"restart\" if you wish to play again");
 			return;
 		}
-
-		processSunflowerCooldown();
-
-		processPeaShooterCooldown();
 
 		// passive sun point logic -- every three turns, increase sun points by 25
 		if (turn - previousTurn == 3) {
@@ -205,25 +176,24 @@ public class ActionProcessor {
 
 		if (actor instanceof PeaShooter) {
 			plantType = "peashooter";
-			if (peaShooterOnCooldown) {
-				game.print("\n" + plantType + Presets.PLANTTYPE_COOLDOWN); // include number of turns left
+			if (CooldownManager.isPeaOnCD()) {
+				game.print("\n" + plantType + Presets.PLANTTYPE_COOLDOWN); 
+				
 			} else if (sunPoints - 100 < 0) {
 				game.print(Presets.NOT_ENOUGH_SUNPOINTS + plantType + "\n");
 			} else {
-				PeaShooter plantToPlace;
-				plantToPlace = new PeaShooter();
-				game.getWorld().getCurrentLevel().placeActor(plantToPlace, new Point(xPos, yPos));
+				game.getWorld().getCurrentLevel().placeActor(new PeaShooter(), new Point(xPos, yPos));
 				sunPoints -= 100;
-				peaShooterOnCooldown = true;
-				peaShooterCooldown = turn;
+				CooldownManager.startPeaCD();
 				game.print("\nYou currently have " + sunPoints + " sun points.\n");
 				game.printGame();
 
 			}
 		} else if (actor instanceof Sunflower) {
 			plantType = "sunflower";
-			if (sunflowerOnCooldown) {
-				game.print("\n" + plantType + Presets.PLANTTYPE_COOLDOWN); // include number of turns left
+			if (CooldownManager.isSunOnCD()) {
+				game.print("\n" + plantType + Presets.PLANTTYPE_COOLDOWN); 
+
 			} else if (sunPoints - 50 < 0) {
 				game.print(Presets.NOT_ENOUGH_SUNPOINTS + plantType + "\n");
 
@@ -232,12 +202,10 @@ public class ActionProcessor {
 				plantToPlace.setTurnPlaced(turn);
 				game.getWorld().getCurrentLevel().placeActor(plantToPlace, new Point(xPos, yPos));
 				sunPoints -= 50;
-				sunflowerOnCooldown = true;
-				sunflowerCooldown = turn;
+				CooldownManager.startSunCD();
 				game.print("\nYou currently have " + sunPoints + " sun points.\n");
 				game.printGame();
 			}
 		}
 	}
-
 }
