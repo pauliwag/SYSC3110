@@ -157,6 +157,10 @@ public class GUIController {
 			}
 		});
 	}
+	
+	/**
+	 * Sets up menu button actions
+	 */
 	private void setupMenuButtons() {
 		quitButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -217,9 +221,19 @@ public class GUIController {
 		peashooterCooldown.setText(Integer.toString(CooldownManager.getCurrentPeaCD()));
 		sunflowerCooldown.setText(Integer.toString(CooldownManager.getCurrentSunCD()));
 	}
-
+	
+	/**
+	 * Updates sunpoint label on UI
+	 */
 	private void updateSunpointLabel() {
 		sunpointLabel.setText("  Sunpoints: " + Integer.toString(game.getWorld().getCurrentLevel().getSunpoints()));
+	}
+	
+	/**
+	 * Updates the wave label on UI
+	 */
+	private void updateWaveNumber() {
+		waveLabel.setText("  Wave: " + Integer.toString(game.getActionProcessor().getWave().getNum()));
 	}
 	
 	/**
@@ -247,6 +261,7 @@ public class GUIController {
 				}
 			}
 		}
+		updateWaveNumber();
 		updateSunpointLabel();
 		updateCooldownDisplay();
 	}

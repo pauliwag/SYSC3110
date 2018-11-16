@@ -203,4 +203,13 @@ public class ActionProcessor {
 					AlertType.INFORMATION);
 		}
 	}
+	
+	/**
+	 * Temporary way to get wave from action processor
+	 * @return Returns action processor wave
+	 */
+	public Wave getWave() {
+		//TODO When ActionProcessor is properly integrated to use Level's wave objects, this won't be needed
+		return wave;
+	}
 }
