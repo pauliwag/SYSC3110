@@ -31,10 +31,9 @@ The next turn button is used to advance the game to the next turn.
 When the game is advanced to the next turn, the the grass grid and any information labels will update.
 
 Every 3 turns, 25 sun points are added to the sun point balance (passive income).
+
 ![](images/actors.png?raw=true)
 
-
-The **quit** and **restart** commands should be pretty self-explanatory 😊
 
 ## The level
 
@@ -49,6 +48,7 @@ The image below has a demo of what the level grid will look like with some *peas
 ![](images/wave3.png?raw=true)
 
 If you manage to complete the level, a dialog will be displayed to congratulate you.
+
 ![](images/winner.png?raw=true)
 
 ## Plant types
