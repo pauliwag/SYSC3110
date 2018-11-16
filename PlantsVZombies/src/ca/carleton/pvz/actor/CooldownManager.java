@@ -74,5 +74,20 @@ public final class CooldownManager {
 		peaTimeLeftOnCD = PEASHOOTER_CD;
 
 	}
-
+	
+	/** 
+	 * Get the current time left on Sunflower cooldown
+	 * @return returns the sunflower cooldown time remaining
+	 */
+	public static int getCurrentSunCD() {
+		return sunTimeLeftOnCD;
+	}
+	
+	/** 
+	 * Get the current time left on Peashooter cooldown
+	 * @return returns the peashooter cooldown time remaining
+	 */
+	public static int getCurrentPeaCD() {
+		return peaTimeLeftOnCD;
+	}
 }

@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 
 import ca.carleton.pvz.PlantsVZombies;
 import ca.carleton.pvz.actor.Actor;
+import ca.carleton.pvz.actor.CooldownManager;
 import ca.carleton.pvz.actor.PeaShooter;
 import ca.carleton.pvz.actor.Plant;
 import ca.carleton.pvz.actor.Sunflower;
@@ -16,16 +17,14 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 /**
  * This class controls the JavaFX fxml user interface.
@@ -37,8 +36,6 @@ public class GUIController {
 	private PlantsVZombies game;
 	private Plant selectedPlant;
 
-	private int sunflowerCooldownInt = 0;
-	private int peashooterCooldownInt = 0;
 
 	@FXML
 	private ResourceBundle resources;
@@ -48,7 +45,7 @@ public class GUIController {
 
 	// @FXML
 	// private Label sunpoints;
-	
+
 	@FXML
 	private Label peashooterCooldown;
 
@@ -80,54 +77,8 @@ public class GUIController {
 		assert gameGrid != null : "fx:id=\"gameGrid\" was not injected: check your FXML file 'pvzgui.fxml'.";
 		assert plantGroup != null : "fx:id=\"gameGrid\" was not injected: check your FXML file 'pvzgui.fxml'.";
 		setupPlantSelectionButtons();
+		setupNextTurnButton();
 		initGameGrid();
-		nextTurnButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent e) {
-				if (game.getActionProcessor().isGameOver()) {
-
-					updateGameGrid();
-					nextTurnButton.setDisable(true);
-					peashooterButton.setDisable(true);
-					sunflowerButton.setDisable(true);
-					gameGrid.setDisable(true);
-					plantGroup.setDisable(true);
-					Label label = new Label("Game over! You failed to protect your home from the zombies :(");
-
-					StackPane secondaryLayout = new StackPane();
-					secondaryLayout.getChildren().add(label);
-
-					Scene secondScene = new Scene(secondaryLayout, 400, 100);
-
-					// New window (Stage)
-					Stage newWindow = new Stage();
-					newWindow.setTitle("Game Over");
-					newWindow.setScene(secondScene);
-
-					// Specifies the modality for new window.
-					newWindow.initModality(Modality.WINDOW_MODAL);
-
-					newWindow.show();
-
-				}
-
-				if (sunflowerCooldownInt > 0) {
-					sunflowerCooldownInt = sunflowerCooldownInt - 1;
-					sunflowerCooldown.setText(Integer.toString(sunflowerCooldownInt));
-				}
-				if (peashooterCooldownInt > 0) {
-					peashooterCooldownInt = peashooterCooldownInt - 1;
-					peashooterCooldown.setText(Integer.toString(sunflowerCooldownInt));
-				}
-				
-				//Updating Sunpoints
-				//sunpoints.setText(Integer.toString(game.getActionProcessor().getSunpoints()));
-				game.getActionProcessor().processNextTurn();
-				updateGameGrid();
-
-			}
-		});
-
 	}
 
 	/**
@@ -161,6 +112,24 @@ public class GUIController {
 	}
 
 	/**
+	 * Sets up the next turn button's event handler
+	 */
+	private void setupNextTurnButton() {
+		nextTurnButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				if (game.getActionProcessor().isGameOver()) {
+					notifyGameOver();
+				}
+
+				game.getActionProcessor().processNextTurn();
+				updateGameGrid();
+
+			}
+		});
+	}
+
+	/**
 	 * Initializes the game grid to grass images and adds event handlers to each
 	 * grid slot.
 	 */
@@ -184,53 +153,11 @@ public class GUIController {
 							row = GridPane.getRowIndex(imgView);
 							column = GridPane.getColumnIndex(imgView);
 							if (game.getWorld().getCurrentLevel().getCell(column, row) == null) {
-								if (selectedPlant instanceof PeaShooter) {
-									if (peashooterCooldownInt == 0
-											&& (game.getActionProcessor().getSunpoints() >= 100)) {
-										System.out.println(peashooterCooldownInt);
-										game.getWorld().getCurrentLevel().placeActor(selectedPlant,
-												new Point(column, row));
-										peashooterCooldownInt = 2;
-										game.getActionProcessor().setSunpoints(-100);
-										peashooterCooldown.setText(Integer.toString(peashooterCooldownInt));
-										//Updating Sunpoints
-										//sunpoints.setText(Integer.toString(game.getActionProcessor().getSunpoints()));
-
-									}
-								}
-
-								if (selectedPlant instanceof Sunflower
-										&& (game.getActionProcessor().getSunpoints() >= 50)) {
-									if (sunflowerCooldownInt == 0) {
-										game.getWorld().getCurrentLevel().placeActor(selectedPlant,
-												new Point(column, row));
-										sunflowerCooldownInt = 2;
-										game.getActionProcessor().setSunpoints(-50);
-										sunflowerCooldown.setText(Integer.toString(sunflowerCooldownInt));
-										//Updating Sunpoints
-										//sunpoints.setText(Integer.toString(game.getActionProcessor().getSunpoints()));
-									}
-								}
+								game.getActionProcessor().processPlaceActor(selectedPlant, column, row);
 
 							} else {
-
-								Label label = new Label("There's already something placed here!");
-
-								StackPane secondaryLayout = new StackPane();
-								secondaryLayout.getChildren().add(label);
-
-								Scene secondScene = new Scene(secondaryLayout, 230, 100);
-
-								// New window (Stage)
-								Stage newWindow = new Stage();
-								newWindow.setTitle("Error");
-								newWindow.setScene(secondScene);
-
-								// Specifies the modality for new window.
-								newWindow.initModality(Modality.WINDOW_MODAL);
-
-								newWindow.show();
-
+								showAlert("No room!", null, "There's already something placed here!",
+										AlertType.INFORMATION);
 							}
 						}
 						updateGameGrid();
@@ -242,6 +169,11 @@ public class GUIController {
 			}
 		}
 
+	}
+
+	private void updateCooldownDisplay() {
+		peashooterCooldown.setText(Integer.toString(CooldownManager.getCurrentPeaCD()));
+		sunflowerCooldown.setText(Integer.toString(CooldownManager.getCurrentSunCD()));
 	}
 
 	/**
@@ -269,6 +201,40 @@ public class GUIController {
 				}
 			}
 		}
+
+		updateCooldownDisplay();
+	}
+
+	public void notifyGameOver() {
+		updateGameGrid();
+		nextTurnButton.setDisable(true);
+		peashooterButton.setDisable(true);
+		sunflowerButton.setDisable(true);
+		gameGrid.setDisable(true);
+		plantGroup.setDisable(true);
+		showAlert("Game Over", null, "Game over! You failed to protect your home from the zombies :(",
+				AlertType.INFORMATION);
+	}
+
+	/**
+	 * Shows the user a pop-up alert dialog
+	 * 
+	 * @param title
+	 *            Title of the alert dialog
+	 * @param header
+	 *            Header of the alert dialog (can be null for no header)
+	 * @param content
+	 *            Content of the alert dialog
+	 * @param type
+	 *            Type of alert - see AlertType documentation
+	 */
+	private void showAlert(String title, String header, String content, AlertType type) {
+		Alert alert = new Alert(type);
+		alert.setTitle(title);
+		alert.setHeaderText(header);
+		alert.setContentText(content);
+
+		alert.showAndWait();
 	}
 
 	/**
