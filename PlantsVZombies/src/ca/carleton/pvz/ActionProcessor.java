@@ -157,8 +157,8 @@ public class ActionProcessor {
 		}
 
 		if (wave.getNum() >= 3 && waveDefeated) {
-			game.print("Congrats! You finished the first level of Plants vs. Zombies.");
-			game.print("Please type 'restart' if you wish to play again.");
+			game.getController().showAlert("You won!", null, "Congrats, you beat the first level of Plants VS Zombies!",
+					AlertType.INFORMATION);
 		}
 	}
 

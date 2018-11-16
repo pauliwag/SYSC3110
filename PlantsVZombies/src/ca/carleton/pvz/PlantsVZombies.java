@@ -35,6 +35,7 @@ public class PlantsVZombies extends Application {
 		controller = loader.getController();
 		controller.setGame(this);
 		Scene scene = new Scene(borderPane, 1030, 615);
+		primaryStage.setTitle("Plants VS Zombies Group 5");
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
