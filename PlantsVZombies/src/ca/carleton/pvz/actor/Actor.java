@@ -9,7 +9,6 @@ import javafx.scene.image.Image;
 public class Actor {
 
 	public Image getSprite() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
