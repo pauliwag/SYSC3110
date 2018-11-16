@@ -145,11 +145,13 @@ public class GUIController {
 		nextTurnButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
+				game.getActionProcessor().processNextTurn();
 				if (game.getActionProcessor().isGameOver()) {
 					notifyGameOver();
+					return;
 				}
 
-				game.getActionProcessor().processNextTurn();
+				
 				updateGameGrid();
 
 			}
