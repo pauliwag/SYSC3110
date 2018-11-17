@@ -16,15 +16,6 @@ public class LevelOneTest {
 	public void setUp() throws Exception {
 		testLevelOne = new LevelOne();
 	}
-
-	/*@Test
-	public void testToString() {
-		assertEquals(testLevelOne.toString(), "|   |   |   |   |   | \r\n" + 
-				"|   |   |   |   |   | \r\n" + 
-				"|   |   |   |   |   | \r\n" + 
-				"|   |   |   |   |   | \r\n" + 
-				"|   |   |   |   |   | \r");
-	}*/
 	
 	@Test
 	public void testInitWaves() {
