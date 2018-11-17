@@ -2,33 +2,49 @@ package ca.carleton.pvz.test;
 
 import static org.junit.Assert.*;
 
-import org.junit.After;
-import org.junit.AfterClass;
+import java.awt.Point;
+
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
+
+import ca.carleton.pvz.actor.Zombie;
+import ca.carleton.pvz.level.Level;
+import ca.carleton.pvz.level.LevelOne;
+import javafx.scene.image.Image;
 
 public class ZombieTest {
 
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-	}
-
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
-
+	Zombie testZombie;
+	LevelOne testLevel;
+	
 	@Before
 	public void setUp() throws Exception {
+		testZombie = new Zombie();
+		testLevel = new LevelOne();
 	}
 
-	@After
-	public void tearDown() throws Exception {
-	}
 
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void testGetters() {
+		assertTrue (testZombie instanceof Zombie);
+		assertEquals(600, testZombie.getHealth());
+		testZombie.setHealth(200);
+		assertEquals(200, testZombie.getHealth());
+		
+	}
+	
+	@Test
+	public void testMovement() {
+		testLevel.placeActor(testZombie, new Point(2,2));
+		Zombie.moveZombies(testLevel);
+		assertEquals(null, testLevel.getCell(2, 2));
+		assertEquals(null, testLevel.getCell(3, 2));
+		assertTrue(testLevel.getCell(1, 2) instanceof Zombie);
+	}
+	
+	@Test
+	public void testSprite() {
+		assertTrue(testZombie.getSprite() instanceof Image);
 	}
 
 }
