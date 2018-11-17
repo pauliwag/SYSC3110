@@ -29,6 +29,7 @@ Sameed Mohammed: Worked on test classes for all classes in project, added Javado
 ---
 
 **For the next deliverable:** 
+
 Significant rearchitecting was performed in preparation for iteration 3 (when markers start docking for smelly code) with the intention of decentralizing the core logic of the game that primarily resides in the ActionProcessor class. E.g., the Level class now has a (currently unused) field that is a priority queue of Wave objects. Waves are prioritized in order of ascending wave number (i.e., lower wave number is prioritized) to ensure zombie waves are deployed in the correct sequence (1, 2, ..., n).
 
 Many other refactorings were performed to maximize delegation of tasks, e.g., from ActionProcessor to the other classes, thereby maximizing encapsulation and extensibility. These refactorings have yet to be melded with the core logic of the game (namely the logic in ActionProcessor).
