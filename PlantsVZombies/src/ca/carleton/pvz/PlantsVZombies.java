@@ -91,9 +91,7 @@ public class PlantsVZombies extends Application {
 	/**
 	 * Print out the current level being played.
 	 */
-	public void printGame() {
-		print(getWorld().getCurrentLevel().toString());
-	}
+
 
 	/**
 	 * Get the game's action processor

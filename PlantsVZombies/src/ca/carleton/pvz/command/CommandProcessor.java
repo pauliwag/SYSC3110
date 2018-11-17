@@ -38,7 +38,7 @@ public class CommandProcessor {
 		Command command = parser.getCommand();
 
 		if (command.isUnknown()) {
-			game.print(Presets.INVALID);
+			
 			return false;
 		}
 
@@ -47,9 +47,9 @@ public class CommandProcessor {
 		switch (commandWord) {
 		case "help":
 			if (command.hasSecondWord()) {
-				processHelp(command);
+				//processHelp(command);
 			} else {
-				game.print(Presets.HELP);
+			
 			}
 			break;
 		case "place":
@@ -62,7 +62,7 @@ public class CommandProcessor {
 			break;
 		case "restart":
 			if (command.hasSecondWord()) {
-				game.print(Presets.INVALID);
+				
 			} else {
 				new PlantsVZombies();
 			}
@@ -86,25 +86,25 @@ public class CommandProcessor {
 
 			switch (command.getSecondWord()) {
 			case "quit":
-				game.print(Presets.QUIT_HELP);
+				//game.print(Presets.QUIT_HELP);
 				break;
 			case "place":
-				game.print(Presets.PLACE_HELP);
+				//game.print(Presets.PLACE_HELP);
 				break;
 			case "next":
-				game.print(Presets.NEXT_HELP);
+				//game.print(Presets.NEXT_HELP);
 				break;
 			case "restart":
-				game.print(Presets.RESTART_HELP);
+				//game.print(Presets.RESTART_HELP);
 				break;
 			default:
-				game.print(Presets.INVALID);
+				//game.print(Presets.INVALID);
 				break;
 			}
 
 		} else {
 
-			game.print(Presets.INVALID);
+			//game.print(Presets.INVALID);
 
 		}
 	}
@@ -117,14 +117,14 @@ public class CommandProcessor {
 	private void processNext(Command command) {
 
 		if (!command.hasSecondWord()) {
-			game.print(Presets.NEXT_WHAT);
+		
 
 		} else if (command.getSecondWord().equals("turn")) {
 
 			game.getActionProcessor().processNextTurn();
 
 		} else {
-			game.print(Presets.INVALID);
+
 		}
 
 	}
@@ -145,13 +145,13 @@ public class CommandProcessor {
 		 */
 
 		if (!command.hasSecondWord()) {
-			game.print(Presets.PLACE_WHAT);
+
 			return;
 		} else if (!command.hasThirdWord()) {
-			game.print(Presets.PLACE_WHERE);
+		
 			return;
 		} else if (!command.hasFourthWord()) {
-			game.print(Presets.PLACE_WHERE);
+
 			return;
 		}
 
@@ -160,20 +160,20 @@ public class CommandProcessor {
 			xPos = Integer.parseInt(command.getThirdWord());
 			yPos = Integer.parseInt(command.getFourthWord());
 		} catch (NumberFormatException ex) {
-			game.print(Presets.PLACE_WHERE);
+
 			return;
 		}
 
 		String plantType = command.getSecondWord();
 
 		if (!game.getWorld().getCurrentLevel().isPointValid(new Point(xPos, yPos))) {
-			game.print(Presets.INVALID_POINT);
+
 			return;
 		}
 
 		Actor o = game.getWorld().getCurrentLevel().getCell(xPos, yPos);
 		if (o instanceof Zombie) {
-			game.print(Presets.PLACE_ON_ZOMBIE);
+
 			return;
 		}
 
@@ -186,7 +186,7 @@ public class CommandProcessor {
 			game.getActionProcessor().processPlaceActor(new Sunflower(), xPos, yPos);
 
 		} else {
-			game.print(Presets.INVALID_PLANT_TYPE);
+
 		}
 	}
 
