@@ -40,19 +40,9 @@ public class Sunflower extends Plant {
 	}
 
 	/**
-	 * Returns a String representation of this sunflower.
+	 * Gets the sunflower sprite.
 	 *
-	 * @return A String representation of this sunflower.
-	 */
-	@Override
-	public String toString() {
-		return "S";
-	}
-
-	/**
-	 * Returns the .png sprite image of this sunflower.
-	 *
-	 * @return The .png sprite image of this sunflower.
+	 * @return The sunflower sprite.
 	 */
 	@Override
 	public Image getSprite() {

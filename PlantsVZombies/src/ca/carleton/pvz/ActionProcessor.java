@@ -7,7 +7,6 @@ import ca.carleton.pvz.actor.CooldownManager;
 import ca.carleton.pvz.actor.PeaShooter;
 import ca.carleton.pvz.actor.Sunflower;
 import ca.carleton.pvz.actor.Zombie;
-import ca.carleton.pvz.command.Presets;
 import ca.carleton.pvz.level.Wave;
 import javafx.scene.control.Alert.AlertType;
 
@@ -155,11 +154,11 @@ public class ActionProcessor {
 	}
 
 	public void processPlaceActor(Actor actor, int xPos, int yPos) {
-		String plantType;
+
 		if (game.getWorld().getCurrentLevel().getCell(xPos, yPos) == null) {
 
 			if (actor instanceof PeaShooter) {
-				plantType = "peashooter";
+
 				if (CooldownManager.isPeaOnCD()) {
 
 				} else if (game.getWorld().getCurrentLevel().getSunpoints() - 100 < 0) {
@@ -170,7 +169,7 @@ public class ActionProcessor {
 
 				}
 			} else if (actor instanceof Sunflower) {
-				plantType = "sunflower";
+
 				if (CooldownManager.isSunOnCD()) {
 
 				} else if (game.getWorld().getCurrentLevel().getSunpoints() - 50 < 0) {
@@ -193,7 +192,7 @@ public class ActionProcessor {
 
 	/**
 	 * Temporary way to get wave from action processor
-	 * 
+	 *
 	 * @return Returns action processor wave
 	 */
 	public Wave getWave() {

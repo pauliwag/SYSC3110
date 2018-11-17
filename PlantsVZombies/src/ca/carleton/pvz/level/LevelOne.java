@@ -45,8 +45,5 @@ public class LevelOne extends Level {
 		addWaves(wave1, wave2, wave3);
 
 	}
-	
-	
-	
 
 }
