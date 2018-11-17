@@ -1,6 +1,6 @@
 # Welcome to Plants Vs Zombies!
 
-In this document, simple instructions on how to play Group 5's Plants Vs Zombies v1.0 will be given.
+In this document, simple instructions on how to play Group 5's Plants Vs Zombies v2.0 will be given.
 
 
 ## Launching the game
@@ -9,29 +9,31 @@ To launch the game, first ensure that you have the PlantsVZombies.jar file downl
 
     java -jar PlantsVZombies.jar
 
-If you have Java installed correctly, you will see a welcome message printed by the game.
+If you have Java installed correctly, a window will launch and display the initial state of the game.
 
-![](images/launching.png?raw=true)
+![](images/home.png?raw=true)
 
-## Commands
+## Controls
 
-Now that you've got the game started, it's time to learn about the different commands you can use to interact with the game.
-The most important command is **help**, as it will let you view more information about the other commands in-game.
+Now that you've got the game started, it's time to learn about the different controls you can use to interact with the game.
+On the left side of the window, you'll see the buttons you can use. 
 
-![](images/help.png?raw=true)
+To 'select' a plant that will be placed by clicking on a position on the grass grid, click the button with the plant's name.
 
-The **place <planttype> <x-position> <y-position>** command will let you place a plant at the specified coordinates on the level.
+Beside the plant buttons, a number representing the number of turns until you can place this plant is displayed.
 
-Valid plant types are *sunflower* and *peashooter*.
+Below the plant selection buttons, there is information on the current level number, wave number, and sunpoint balance. 
 
-The **next turn** command will advance the game to the next turn.
+The next turn button is used to advance the game to the next turn.
 
-When the game is advanced to the next turn, the current level state will be output, along with some other useful information about the turn.
+![](images/controls.png?raw=true)
 
-![](images/turn.png?raw=true)
+When the game is advanced to the next turn, the the grass grid and any information labels will update.
 
+Every 3 turns, 25 sun points are added to the sun point balance (passive income).
 
-The **quit** and **restart** commands should be pretty self-explanatory 😊
+![](images/actors.png?raw=true)
+
 
 ## The level
 
@@ -43,7 +45,11 @@ During your first few turns of a new level, you'll want to place some plants nea
 
 The image below has a demo of what the level grid will look like with some *peashooters* and a *sunflower* placed on the left hand side, and *zombies* attacking from the right.
 
-![](images/level.png?raw=true)
+![](images/wave3.png?raw=true)
+
+If you manage to complete the level, a dialog will be displayed to congratulate you.
+
+![](images/winner.png?raw=true)
 
 ## Plant types
 
