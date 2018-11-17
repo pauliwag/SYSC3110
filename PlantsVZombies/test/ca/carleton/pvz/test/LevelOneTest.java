@@ -17,6 +17,10 @@ public class LevelOneTest {
 		testLevelOne = new LevelOne();
 	}
 	
+	/**
+	 * Tests the method for initial waves
+	 * @result All initial waves are created successfully, and for LevelOne, that entails 3 waves
+	 */
 	@Test
 	public void testInitWaves() {
 		Wave testWave;

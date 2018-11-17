@@ -23,6 +23,10 @@ public class PeaShooterTest {
 		testPeaShooter = new PeaShooter();
 	}
 
+	/**
+	 * Tests the hits field of the PeaShooter
+	 * @result Hits behaves as expected, including the newTurn() method, which resets the hits to 0.
+	 */
 	@Test
 	public void testHits() {
 		assertEquals(0, testPeaShooter.getHits());
@@ -33,6 +37,10 @@ public class PeaShooterTest {
 		assertEquals(0, testPeaShooter.getHits());
 	}
 	
+	/**
+	 * Tests the functionality of the shooting function
+	 * @result Zombies health is reduced as expected, which is -400 per shot
+	 */
 	@Test
 	public void testShoot() {
 		testLevel = new LevelOne();

@@ -17,6 +17,10 @@ public class SunflowerTest {
 		testSunflower = new Sunflower();
 	}
 
+	/**
+	 * Tests the "turns" functionality of the Sunflower
+	 * @result The turns should be working as intended, where it starts at 0 initially
+	 */
 	@Test
 	public void testTurns() {
 		assertEquals(0, testSunflower.getTurnPlaced());
@@ -27,6 +31,10 @@ public class SunflowerTest {
 	// not testing toString() method of testSunflower because GUI is implemented, and that will be removed
 	// in future versions!
 	
+	/**
+	 * Testing Sprite method to make sure that it generates an Image
+	 * @result The return type of the getSprite method should be an Image type
+	 */
 	@Test
 	public void testSprite() {
 		assertTrue(testSunflower.getSprite() instanceof Image);

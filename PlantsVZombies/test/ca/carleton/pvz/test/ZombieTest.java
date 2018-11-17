@@ -23,7 +23,10 @@ public class ZombieTest {
 		testLevel = new LevelOne();
 	}
 
-
+	/**
+	 * Tests the basic getter methods of the Zombie class
+	 * @result All getter methods should be working as intended and returns the correct values
+	 */
 	@Test
 	public void testGetters() {
 		assertTrue (testZombie instanceof Zombie);
@@ -33,6 +36,10 @@ public class ZombieTest {
 		
 	}
 	
+	/**
+	 * Tests the movement functionality of the Zombie on a sample level
+	 * @result The zombie should move left one square PER call of the function
+	 */
 	@Test
 	public void testMovement() {
 		testLevel.placeActor(testZombie, new Point(2,2));
@@ -42,6 +49,10 @@ public class ZombieTest {
 		assertTrue(testLevel.getCell(1, 2) instanceof Zombie);
 	}
 	
+	/**
+	 * Tests the Sprite method for Zombie
+	 * @result The expected type for the Object returned by this method should be an Image type
+	 */
 	@Test
 	public void testSprite() {
 		assertTrue(testZombie.getSprite() instanceof Image);

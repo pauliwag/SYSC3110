@@ -21,6 +21,10 @@ public class WorldTest {
 		testWorld = new World();
 	}
 
+	/**
+	 * Tests the methods of World class, to ensure it works as intended
+	 * @result Before the stack is populated, the expectation is that it returns an EmptyStackException. The other asserts should expect normal behaviour.
+	 */
 	@Test
 	public void testWorld() {
 		try {

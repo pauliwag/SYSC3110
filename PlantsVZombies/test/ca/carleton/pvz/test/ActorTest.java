@@ -17,6 +17,10 @@ public class ActorTest {
 		testActor = new Actor();
 	}
 
+	/**
+	 * Tests the image creator method in Actor.
+	 * @result The sprite is generated successfully, as null
+	 */
 	@Test
 	public void testActor() {
 		assertTrue(testActor.getSprite() == null);
