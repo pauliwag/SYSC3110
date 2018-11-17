@@ -1,29 +1,26 @@
 package ca.carleton.pvz.actor;
 
 import java.awt.Point;
-import java.io.InputStream;
-
 import ca.carleton.pvz.level.Level;
-import javafx.scene.image.Image;
 
 /**
- * A zombie which advances from the rightmost grid column to the left; when a
- * zombie reaches the leftmost column, it's game over!
+ * The parent zombie class, from which different zombie types inherit.
  *
  */
-public class Zombie extends Actor {
+public abstract class Zombie extends Actor {
+
 	private int health;
 
 	/**
 	 * Creates a new Zombie.
 	 */
-	public Zombie() {
-		health = 600;
+	public Zombie(int health) {
+		this.health = health;
 	}
 
 	/**
 	 * Gets the current health of this zombie.
-	 * 
+	 *
 	 * @return The current health of this zombie.
 	 */
 	public int getHealth() {
@@ -32,15 +29,16 @@ public class Zombie extends Actor {
 
 	/**
 	 * Sets the health of this zombie.
-	 * 
-	 * @param health
-	 *            The zombie's health will be assigned this value.
+	 *
+	 * @param health This zombie's health will be assigned the given value.
 	 */
 	public void setHealth(int health) {
 		this.health = health;
 	}
 
 	public static void moveZombies(Level level) {
+
+		// TODO : Emigrate this method ...
 
 		for (int i = 0; i < level.getDimension().height; ++i) {
 			for (int j = 0; j < level.getDimension().width; ++j) {
@@ -54,19 +52,4 @@ public class Zombie extends Actor {
 		}
 	}
 
-	/**
-	 * Return a String representation of this zombie (including its health).
-	 * 
-	 * @return A String representation of this zombie (including its health).
-	 */
-	@Override
-	public String toString() {
-		return "Z";
-	}
-	
-	@Override
-	public Image getSprite() {
-		InputStream stream = getClass().getResourceAsStream("zombie_tutorial.png");
-		return new Image(stream);
-	}
 }

@@ -3,13 +3,11 @@ package ca.carleton.pvz.actor;
 import javafx.scene.image.Image;
 
 /**
- * The class from which zombies and plants inherit.
+ * The class from which all plants and zombies inherit.
  *
  */
-public class Actor {
+public abstract class Actor {
 
-	public Image getSprite() {
-		return null;
-	}
+	public abstract Image getSprite();
 
 }

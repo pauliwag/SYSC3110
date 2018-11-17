@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Random;
 
+import ca.carleton.pvz.actor.NormalZombie;
 import ca.carleton.pvz.actor.Zombie;
 
 /**
@@ -34,7 +35,7 @@ public class Wave {
 		this.waveNum = waveNum;
 
 		zombies = new ArrayList<>(numZombies);
-		for (int i = 0; i < numZombies; ++i) zombies.add(new Zombie());
+		for (int i = 0; i < numZombies; ++i) zombies.add(new NormalZombie());
 
 		r = new Random();
 
@@ -49,7 +50,6 @@ public class Wave {
 		return zombies.size() == 0;
 	}
 
-	// TODO : refactor below method ...
 	/**
 	 * Spawns zombies on game map according to waveNumber and numberofZombies.
 	 *
@@ -57,8 +57,11 @@ public class Wave {
 	 * @return The resulting game map after new zombies have spawned.
 	 */
 	public static Level spawnZombieOnLevel(Level level) {
+
+		// TODO : Emigrate this method ...
+
 		int randomRow = r.nextInt(5);
-		Zombie zombie = new Zombie();
+		Zombie zombie = new NormalZombie();
 		level.placeActor(zombie, new Point(4, randomRow));
 		return level;
 	}
@@ -101,7 +104,7 @@ public class Wave {
 
 			if (zombies.size() > numZombies) zombies.remove(0);
 
-			if (zombies.size() < numZombies) zombies.add(new Zombie());
+			if (zombies.size() < numZombies) zombies.add(new NormalZombie());
 
 		}
 	}

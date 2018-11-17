@@ -55,6 +55,8 @@ public class PeaShooter extends Plant {
 	 */
 	public static void shootZombies(Level level) {
 
+		// TODO : Emigrate this method ...
+
 		for (int i = 0; i < level.getDimension().height; ++i) {
 			for (int j = 0; j < level.getDimension().width; ++j) {
 				Actor o = level.getCell(i, j);
@@ -102,23 +104,14 @@ public class PeaShooter extends Plant {
 	}
 
 	/**
-	 * Returns a String representing this peashooter.
+	 * Gets the peashooter sprite.
 	 *
-	 * @return A String representing this peashooter.
-	 */
-	@Override
-	public String toString() {
-		return "P";
-	}
-
-	/**
-	 * Returns the .png sprite image of this peashooter.
-	 *
-	 * @return The .png sprite image of this peashooter.
+	 * @return The peashooter sprite.
 	 */
 	@Override
 	public Image getSprite() {
 		InputStream stream = getClass().getResourceAsStream("peashooter.png");
 		return new Image(stream);
 	}
+
 }
