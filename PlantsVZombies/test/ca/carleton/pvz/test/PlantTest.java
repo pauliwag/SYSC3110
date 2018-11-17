@@ -1,34 +1,28 @@
 package ca.carleton.pvz.test;
 
 import static org.junit.Assert.*;
-
-import org.junit.After;
-import org.junit.AfterClass;
+ 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
+
+import ca.carleton.pvz.actor.Actor;
+import ca.carleton.pvz.actor.Plant;
 
 public class PlantTest {
 
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-	}
-
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
-
+	Plant testPlant;
+	
 	@Before
 	public void setUp() throws Exception {
-	}
-
-	@After
-	public void tearDown() throws Exception {
+		testPlant = new Plant();
 	}
 
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void testPlant() {
+		assertTrue(testPlant instanceof Actor);
 	}
 
+	// tearDown() is not necessary here, as garbage collection of objects
+	// after the test class concludes. Other things that consume system
+	// resources may need tearDown() however (like GUI).
 }
