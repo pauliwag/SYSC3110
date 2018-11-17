@@ -1,34 +1,35 @@
 package ca.carleton.pvz.test;
 
 import static org.junit.Assert.*;
+import java.util.EmptyStackException;
 
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
+
+import ca.carleton.pvz.World;
+import ca.carleton.pvz.level.Level;
 
 public class WorldTest {
 
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-	}
-
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
-
+	World testWorld;
+	Level testLevel1;
+	Level testLevel2;
+	Level testLevel3;
+	
 	@Before
 	public void setUp() throws Exception {
-	}
-
-	@After
-	public void tearDown() throws Exception {
+		testWorld = new World();
 	}
 
 	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void testWorld() {
+		try {
+			testWorld.getCurrentLevel();
+		} catch (Exception e) {
+			assertTrue(e instanceof EmptyStackException);
+		}
+		testWorld.addLevel(testLevel1);
+		testWorld.addLevel(testLevel2);
 	}
 
 }
