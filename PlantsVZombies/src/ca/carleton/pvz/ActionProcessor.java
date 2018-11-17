@@ -18,7 +18,7 @@ public class ActionProcessor {
 
 	private Wave wave;
 	private PlantsVZombies game;
-	
+
 	public ActionProcessor(PlantsVZombies game) {
 		this.game = game;
 		previousTurn = 0;
@@ -26,7 +26,6 @@ public class ActionProcessor {
 		wave = new Wave(1, 3);
 		waveDefeated = false;
 	}
-
 
 	public boolean isGameOver() {
 		if (turn > 6) { // searching for any zombies that made it to end game
@@ -43,23 +42,22 @@ public class ActionProcessor {
 
 	public void processNextTurn() {
 		++turn;
-		
+
 		CooldownManager.decTimeOnCD();
-		
+
 		// wave logic
 		if (wave.getNum() == 1 && waveDefeated) {
-			game.print(Presets.WAVE_COMPLETE);
+
 			return;
 		}
 
 		if (wave.getNum() == 2 && waveDefeated) {
-			game.print(Presets.WAVE_COMPLETE);
+
 			return;
 		}
 
 		if (wave.getNum() >= 3 && waveDefeated) {
-			game.print("Congrats! You finished the first level of Plants vs. Zombies");
-			game.print("Please type \"restart\" if you wish to play again");
+
 			return;
 		}
 
@@ -75,7 +73,8 @@ public class ActionProcessor {
 					Actor o = game.getWorld().getCurrentLevel().getCell(i, j);
 					if (o instanceof Sunflower) {
 						if ((turn - ((Sunflower) o).getTurnPlaced()) % 2 == 0) {
-							game.getWorld().getCurrentLevel().addToSunpoints(25);;
+							game.getWorld().getCurrentLevel().addToSunpoints(25);
+							;
 						}
 					}
 				}
@@ -90,19 +89,18 @@ public class ActionProcessor {
 
 		if (wave.getNum() == 1 && turn >= 3 && wave.getRemainingZombies() > 0) { // zombies spawn after turn
 																					// == 3 for first wave
-			game.print(Presets.ZOMBIES_SPAWNING);
+
 			game.getWorld().updateCurrentLevel(Wave.spawnZombieOnLevel(game.getWorld().getCurrentLevel()));
 			wave.setRemainingZombies(wave.getRemainingZombies() - 1);
 		}
 
 		if (wave.getNum() == 2 && turn >= 3 && wave.getRemainingZombies() > 0) {
-			game.print(Presets.ZOMBIES_SPAWNING);
 			game.getWorld().updateCurrentLevel(Wave.spawnZombieOnLevel(game.getWorld().getCurrentLevel()));
 			wave.setRemainingZombies(wave.getRemainingZombies() - 1);
 		}
 
 		if (wave.getNum() == 3 && turn >= 3 && wave.getRemainingZombies() > 0) {
-			game.print(Presets.ZOMBIES_SPAWNING);
+
 			game.getWorld().updateCurrentLevel(Wave.spawnZombieOnLevel(game.getWorld().getCurrentLevel()));
 			wave.setRemainingZombies(wave.getRemainingZombies() - 1);
 		}
@@ -110,8 +108,6 @@ public class ActionProcessor {
 		isGameOver();
 
 		if (isGameOver()) {
-			game.printGame();
-			game.print(Presets.GAME_OVER);
 			game.setGameOver();
 			return;
 		}
@@ -129,11 +125,9 @@ public class ActionProcessor {
 			}
 		}
 
-		game.printGame();
+
 
 		if (game.isGameOver()) {
-			game.printGame();
-			game.print(Presets.GAME_OVER);
 			game.setGameOver();
 			return;
 		}
@@ -143,7 +137,6 @@ public class ActionProcessor {
 			wave.setRemainingZombies(5);
 			turn = 0;
 			wave.setWaveNumber(2);
-			game.print("Wave 2 will arrive shortly.");
 			return;
 		}
 
@@ -152,7 +145,6 @@ public class ActionProcessor {
 			wave.setRemainingZombies(7);
 			turn = 0;
 			wave.setWaveNumber(3);
-			game.print("Wave 3 will arrive shortly.");
 			return;
 		}
 
@@ -165,36 +157,31 @@ public class ActionProcessor {
 	public void processPlaceActor(Actor actor, int xPos, int yPos) {
 		String plantType;
 		if (game.getWorld().getCurrentLevel().getCell(xPos, yPos) == null) {
-			
+
 			if (actor instanceof PeaShooter) {
 				plantType = "peashooter";
 				if (CooldownManager.isPeaOnCD()) {
-					game.print("\n" + plantType + Presets.PLANTTYPE_COOLDOWN); 
-					
+
 				} else if (game.getWorld().getCurrentLevel().getSunpoints() - 100 < 0) {
-					game.print(Presets.NOT_ENOUGH_SUNPOINTS + plantType + "\n");
 				} else {
 					game.getWorld().getCurrentLevel().placeActor(new PeaShooter(), new Point(xPos, yPos));
 					game.getWorld().getCurrentLevel().subtractFromSunpoints(100);
 					CooldownManager.startPeaCD();
-					game.printGame();
-	
+
 				}
 			} else if (actor instanceof Sunflower) {
 				plantType = "sunflower";
 				if (CooldownManager.isSunOnCD()) {
-					game.print("\n" + plantType + Presets.PLANTTYPE_COOLDOWN); 
-	
+
 				} else if (game.getWorld().getCurrentLevel().getSunpoints() - 50 < 0) {
-					game.print(Presets.NOT_ENOUGH_SUNPOINTS + plantType + "\n");
-	
+					//game.print(Presets.NOT_ENOUGH_SUNPOINTS + plantType + "\n");
+
 				} else {
 					Sunflower plantToPlace = new Sunflower();
 					plantToPlace.setTurnPlaced(turn);
 					game.getWorld().getCurrentLevel().placeActor(plantToPlace, new Point(xPos, yPos));
 					game.getWorld().getCurrentLevel().subtractFromSunpoints(50);
 					CooldownManager.startSunCD();
-					game.printGame();
 				}
 			}
 		} else {
@@ -203,13 +190,15 @@ public class ActionProcessor {
 					AlertType.INFORMATION);
 		}
 	}
-	
+
 	/**
 	 * Temporary way to get wave from action processor
+	 * 
 	 * @return Returns action processor wave
 	 */
 	public Wave getWave() {
-		//TODO When ActionProcessor is properly integrated to use Level's wave objects, this won't be needed
+		// TODO When ActionProcessor is properly integrated to use Level's wave objects,
+		// this won't be needed
 		return wave;
 	}
 }
