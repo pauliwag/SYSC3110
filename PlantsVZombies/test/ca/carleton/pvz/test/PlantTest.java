@@ -17,6 +17,10 @@ public class PlantTest {
 		testPlant = new Plant();
 	}
 
+	/**
+	 * Tests if the Plant is an instance of the Actor class
+	 * @result As expected, the Plant should be an instance of the Actor class (it's parent class)
+	 */
 	@Test
 	public void testPlant() {
 		assertTrue(testPlant instanceof Actor);
