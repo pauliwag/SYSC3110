@@ -30,13 +30,13 @@ public class WaveTest {
 	@Test
 	public void testGetters() {
 		assertEquals(1, testWave.getNum());
-		assertEquals(3, testWave.getRemainingZombies());
+		assertEquals(3, testWave.getTotalNumZombies());
 		
-		testWave.setWaveNumber(2);
+		testWave.setWaveNum(2);
 		assertEquals (2, testWave.getNum());
 		
 		testWave.setRemainingZombies(5);
-		assertEquals(5, testWave.getRemainingZombies());
+		assertEquals(5, testWave.getTotalNumZombies());
 	}
 	
 	/**
