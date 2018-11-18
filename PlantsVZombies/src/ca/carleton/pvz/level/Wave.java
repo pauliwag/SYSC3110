@@ -1,7 +1,7 @@
 package ca.carleton.pvz.level;
 
 import java.awt.Point;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 import ca.carleton.pvz.actor.NormalZombie;
@@ -14,28 +14,30 @@ import ca.carleton.pvz.actor.Zombie;
 public class Wave {
 
 	/**
-	 * This wave's number; determines when this wave will be deployed via waves
-	 * priority queue in Level class.
+	 * This wave's number; determines when this wave will be deployed via the
+	 * waves priority queue in the Level class.
 	 */
 	private int waveNum;
 
-	/** A collection of the zombies in this wave. */
-	private ArrayList<Zombie> zombies;
+	/** A hash table of the numbers of different zombie types in this wave. */
+	private HashMap<Class<? extends Zombie>, Integer> zombies;
 
 	private static Random r;
 
 	/**
-	 * Creates a new wave comprising the specified number of zombies.
+	 * Creates a new wave comprising the specified numbers of zombies.
 	 *
 	 * @param waveNum This wave's sequence number.
-	 * @param numZombies The number of zombies initially in this wave.
+	 * @param numNormalZombies The number of normal zombies initially in this
+	 *            wave.
 	 */
-	public Wave(int waveNum, int numZombies) {
+	public Wave(int waveNum, int numNormalZombies) {
 
 		this.waveNum = waveNum;
 
-		zombies = new ArrayList<>(numZombies);
-		for (int i = 0; i < numZombies; ++i) zombies.add(new NormalZombie());
+		zombies = new HashMap<>();
+		zombies.put(NormalZombie.class, numNormalZombies);
+		// TODO : Add more zombie types ...
 
 		r = new Random();
 
@@ -47,7 +49,71 @@ public class Wave {
 	 * @return true if this wave is defeated, false otherwise.
 	 */
 	public boolean isDefeated() {
-		return zombies.size() == 0;
+
+		return getTotalNumZombies() == 0;
+
+	}
+
+	/**
+	 * Gets the total number of zombies in this wave.
+	 *
+	 * @return The total number of zombies in this wave.
+	 */
+	public int getTotalNumZombies() {
+
+		int totalNumZombies = 0;
+
+		for (int num : zombies.values())
+			totalNumZombies += num;
+
+		return totalNumZombies;
+
+	}
+
+	/**
+	 * Gets this wave's number.
+	 *
+	 * @return This wave's number.
+	 */
+	public int getNum() {
+
+		return waveNum;
+
+	}
+
+	/**
+	 * Sets this wave's number.
+	 *
+	 * @param waveNum The number to be assigned to this wave.
+	 */
+	public void setWaveNum(int waveNum) {
+
+		this.waveNum = waveNum;
+
+	}
+
+	/**
+	 * Gets the number of the specified zombie type in this wave.
+	 *
+	 * @param zombieType The zombie type whose quantity will be returned.
+	 */
+	public int getNumZombies(Class<? extends Zombie> zombieType) {
+
+		return zombies.containsKey(zombieType) ? zombies.get(zombieType) : 0;
+
+	}
+
+	/**
+	 * Sets the number of the specified zombie type in this wave.
+	 *
+	 * @param zombieType The zombie type whose quantity will be set.
+	 * @param num The new quantity of the specified zombie type.
+	 */
+	public void setNumZombies(Class<? extends Zombie> zombieType, int num) {
+
+		if (zombies.containsKey(zombieType))
+			zombies.replace(zombieType, num);
+
 	}
 
 	/**
@@ -64,48 +130,16 @@ public class Wave {
 		Zombie zombie = new NormalZombie();
 		level.placeActor(zombie, new Point(4, randomRow));
 		return level;
+
 	}
 
-	/**
-	 * Gets the number of zombies remaining from this wave.
-	 *
-	 * @return The number of zombies remaining from this wave.
-	 */
-	public int getRemainingZombies() {
-		return zombies.size();
+	public void setRemainingZombies(int num) {
+
+		// TODO : This method is here for current ActionProcessor logic. Needs
+		// to be refactored ...
+
+		zombies.replace(NormalZombie.class, num);
+
 	}
 
-	/**
-	 * Gets this wave's number.
-	 *
-	 * @return This wave's number.
-	 */
-	public int getNum() {
-		return waveNum;
-	}
-
-	/**
-	 * Sets this wave's number.
-	 *
-	 * @param waveNum The number to be assigned to this wave.
-	 */
-	public void setWaveNumber(int waveNum) {
-		this.waveNum = waveNum;
-	}
-
-	/**
-	 * Sets the number of zombies remaining in this wave.
-	 *
-	 * @param numZombies The new number of zombies in this wave.
-	 */
-	public void setRemainingZombies(int numZombies) {
-
-		while (zombies.size() != numZombies) {
-
-			if (zombies.size() > numZombies) zombies.remove(0);
-
-			if (zombies.size() < numZombies) zombies.add(new NormalZombie());
-
-		}
-	}
 }

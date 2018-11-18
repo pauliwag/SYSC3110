@@ -28,17 +28,17 @@ public class LevelOneTest {
 		testLevelOne.initWaves();
 		testWave = new Wave(1,2);
 		assertEquals(testWave.getNum(), testLevelOne.getWave().getNum());
-		assertEquals(testWave.getRemainingZombies(), testLevelOne.getWave().getRemainingZombies());
+		assertEquals(testWave.getTotalNumZombies(), testLevelOne.getWave().getTotalNumZombies());
 		
 		testWave = new Wave(2,3);
 		testLevelOne.dequeueWave();
 		assertEquals(testWave.getNum(), testLevelOne.getWave().getNum());
-		assertEquals(testWave.getRemainingZombies(), testLevelOne.getWave().getRemainingZombies());
+		assertEquals(testWave.getTotalNumZombies(), testLevelOne.getWave().getTotalNumZombies());
 		
 		testWave = new Wave(3,4);
 		testLevelOne.dequeueWave();
 		assertEquals(testWave.getNum(), testLevelOne.getWave().getNum());
-		assertEquals(testWave.getRemainingZombies(), testLevelOne.getWave().getRemainingZombies());
+		assertEquals(testWave.getTotalNumZombies(), testLevelOne.getWave().getTotalNumZombies());
 	}
 
 	// tearDown() is not necessary here, as garbage collection of objects

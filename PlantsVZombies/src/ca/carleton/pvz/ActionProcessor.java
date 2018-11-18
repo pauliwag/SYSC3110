@@ -86,22 +86,22 @@ public class ActionProcessor {
 																	// each turn
 		}
 
-		if (wave.getNum() == 1 && turn >= 3 && wave.getRemainingZombies() > 0) { // zombies spawn after turn
+		if (wave.getNum() == 1 && turn >= 3 && wave.getTotalNumZombies() > 0) { // zombies spawn after turn
 																					// == 3 for first wave
 
 			game.getWorld().updateCurrentLevel(Wave.spawnZombieOnLevel(game.getWorld().getCurrentLevel()));
-			wave.setRemainingZombies(wave.getRemainingZombies() - 1);
+			wave.setRemainingZombies(wave.getTotalNumZombies() - 1);
 		}
 
-		if (wave.getNum() == 2 && turn >= 3 && wave.getRemainingZombies() > 0) {
+		if (wave.getNum() == 2 && turn >= 3 && wave.getTotalNumZombies() > 0) {
 			game.getWorld().updateCurrentLevel(Wave.spawnZombieOnLevel(game.getWorld().getCurrentLevel()));
-			wave.setRemainingZombies(wave.getRemainingZombies() - 1);
+			wave.setRemainingZombies(wave.getTotalNumZombies() - 1);
 		}
 
-		if (wave.getNum() == 3 && turn >= 3 && wave.getRemainingZombies() > 0) {
+		if (wave.getNum() == 3 && turn >= 3 && wave.getTotalNumZombies() > 0) {
 
 			game.getWorld().updateCurrentLevel(Wave.spawnZombieOnLevel(game.getWorld().getCurrentLevel()));
-			wave.setRemainingZombies(wave.getRemainingZombies() - 1);
+			wave.setRemainingZombies(wave.getTotalNumZombies() - 1);
 		}
 
 		isGameOver();
@@ -135,7 +135,7 @@ public class ActionProcessor {
 			waveDefeated = false;
 			wave.setRemainingZombies(5);
 			turn = 0;
-			wave.setWaveNumber(2);
+			wave.setWaveNum(2);
 			return;
 		}
 
@@ -143,7 +143,7 @@ public class ActionProcessor {
 			waveDefeated = false;
 			wave.setRemainingZombies(7);
 			turn = 0;
-			wave.setWaveNumber(3);
+			wave.setWaveNum(3);
 			return;
 		}
 
