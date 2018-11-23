@@ -192,21 +192,21 @@ public abstract class Level {
 	}
 
 	/**
-	 * Gets the number of rows in this level.
-	 *
-	 * @return The number of rows in this level.
-	 */
-	public int getNumRows() {
-		return levelDimension.height;
-	}
-
-	/**
 	 * Gets the number of columns in this level.
 	 *
 	 * @return The number of columns in this level.
 	 */
 	public int getNumCols() {
 		return levelDimension.width;
+	}
+
+	/**
+	 * Gets the number of rows in this level.
+	 *
+	 * @return The number of rows in this level.
+	 */
+	public int getNumRows() {
+		return levelDimension.height;
 	}
 
 	/**

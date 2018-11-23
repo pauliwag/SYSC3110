@@ -166,11 +166,11 @@ public class ActionProcessor {
 	private void moveZombies() {
 
 		Level lvl = game.getWorld().getCurrentLevel();
-		int numRows = lvl.getNumRows();
 		int numCols = lvl.getNumCols();
+		int numRows = lvl.getNumRows();
 
-		for (int x = 0; x < numRows; ++x) {
-			for (int y = 0; y < numCols; ++y) {
+		for (int x = 0; x < numCols; ++x) {
+			for (int y = 0; y < numRows; ++y) {
 				Actor a = lvl.getCell(x, y);
 				if (a instanceof Zombie) {
 					Zombie z = (Zombie) a;
