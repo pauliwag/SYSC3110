@@ -4,7 +4,9 @@ import java.awt.Point;
 import java.util.HashMap;
 import java.util.Random;
 
+import ca.carleton.pvz.actor.FastZombie;
 import ca.carleton.pvz.actor.NormalZombie;
+import ca.carleton.pvz.actor.ShieldZombie;
 import ca.carleton.pvz.actor.Zombie;
 
 /**
@@ -31,13 +33,14 @@ public class Wave {
 	 * @param numNormalZombies The number of normal zombies initially in this
 	 *            wave.
 	 */
-	public Wave(int waveNum, int numNormalZombies) {
+	public Wave(int waveNum, int numNormalZombies, int numShieldZombies, int numFastZombies) {
 
 		this.waveNum = waveNum;
 
 		zombies = new HashMap<>();
 		zombies.put(NormalZombie.class, numNormalZombies);
-		// TODO : Add more zombie types ...
+		zombies.put(ShieldZombie.class, numShieldZombies);
+		zombies.put(FastZombie.class, numFastZombies);
 
 		r = new Random();
 

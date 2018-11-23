@@ -15,7 +15,7 @@ public class GatlingPeaShooter extends PeaShooter {
 
 	/**
 	 * Constructs a new gatling pea-shooting plant, which deals more damage per
-	 * pea than a normal pea shooter.
+	 * shot than a normal pea shooter.
 	 */
 	public GatlingPeaShooter() {
 

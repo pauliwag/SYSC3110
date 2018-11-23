@@ -22,7 +22,7 @@ public class ActionProcessor {
 		this.game = game;
 		previousTurn = 0;
 		turn = 0;
-		wave = new Wave(1, 3);
+		wave = new Wave(1, 3, 0, 0);
 		waveDefeated = false;
 	}
 
@@ -60,7 +60,8 @@ public class ActionProcessor {
 			return;
 		}
 
-		// passive sun point logic -- every three turns, increase sun points by 25
+		// passive sun point logic -- every three turns, increase sun points by
+		// 25
 		if (turn - previousTurn == 3) {
 			previousTurn = turn;
 			game.getWorld().getCurrentLevel().addToSunpoints(25);
@@ -82,12 +83,23 @@ public class ActionProcessor {
 
 		if (turn > 3) {
 			NormalPeaShooter.shootZombies(game.getWorld().getCurrentLevel());
-			Zombie.moveZombies(game.getWorld().getCurrentLevel()); // shifting already-placed zombies one to the left
+			Zombie.moveZombies(game.getWorld().getCurrentLevel()); // shifting
+																	// already-placed
+																	// zombies
+																	// one to
+																	// the left
 																	// each turn
 		}
 
-		if (wave.getNum() == 1 && turn >= 3 && wave.getTotalNumZombies() > 0) { // zombies spawn after turn
-																					// == 3 for first wave
+		if (wave.getNum() == 1 && turn >= 3 && wave.getTotalNumZombies() > 0) { // zombies
+																				// spawn
+																				// after
+																				// turn
+																				// ==
+																				// 3
+																				// for
+																				// first
+																				// wave
 
 			game.getWorld().updateCurrentLevel(Wave.spawnZombieOnLevel(game.getWorld().getCurrentLevel()));
 			wave.setRemainingZombies(wave.getTotalNumZombies() - 1);
@@ -123,8 +135,6 @@ public class ActionProcessor {
 				}
 			}
 		}
-
-
 
 		if (game.isGameOver()) {
 			game.setGameOver();
@@ -173,7 +183,8 @@ public class ActionProcessor {
 				if (CooldownManager.isSunOnCD()) {
 
 				} else if (game.getWorld().getCurrentLevel().getSunpoints() - 50 < 0) {
-					//game.print(Presets.NOT_ENOUGH_SUNPOINTS + plantType + "\n");
+					// game.print(Presets.NOT_ENOUGH_SUNPOINTS + plantType +
+					// "\n");
 
 				} else {
 					Sunflower plantToPlace = new Sunflower();
@@ -196,7 +207,8 @@ public class ActionProcessor {
 	 * @return Returns action processor wave
 	 */
 	public Wave getWave() {
-		// TODO When ActionProcessor is properly integrated to use Level's wave objects,
+		// TODO When ActionProcessor is properly integrated to use Level's wave
+		// objects,
 		// this won't be needed
 		return wave;
 	}
