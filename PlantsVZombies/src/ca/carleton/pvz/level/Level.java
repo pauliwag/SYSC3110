@@ -17,8 +17,8 @@ public abstract class Level {
 	private String levelName;
 
 	/**
-	 * A Dimension object comprising the height and width, in cells, of this level's
-	 * grid.
+	 * A Dimension object comprising the height and width, in cells, of this
+	 * level's grid.
 	 */
 	private Dimension levelDimension;
 
@@ -42,14 +42,11 @@ public abstract class Level {
 	/**
 	 * Initializes the fields of a level object.
 	 *
-	 * @param levelName
-	 *            The name of the level.
-	 * @param width
-	 *            The width (number of horizontal cells) of the level.
-	 * @param height
-	 *            The height (number of vertical cells) of the level.
-	 * @param startingSunPoints
-	 *            The sun points the player has at the start of the level.
+	 * @param levelName The name of the level.
+	 * @param width The width (number of horizontal cells) of the level.
+	 * @param height The height (number of vertical cells) of the level.
+	 * @param startingSunPoints The sun points the player has at the start of
+	 *            the level.
 	 */
 	public Level(String levelName, int width, int height, int startingSunPoints) {
 
@@ -60,33 +57,24 @@ public abstract class Level {
 		turn = 0;
 
 		// initialize waves queue such that a lower wave number is prioritized
-		waves = new PriorityQueue<>(11, new Comparator<Wave>() {
-
-			@Override
-			public int compare(Wave wave1, Wave wave2) {
-
-				int wave1Num = wave1.getNum();
-				int wave2Num = wave2.getNum();
-
-				return wave1Num > wave2Num ? 1 : wave1Num == wave2Num ? 0 : -1;
-
-			}
+		waves = new PriorityQueue<>(11, (wave1, wave2) -> {
+			return wave2.getNum() - wave1.getNum();
 		});
 
 		// initialize grid (playable area)
 		for (Actor[] row : grid) {
 			Arrays.fill(row, null);
 		}
-		
+
 		initWaves();
+
 	}
 
 	/**
-	 * Adds the given wave(s) to this level's queue of waves. This method is needed
-	 * for level subclasses to be able to augment the waves queue.
+	 * Adds the given wave(s) to this level's queue of waves. This method is
+	 * needed for level subclasses to be able to augment the waves queue.
 	 *
-	 * @param waves
-	 *            The wave(s) to be added to this level's queue of waves.
+	 * @param waves The wave(s) to be added to this level's queue of waves.
 	 */
 	public void addWaves(Wave... waves) {
 		if (waves.length > 0) {
@@ -179,12 +167,10 @@ public abstract class Level {
 	/**
 	 * Gets the cell located at the given coordinates.
 	 *
-	 * @param x
-	 *            The x-coordinate (column number).
-	 * @param y
-	 *            The y-coordinate (row number).
-	 * @return The cell located at the given coordinates, or null if the coordinates
-	 *         are invalid.
+	 * @param x The x-coordinate (column number).
+	 * @param y The y-coordinate (row number).
+	 * @return The cell located at the given coordinates, or null if the
+	 *         coordinates are invalid.
 	 */
 	public Actor getCell(int x, int y) {
 		if (isPointValid(new Point(x, y))) {
@@ -196,10 +182,8 @@ public abstract class Level {
 	/**
 	 * Places a plant or zombie at the given point.
 	 *
-	 * @param a
-	 *            A plant or zombie object to be placed.
-	 * @param p
-	 *            The point at which to place the given object.
+	 * @param a A plant or zombie object to be placed.
+	 * @param p The point at which to place the given object.
 	 */
 	public void placeActor(Actor a, Point p) {
 		if (isPointValid(p)) {
@@ -208,11 +192,11 @@ public abstract class Level {
 	}
 
 	/**
-	 * Returns the Dimension object comprising the width and height of this level's
-	 * grid.
+	 * Returns the Dimension object comprising the width and height of this
+	 * level's grid.
 	 *
-	 * @return The Dimension object comprising the width and height of this level's
-	 *         grid.
+	 * @return The Dimension object comprising the width and height of this
+	 *         level's grid.
 	 */
 	public Dimension getDimension() {
 		return levelDimension;
@@ -230,8 +214,7 @@ public abstract class Level {
 	/**
 	 * Checks if the given point is a valid position on the grid.
 	 *
-	 * @param p
-	 *            The point whose validity will be evaluated.
+	 * @param p The point whose validity will be evaluated.
 	 * @return true if valid, false otherwise.
 	 */
 	public boolean isPointValid(Point p) {
@@ -240,9 +223,8 @@ public abstract class Level {
 
 	/**
 	 * Adds specified value from sunpoints field
-	 * 
-	 * @param value
-	 *            The value to be added from sunpoints
+	 *
+	 * @param value The value to be added from sunpoints
 	 */
 	public void addToSunpoints(int value) {
 
@@ -251,9 +233,8 @@ public abstract class Level {
 
 	/**
 	 * Subtracts specified value from sunpoints field
-	 * 
-	 * @param value
-	 *            The value to be subtracted from sunpoints
+	 *
+	 * @param value The value to be subtracted from sunpoints
 	 */
 	public void subtractFromSunpoints(int value) {
 
@@ -262,7 +243,7 @@ public abstract class Level {
 
 	/**
 	 * Returns sunPoints at the current state of the game
-	 * 
+	 *
 	 * @return sunPoints Users current sunpoints
 	 */
 	public int getSunpoints() {

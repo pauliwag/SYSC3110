@@ -7,7 +7,7 @@ import java.awt.Point;
 import org.junit.Before;
 import org.junit.Test;
 
-import ca.carleton.pvz.actor.PeaShooter;
+import ca.carleton.pvz.actor.NormalPeaShooter;
 import ca.carleton.pvz.actor.Zombie;
 import ca.carleton.pvz.level.Level;
 import ca.carleton.pvz.level.LevelOne;
@@ -15,12 +15,12 @@ import ca.carleton.pvz.level.LevelOne;
 public class PeaShooterTest {
 	
 	private Level testLevel;
-	private PeaShooter testPeaShooter;
+	private NormalPeaShooter testPeaShooter;
 	private Zombie testZombie;
 
 	@Before
 	public void setUp() throws Exception {
-		testPeaShooter = new PeaShooter();
+		testPeaShooter = new NormalPeaShooter();
 	}
 
 	/**
@@ -50,10 +50,10 @@ public class PeaShooterTest {
 		testLevel.placeActor(testZombie, new Point(4,2));
 		assertEquals(600, testZombie.getHealth());
 		
-		PeaShooter.shootZombies(testLevel);
+		NormalPeaShooter.shootZombies(testLevel);
 		assertEquals(200, testZombie.getHealth());
 		
-		PeaShooter.shootZombies(testLevel);
+		NormalPeaShooter.shootZombies(testLevel);
 		assertEquals(-200, testZombie.getHealth());
 	}
 	

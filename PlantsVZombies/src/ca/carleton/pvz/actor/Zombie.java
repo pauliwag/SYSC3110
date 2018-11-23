@@ -9,13 +9,24 @@ import ca.carleton.pvz.level.Level;
  */
 public abstract class Zombie extends Actor {
 
+	/** The health points of this zombie. */
 	private int health;
+
+	/**
+	 * The speed of this zombie; i.e., how many tiles it moves to the left per
+	 * turn.
+	 */
+	private int speed;
 
 	/**
 	 * Creates a new Zombie.
 	 */
-	public Zombie(int health) {
+	public Zombie(int health, int speed) {
+
 		this.health = health;
+
+		this.speed = speed;
+
 	}
 
 	/**
@@ -24,7 +35,22 @@ public abstract class Zombie extends Actor {
 	 * @return The current health of this zombie.
 	 */
 	public int getHealth() {
+
 		return health;
+
+	}
+
+	/**
+	 * Gets the speed of this zombie; i.e., how many tiles it moves to the left
+	 * per turn.
+	 *
+	 * @return The speed of this zombie; i.e., how many tiles it moves to the
+	 *         left per turn.
+	 */
+	public int getSpeed() {
+
+		return speed;
+
 	}
 
 	/**
@@ -33,7 +59,9 @@ public abstract class Zombie extends Actor {
 	 * @param health This zombie's health will be assigned the given value.
 	 */
 	public void setHealth(int health) {
+
 		this.health = health;
+
 	}
 
 	public static void moveZombies(Level level) {

@@ -4,7 +4,7 @@ import java.awt.Point;
 
 import ca.carleton.pvz.actor.Actor;
 import ca.carleton.pvz.actor.CooldownManager;
-import ca.carleton.pvz.actor.PeaShooter;
+import ca.carleton.pvz.actor.NormalPeaShooter;
 import ca.carleton.pvz.actor.Sunflower;
 import ca.carleton.pvz.actor.Zombie;
 import ca.carleton.pvz.level.Wave;
@@ -81,7 +81,7 @@ public class ActionProcessor {
 		}
 
 		if (turn > 3) {
-			PeaShooter.shootZombies(game.getWorld().getCurrentLevel());
+			NormalPeaShooter.shootZombies(game.getWorld().getCurrentLevel());
 			Zombie.moveZombies(game.getWorld().getCurrentLevel()); // shifting already-placed zombies one to the left
 																	// each turn
 		}
@@ -157,15 +157,15 @@ public class ActionProcessor {
 
 		if (game.getWorld().getCurrentLevel().getCell(xPos, yPos) == null) {
 
-			if (actor instanceof PeaShooter) {
+			if (actor instanceof NormalPeaShooter) {
 
-				if (CooldownManager.isPeaOnCD()) {
+				if (CooldownManager.isNormalPeaOnCD()) {
 
 				} else if (game.getWorld().getCurrentLevel().getSunpoints() - 100 < 0) {
 				} else {
-					game.getWorld().getCurrentLevel().placeActor(new PeaShooter(), new Point(xPos, yPos));
+					game.getWorld().getCurrentLevel().placeActor(new NormalPeaShooter(), new Point(xPos, yPos));
 					game.getWorld().getCurrentLevel().subtractFromSunpoints(100);
-					CooldownManager.startPeaCD();
+					CooldownManager.startNormalPeaCD();
 
 				}
 			} else if (actor instanceof Sunflower) {
