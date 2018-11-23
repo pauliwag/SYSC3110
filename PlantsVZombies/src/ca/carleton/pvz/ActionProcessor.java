@@ -179,8 +179,14 @@ public class ActionProcessor {
 					if (xNew < 0) {
 						xNew = 0;
 					}
+					// constraint: one zombie per cell;
+					// slower zombie gets pushed back one cell
+					if (lvl.getCell(xNew, y) instanceof Zombie) {
+						lvl.placeActor(lvl.getCell(xNew, y), new Point(xNew + 1, y));
+					}
 					lvl.placeActor(z, new Point(xNew, y));
-					// ensure all non-zombie cells in zombie's path are nullified
+					// ensure all non-zombie cells in zombie's path are
+					// nullified
 					for (int xAux = xNew + 1; xAux <= x; ++xAux) {
 						if (!(lvl.getCell(xAux, y) instanceof Zombie))
 							lvl.placeActor(null, new Point(xAux, y));
