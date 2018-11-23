@@ -12,6 +12,7 @@ import javafx.scene.image.Image;
  */
 public class NormalPeaShooter extends PeaShooter {
 
+	public static final int NORMAL_PEA_COST = 300; // in sunpoints
 	public static final int NORMAL_PEA_DAMAGE = 600;
 
 	private int hits; // number of hits on zombies
@@ -22,7 +23,7 @@ public class NormalPeaShooter extends PeaShooter {
 	 */
 	public NormalPeaShooter() {
 
-		super(NORMAL_PEA_DAMAGE);
+		super(NORMAL_PEA_COST, NORMAL_PEA_DAMAGE);
 
 		hits = 0; // TODO : Remove this field ...
 

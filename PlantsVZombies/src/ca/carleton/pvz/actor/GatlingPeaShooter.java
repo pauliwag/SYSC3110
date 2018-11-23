@@ -10,16 +10,16 @@ import javafx.scene.image.Image;
  */
 public class GatlingPeaShooter extends PeaShooter {
 
-	public static final int GATLING_PEA_DAMAGE = 900;
 	public static final int GATLING_PEA_COST = 500; // in sunpoints
+	public static final int GATLING_PEA_DAMAGE = 900;
 
 	/**
-	 * Constructs a new gatling pea-shooting plant, which deals more damage
-	 * per pea than a normal pea shooter.
+	 * Constructs a new gatling pea-shooting plant, which deals more damage per
+	 * pea than a normal pea shooter.
 	 */
 	public GatlingPeaShooter() {
 
-		super(GATLING_PEA_DAMAGE);
+		super(GATLING_PEA_COST, GATLING_PEA_DAMAGE);
 
 	}
 
@@ -32,7 +32,7 @@ public class GatlingPeaShooter extends PeaShooter {
 	public Image getSprite() {
 		InputStream stream = getClass().getResourceAsStream("peashooter.png");
 		return new Image(stream);
-		// TODO : Get gatling pea shooter sprite ...
+		// TODO : Get proper sprite ...
 	}
 
 }

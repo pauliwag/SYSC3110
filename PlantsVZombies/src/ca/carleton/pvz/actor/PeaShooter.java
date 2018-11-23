@@ -6,16 +6,31 @@ package ca.carleton.pvz.actor;
  */
 public abstract class PeaShooter extends Plant {
 
-	private int peaDamage; // damage done per hit
+	/** The damage a pea does per hit. */
+	private int peaDamage;
 
 	/**
-	 * Initializes the peaDamage field.
+	 * Initializes fields.
 	 *
-	 * @param peaDamage The damage a pea inflicts each hit.
+	 * @param cost The cost, in sunpoints, of this pea-shooting plant.
+	 * @param peaDamage The damage a pea inflicts (each hit).
 	 */
-	public PeaShooter(int peaDamage) {
+	public PeaShooter(int cost, int peaDamage) {
+
+		super(cost);
 
 		this.peaDamage = peaDamage;
+
+	}
+
+	/**
+	 * Gets the damage inflicted by each pea shot by this plant.
+	 *
+	 * @return The damage inflicted by each pea shot by this plant.
+	 */
+	public int getPeaDamage() {
+
+		return peaDamage;
 
 	}
 
