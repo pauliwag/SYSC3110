@@ -7,6 +7,7 @@ import ca.carleton.pvz.actor.CooldownManager;
 import ca.carleton.pvz.actor.NormalPeaShooter;
 import ca.carleton.pvz.actor.Sunflower;
 import ca.carleton.pvz.actor.Zombie;
+import ca.carleton.pvz.level.Level;
 import ca.carleton.pvz.level.Wave;
 import javafx.scene.control.Alert.AlertType;
 
@@ -83,12 +84,7 @@ public class ActionProcessor {
 
 		if (turn > 3) {
 			NormalPeaShooter.shootZombies(game.getWorld().getCurrentLevel());
-			Zombie.moveZombies(game.getWorld().getCurrentLevel()); // shifting
-																	// already-placed
-																	// zombies
-																	// one to
-																	// the left
-																	// each turn
+			moveZombies();
 		}
 
 		if (wave.getNum() == 1 && turn >= 3 && wave.getTotalNumZombies() > 0) { // zombies
@@ -161,6 +157,28 @@ public class ActionProcessor {
 			game.getController().showAlert("You won!", null, "Congrats, you beat the first level of Plants VS Zombies!",
 					AlertType.INFORMATION);
 		}
+	}
+
+	/**
+	 * Moves all zombies on the board to the left by the appropriate number of
+	 * tiles; i.e., based on zombie speed, which varies across Zombie subtypes.
+	 */
+	private void moveZombies() {
+
+		Level lvl = game.getWorld().getCurrentLevel();
+		int numRows = lvl.getDimension().height;
+		int numCols = lvl.getDimension().width;
+
+		for (int x = 0; x < numRows; ++x) {
+			for (int y = 0; y < numCols; ++y) {
+				Actor a = lvl.getCell(x, y);
+				if (a instanceof Zombie) {
+					lvl.placeActor(a, new Point(x - ((Zombie) a).getSpeed(), y));
+					lvl.placeActor(null, new Point(x, y));
+				}
+			}
+		}
+
 	}
 
 	public void processPlaceActor(Actor actor, int xPos, int yPos) {
