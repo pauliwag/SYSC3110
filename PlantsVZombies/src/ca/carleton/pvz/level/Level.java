@@ -192,14 +192,21 @@ public abstract class Level {
 	}
 
 	/**
-	 * Returns the Dimension object comprising the width and height of this
-	 * level's grid.
+	 * Gets the number of rows in this level.
 	 *
-	 * @return The Dimension object comprising the width and height of this
-	 *         level's grid.
+	 * @return The number of rows in this level.
 	 */
-	public Dimension getDimension() {
-		return levelDimension;
+	public int getNumRows() {
+		return levelDimension.height;
+	}
+
+	/**
+	 * Gets the number of columns in this level.
+	 *
+	 * @return The number of columns in this level.
+	 */
+	public int getNumCols() {
+		return levelDimension.width;
 	}
 
 	/**

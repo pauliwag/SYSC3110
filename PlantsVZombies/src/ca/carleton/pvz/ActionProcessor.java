@@ -29,7 +29,7 @@ public class ActionProcessor {
 
 	public boolean isGameOver() {
 		if (turn > 6) { // searching for any zombies that made it to end game
-			for (int j = 0; j < game.getWorld().getCurrentLevel().getDimension().width; ++j) {
+			for (int j = 0; j < game.getWorld().getCurrentLevel().getNumCols(); ++j) {
 				Actor o = game.getWorld().getCurrentLevel().getCell(0, j);
 				if (o instanceof Zombie) {
 					return true;
@@ -69,8 +69,8 @@ public class ActionProcessor {
 		}
 
 		if (wave.getNum() >= 1) {
-			for (int i = 0; i < game.getWorld().getCurrentLevel().getDimension().height; ++i) {
-				for (int j = 0; j < game.getWorld().getCurrentLevel().getDimension().width; ++j) {
+			for (int i = 0; i < game.getWorld().getCurrentLevel().getNumRows(); ++i) {
+				for (int j = 0; j < game.getWorld().getCurrentLevel().getNumCols(); ++j) {
 					Actor o = game.getWorld().getCurrentLevel().getCell(i, j);
 					if (o instanceof Sunflower) {
 						if ((turn - ((Sunflower) o).getTurnPlaced()) % 2 == 0) {
@@ -122,8 +122,8 @@ public class ActionProcessor {
 		if ((wave.getNum() == 1 && turn >= 6) || (wave.getNum() == 2 && turn >= 8)
 				|| (wave.getNum() == 3 && turn >= 10)) {
 			waveDefeated = true;
-			for (int i = 0; i < game.getWorld().getCurrentLevel().getDimension().height; ++i) {
-				for (int j = 0; j < game.getWorld().getCurrentLevel().getDimension().width; ++j) {
+			for (int i = 0; i < game.getWorld().getCurrentLevel().getNumRows(); ++i) {
+				for (int j = 0; j < game.getWorld().getCurrentLevel().getNumCols(); ++j) {
 					Actor o = game.getWorld().getCurrentLevel().getCell(i, j);
 					if (o instanceof Zombie) {
 						waveDefeated = false;
@@ -166,8 +166,8 @@ public class ActionProcessor {
 	private void moveZombies() {
 
 		Level lvl = game.getWorld().getCurrentLevel();
-		int numRows = lvl.getDimension().height;
-		int numCols = lvl.getDimension().width;
+		int numRows = lvl.getNumRows();
+		int numCols = lvl.getNumCols();
 
 		for (int x = 0; x < numRows; ++x) {
 			for (int y = 0; y < numCols; ++y) {
