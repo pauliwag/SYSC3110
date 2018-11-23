@@ -37,9 +37,9 @@ public class LevelOne extends Level {
 		clearWaves();
 
 		// specify this level's waves
-		Wave wave1 = new Wave(1, 2);
-		Wave wave2 = new Wave(2, 3);
-		Wave wave3 = new Wave(3, 4);
+		Wave wave1 = new Wave(1, 2, 0, 0);
+		Wave wave2 = new Wave(2, 3, 0, 0);
+		Wave wave3 = new Wave(3, 4, 0, 0);
 
 		// populate the queue
 		addWaves(wave1, wave2, wave3);
