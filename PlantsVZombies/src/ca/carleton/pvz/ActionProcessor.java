@@ -5,6 +5,7 @@ import java.awt.Point;
 import ca.carleton.pvz.actor.Actor;
 import ca.carleton.pvz.actor.CooldownManager;
 import ca.carleton.pvz.actor.NormalPeaShooter;
+import ca.carleton.pvz.actor.PeaShooter;
 import ca.carleton.pvz.actor.Sunflower;
 import ca.carleton.pvz.actor.Zombie;
 import ca.carleton.pvz.level.Level;
@@ -83,7 +84,7 @@ public class ActionProcessor {
 		}
 
 		if (turn > 3) {
-			NormalPeaShooter.shootZombies(game.getWorld().getCurrentLevel());
+			shootZombies();
 			moveZombies();
 		}
 
@@ -160,17 +161,16 @@ public class ActionProcessor {
 	}
 
 	/**
-	 * Moves all zombies on the board to the left by the appropriate number of
+	 * Moves all zombies on the map to the left by the appropriate number of
 	 * tiles; i.e., based on zombie speed, which varies across Zombie subtypes.
 	 */
 	private void moveZombies() {
 
 		Level lvl = game.getWorld().getCurrentLevel();
-		int numCols = lvl.getNumCols();
-		int numRows = lvl.getNumRows();
 
-		for (int x = 0; x < numCols; ++x) {
-			for (int y = 0; y < numRows; ++y) {
+		// traverse col-by-col starting top-left as (0, 0)
+		for (int x = 0; x < lvl.getNumCols(); ++x) {
+			for (int y = 0; y < lvl.getNumRows(); ++y) {
 				Actor a = lvl.getCell(x, y);
 				if (a instanceof Zombie) {
 					Zombie z = (Zombie) a;
@@ -182,6 +182,46 @@ public class ActionProcessor {
 
 	}
 
+	/**
+	 * Actuates all shooting plants on the map.
+	 *
+	 */
+	private void shootZombies() {
+
+		Level lvl = game.getWorld().getCurrentLevel();
+
+		// traverse col-by-col starting top-left as (0, 0)
+		for (int x1 = 0; x1 < lvl.getNumCols(); ++x1) {
+			for (int y = 0; y < lvl.getNumRows(); ++y) {
+				Actor a1 = lvl.getCell(x1, y);
+				if (a1 instanceof PeaShooter) {
+					PeaShooter pS = (PeaShooter) a1;
+					// look for zombie to right of pea shooter
+					for (int x2 = x1; x2 < lvl.getNumCols(); ++x2) {
+						Actor a2 = lvl.getCell(x2, y);
+						if (a2 instanceof Zombie) {
+							Zombie z = (Zombie) a2;
+							z.setHealth(z.getHealth() - pS.getPeaDamage());
+							if (z.getHealth() <= 0) {
+								lvl.placeActor(null, new Point(x2, y));
+							}
+							break; // so that trailing zombies (in same row)
+									// don't also get hit
+						}
+					}
+				}
+			}
+		}
+
+	}
+
+	/**
+	 * Places the given Actor object at the given coordinates.
+	 *
+	 * @param actor The Actor object to place.
+	 * @param xPos The x-coordinate at which to place the given actor.
+	 * @param yPos The y-coordinate at which to place the given actor.
+	 */
 	public void processPlaceActor(Actor actor, int xPos, int yPos) {
 
 		if (game.getWorld().getCurrentLevel().getCell(xPos, yPos) == null) {

@@ -1,9 +1,7 @@
 package ca.carleton.pvz.actor;
 
-import java.awt.Point;
 import java.io.InputStream;
 
-import ca.carleton.pvz.level.Level;
 import javafx.scene.image.Image;
 
 /**
@@ -52,62 +50,6 @@ public class NormalPeaShooter extends PeaShooter {
 	 */
 	public void addHit() {
 		++hits;
-	}
-
-	/**
-	 * Calls upon each pea shooter on map to shoot at any zombies in the same
-	 * lane.
-	 *
-	 * @param game The gameWorld to be modified by this method.
-	 */
-	public static void shootZombies(Level level) {
-
-		// TODO : Emigrate this method ...
-
-		for (int i = 0; i < level.getNumRows(); ++i) {
-			for (int j = 0; j < level.getNumCols(); ++j) {
-				Actor o = level.getCell(i, j);
-				if (o instanceof NormalPeaShooter) { // if peashooter, shoot all
-					// zombies to the right of
-					// peashooter
-					((NormalPeaShooter) o).newTurn();
-					int i1 = i;
-					for (int index = i1; index < level.getNumRows(); ++index) {
-						Actor o1 = level.getCell(index, j);
-						if (o1 instanceof Zombie) {
-							while (((NormalPeaShooter) o).getHits() < 4) {
-
-								// while loop - zombie gets hit up to 4 times or
-								// health becomes zero
-								((Zombie) o1).setHealth(((Zombie) o1).getHealth() - 100);
-								((NormalPeaShooter) o).addHit();
-								if (((Zombie) o1).getHealth() <= 0) {
-									level.placeActor(null, new Point(index, j));
-								}
-
-								// if zombie dies and peashooter isn't done
-								// shooting, progress to zombies to
-								// right
-								if (((Zombie) o1).getHealth() == 0 && ((NormalPeaShooter) o).getHits() < 4) {
-									for (int i2 = i1 + 1; i2 < level.getNumRows(); ++i2) {
-										Actor o2 = level.getCell(i2, j);
-										if (o2 instanceof Zombie) {
-											while (((NormalPeaShooter) o).getHits() < 4) {
-												((Zombie) o2).setHealth(((Zombie) o2).getHealth() - 100);
-												((NormalPeaShooter) o).addHit();
-												if (((Zombie) o2).getHealth() <= 0) {
-													level.placeActor(null, new Point(index, j));
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
 	}
 
 	/**
