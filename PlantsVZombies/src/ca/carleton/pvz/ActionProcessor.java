@@ -1,10 +1,12 @@
 package ca.carleton.pvz;
 
 import java.awt.Point;
+import java.util.Random;
 
 import ca.carleton.pvz.actor.Actor;
 import ca.carleton.pvz.actor.CooldownManager;
 import ca.carleton.pvz.actor.NormalPeaShooter;
+import ca.carleton.pvz.actor.NormalZombie;
 import ca.carleton.pvz.actor.PeaShooter;
 import ca.carleton.pvz.actor.Sunflower;
 import ca.carleton.pvz.actor.Zombie;
@@ -12,105 +14,75 @@ import ca.carleton.pvz.level.Level;
 import ca.carleton.pvz.level.Wave;
 import javafx.scene.control.Alert.AlertType;
 
+/**
+ * Updates the model as dictated by GUIController.
+ *
+ */
 public class ActionProcessor {
-	private int previousTurn;
+
 	private boolean waveDefeated;
-	public int turn;
 
 	private Wave wave;
 	private PlantsVZombies game;
 
+	private Random r;
+
 	public ActionProcessor(PlantsVZombies game) {
 		this.game = game;
-		previousTurn = 0;
-		turn = 0;
 		wave = new Wave(1, 3, 0, 0);
 		waveDefeated = false;
-	}
-
-	public boolean isGameOver() {
-		if (turn > 6) { // searching for any zombies that made it to end game
-			for (int j = 0; j < game.getWorld().getCurrentLevel().getNumCols(); ++j) {
-				Actor o = game.getWorld().getCurrentLevel().getCell(0, j);
-				if (o instanceof Zombie) {
-					return true;
-				}
-			}
-
-		}
-		return false;
+		r = new Random();
 	}
 
 	public void processNextTurn() {
-		++turn;
 
+		Level lvl = game.getWorld().getCurrentLevel();
+
+		// increment turn by one
+		lvl.incTurn();
+
+		// decrement global cooldowns by one
 		CooldownManager.decTimeOnCD();
 
-		// wave logic
-		if (wave.getNum() == 1 && waveDefeated) {
-
-			return;
+		// passively boost sunpoints every other turn
+		// based on the number of sunflowers on the map
+		if (lvl.getTurn() % 2 == 0) {
+			lvl.addToSunpoints(lvl.getNumSunflowers() * Sunflower.PASSIVE_SUNPOINT_BOOST);
 		}
 
-		if (wave.getNum() == 2 && waveDefeated) {
+		// actuate shooting by all shooting plants in the given level
+		shootZombies(lvl);
 
-			return;
+		// actuate movement of all zombies in the given level
+		moveZombies(lvl);
+
+		// --------------------------------------------------------------------------------------
+		// TODO : Refactor code below here ...
+		// --------------------------------------------------------------------------------------
+
+		if (wave.getNum() == 1 && lvl.getTurn() >= 3 && wave.getTotalNumZombies() > 0) { // zombies
+			// spawn
+			// after
+			// lvl.getTurn()
+			// ==
+			// 3
+			// for
+			// first
+			// wave
+
+			game.getWorld().updateCurrentLevel(spawnZombie(lvl));
+			wave.setNumZombies(NormalZombie.class, wave.getTotalNumZombies() - 1);
 		}
 
-		if (wave.getNum() >= 3 && waveDefeated) {
-
-			return;
+		if (wave.getNum() == 2 && lvl.getTurn() >= 3 && wave.getTotalNumZombies() > 0) {
+			game.getWorld().updateCurrentLevel(spawnZombie(lvl));
+			wave.setNumZombies(NormalZombie.class, wave.getTotalNumZombies() - 1);
 		}
 
-		// passive sun point logic -- every three turns, increase sun points by
-		// 25
-		if (turn - previousTurn == 3) {
-			previousTurn = turn;
-			game.getWorld().getCurrentLevel().addToSunpoints(25);
-		}
+		if (wave.getNum() == 3 && lvl.getTurn() >= 3 && wave.getTotalNumZombies() > 0) {
 
-		if (wave.getNum() >= 1) {
-			for (int i = 0; i < game.getWorld().getCurrentLevel().getNumRows(); ++i) {
-				for (int j = 0; j < game.getWorld().getCurrentLevel().getNumCols(); ++j) {
-					Actor o = game.getWorld().getCurrentLevel().getCell(i, j);
-					if (o instanceof Sunflower) {
-						if ((turn - ((Sunflower) o).getTurnPlaced()) % 2 == 0) {
-							game.getWorld().getCurrentLevel().addToSunpoints(25);
-							;
-						}
-					}
-				}
-			}
-		}
-
-		if (turn > 3) {
-			shootZombies();
-			moveZombies();
-		}
-
-		if (wave.getNum() == 1 && turn >= 3 && wave.getTotalNumZombies() > 0) { // zombies
-																				// spawn
-																				// after
-																				// turn
-																				// ==
-																				// 3
-																				// for
-																				// first
-																				// wave
-
-			game.getWorld().updateCurrentLevel(Wave.spawnZombieOnLevel(game.getWorld().getCurrentLevel()));
-			wave.setRemainingZombies(wave.getTotalNumZombies() - 1);
-		}
-
-		if (wave.getNum() == 2 && turn >= 3 && wave.getTotalNumZombies() > 0) {
-			game.getWorld().updateCurrentLevel(Wave.spawnZombieOnLevel(game.getWorld().getCurrentLevel()));
-			wave.setRemainingZombies(wave.getTotalNumZombies() - 1);
-		}
-
-		if (wave.getNum() == 3 && turn >= 3 && wave.getTotalNumZombies() > 0) {
-
-			game.getWorld().updateCurrentLevel(Wave.spawnZombieOnLevel(game.getWorld().getCurrentLevel()));
-			wave.setRemainingZombies(wave.getTotalNumZombies() - 1);
+			game.getWorld().updateCurrentLevel(spawnZombie(lvl));
+			wave.setNumZombies(NormalZombie.class, wave.getTotalNumZombies() - 1);
 		}
 
 		isGameOver();
@@ -120,12 +92,12 @@ public class ActionProcessor {
 			return;
 		}
 
-		if ((wave.getNum() == 1 && turn >= 6) || (wave.getNum() == 2 && turn >= 8)
-				|| (wave.getNum() == 3 && turn >= 10)) {
+		if ((wave.getNum() == 1 && lvl.getTurn() >= 6) || (wave.getNum() == 2 && lvl.getTurn() >= 8)
+				|| (wave.getNum() == 3 && lvl.getTurn() >= 10)) {
 			waveDefeated = true;
-			for (int i = 0; i < game.getWorld().getCurrentLevel().getNumRows(); ++i) {
-				for (int j = 0; j < game.getWorld().getCurrentLevel().getNumCols(); ++j) {
-					Actor o = game.getWorld().getCurrentLevel().getCell(i, j);
+			for (int i = 0; i < lvl.getNumRows(); ++i) {
+				for (int j = 0; j < lvl.getNumCols(); ++j) {
+					Actor o = lvl.getCell(i, j);
 					if (o instanceof Zombie) {
 						waveDefeated = false;
 					}
@@ -140,16 +112,14 @@ public class ActionProcessor {
 
 		if (wave.getNum() == 1 && waveDefeated) {
 			waveDefeated = false;
-			wave.setRemainingZombies(5);
-			turn = 0;
+			wave.setNumZombies(NormalZombie.class, 5);
 			wave.setWaveNum(2);
 			return;
 		}
 
 		if (wave.getNum() == 2 && waveDefeated) {
 			waveDefeated = false;
-			wave.setRemainingZombies(7);
-			turn = 0;
+			wave.setNumZombies(NormalZombie.class, 7);
 			wave.setWaveNum(3);
 			return;
 		}
@@ -161,12 +131,11 @@ public class ActionProcessor {
 	}
 
 	/**
-	 * Moves all zombies on the map to the left by the appropriate number of
-	 * tiles; i.e., based on zombie speed, which varies across Zombie subtypes.
+	 * Moves all zombies in the given level to the left by the appropriate
+	 * number of cells; i.e., based on zombie speed, which varies across Zombie
+	 * subtypes.
 	 */
-	private void moveZombies() {
-
-		Level lvl = game.getWorld().getCurrentLevel();
+	private void moveZombies(Level lvl) {
 
 		// traverse col-by-col starting top-left as (0, 0)
 		for (int x = 0; x < lvl.getNumCols(); ++x) {
@@ -198,12 +167,10 @@ public class ActionProcessor {
 	}
 
 	/**
-	 * Actuates all shooting plants on the map.
+	 * Actuates shooting by all shooting plants in the given level.
 	 *
 	 */
-	private void shootZombies() {
-
-		Level lvl = game.getWorld().getCurrentLevel();
+	private void shootZombies(Level lvl) {
 
 		// traverse col-by-col starting top-left as (0, 0)
 		for (int x1 = 0; x1 < lvl.getNumCols(); ++x1) {
@@ -231,24 +198,64 @@ public class ActionProcessor {
 	}
 
 	/**
+	 * Scans the leftmost column for any zombies. If there is a zombie in the
+	 * leftmost column, it is game over.
+	 *
+	 * @return true if there is a zombie in the leftmost column, false
+	 *         otherwise.
+	 */
+	public boolean isGameOver() {
+		Level lvl = game.getWorld().getCurrentLevel();
+		for (int y = 0; y < lvl.getNumRows(); ++y) {
+			Actor a = lvl.getCell(0, y);
+			if (a instanceof Zombie) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Spawns a zombie from the head wave on the given level. The type of zombie
+	 * spawned is chosen at random.
+	 *
+	 * @param lvl The level on which to spawn a zombie.
+	 * @return The level on which a zombie was spawned.
+	 */
+	private Level spawnZombie(Level lvl) {
+		int randomRow = r.nextInt(lvl.getNumRows());
+		Zombie zombie = new NormalZombie();
+		lvl.placeActor(zombie, new Point(lvl.getNumCols() - 1, randomRow));
+		return lvl;
+	}
+
+	/**
+	 * Deploys the wave at the head of the waves queue.
+	 */
+	public void deployHeadWave(Level lvl) {
+		Wave wave = lvl.getHeadWave();
+		// TODO : implement ...
+	}
+
+	/**
 	 * Places the given Actor object at the given coordinates.
 	 *
 	 * @param actor The Actor object to place.
 	 * @param xPos The x-coordinate at which to place the given actor.
 	 * @param yPos The y-coordinate at which to place the given actor.
 	 */
-	public void processPlaceActor(Actor actor, int xPos, int yPos) {
+	public void processPlaceActor(Level lvl, Actor actor, int xPos, int yPos) {
 
-		if (game.getWorld().getCurrentLevel().getCell(xPos, yPos) == null) {
+		if (lvl.getCell(xPos, yPos) == null) {
 
 			if (actor instanceof NormalPeaShooter) {
 
 				if (CooldownManager.isNormalPeaOnCD()) {
 
-				} else if (game.getWorld().getCurrentLevel().getSunpoints() - 100 < 0) {
+				} else if (lvl.getSunpoints() - 100 < 0) {
 				} else {
-					game.getWorld().getCurrentLevel().placeActor(new NormalPeaShooter(), new Point(xPos, yPos));
-					game.getWorld().getCurrentLevel().subtractFromSunpoints(100);
+					lvl.placeActor(new NormalPeaShooter(), new Point(xPos, yPos));
+					lvl.subtractFromSunpoints(100);
 					CooldownManager.startNormalPeaCD();
 
 				}
@@ -256,15 +263,15 @@ public class ActionProcessor {
 
 				if (CooldownManager.isSunOnCD()) {
 
-				} else if (game.getWorld().getCurrentLevel().getSunpoints() - 50 < 0) {
+				} else if (lvl.getSunpoints() - 50 < 0) {
 					// game.print(Presets.NOT_ENOUGH_SUNPOINTS + plantType +
 					// "\n");
 
 				} else {
 					Sunflower plantToPlace = new Sunflower();
-					plantToPlace.setTurnPlaced(turn);
-					game.getWorld().getCurrentLevel().placeActor(plantToPlace, new Point(xPos, yPos));
-					game.getWorld().getCurrentLevel().subtractFromSunpoints(50);
+					plantToPlace.setTurnPlaced(lvl.getTurn());
+					lvl.placeActor(plantToPlace, new Point(xPos, yPos));
+					lvl.subtractFromSunpoints(50);
 					CooldownManager.startSunCD();
 				}
 			}

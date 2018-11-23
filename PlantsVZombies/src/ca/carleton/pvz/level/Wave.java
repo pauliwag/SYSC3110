@@ -1,9 +1,6 @@
 package ca.carleton.pvz.level;
 
-import java.awt.Point;
 import java.util.HashMap;
-import java.util.Random;
-
 import ca.carleton.pvz.actor.FastZombie;
 import ca.carleton.pvz.actor.NormalZombie;
 import ca.carleton.pvz.actor.ShieldZombie;
@@ -24,8 +21,6 @@ public class Wave {
 	/** A hash table of the numbers of different zombie types in this wave. */
 	private HashMap<Class<? extends Zombie>, Integer> zombies;
 
-	private static Random r;
-
 	/**
 	 * Creates a new wave comprising the specified numbers of zombies.
 	 *
@@ -41,8 +36,6 @@ public class Wave {
 		zombies.put(NormalZombie.class, numNormalZombies);
 		zombies.put(ShieldZombie.class, numShieldZombies);
 		zombies.put(FastZombie.class, numFastZombies);
-
-		r = new Random();
 
 	}
 
@@ -116,32 +109,6 @@ public class Wave {
 
 		if (zombies.containsKey(zombieType))
 			zombies.replace(zombieType, num);
-
-	}
-
-	/**
-	 * Spawns zombies on game map according to waveNumber and numberofZombies.
-	 *
-	 * @param map The game map to be modified when zombies are spawning.
-	 * @return The resulting game map after new zombies have spawned.
-	 */
-	public static Level spawnZombieOnLevel(Level level) {
-
-		// TODO : Emigrate this method ...
-
-		int randomRow = r.nextInt(5);
-		Zombie zombie = new NormalZombie();
-		level.placeActor(zombie, new Point(4, randomRow));
-		return level;
-
-	}
-
-	public void setRemainingZombies(int num) {
-
-		// TODO : This method is here for current ActionProcessor logic. Needs
-		// to be refactored ...
-
-		zombies.replace(NormalZombie.class, num);
 
 	}
 

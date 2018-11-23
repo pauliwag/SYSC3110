@@ -3,9 +3,10 @@ package ca.carleton.pvz.level;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.PriorityQueue;
 import ca.carleton.pvz.actor.Actor;
+import ca.carleton.pvz.actor.Sunflower;
+import ca.carleton.pvz.actor.Zombie;
 
 /**
  * The abstract class from which all game levels inherit.
@@ -60,13 +61,12 @@ public abstract class Level {
 		waves = new PriorityQueue<>(11, (wave1, wave2) -> {
 			return wave2.getNum() - wave1.getNum();
 		});
+		initWaves();
 
 		// initialize grid (playable area)
 		for (Actor[] row : grid) {
 			Arrays.fill(row, null);
 		}
-
-		initWaves();
 
 	}
 
@@ -90,14 +90,6 @@ public abstract class Level {
 	public abstract void initWaves();
 
 	/**
-	 * Deploys the wave at the head of the waves queue.
-	 */
-	public void deployWave() {
-		Wave wave = getWave();
-		// TODO : implement ...
-	}
-
-	/**
 	 * Clears the waves queue.
 	 */
 	public void clearWaves() {
@@ -109,14 +101,14 @@ public abstract class Level {
 	 *
 	 * @return The wave at the head of the queue.
 	 */
-	public Wave getWave() {
+	public Wave getHeadWave() {
 		return waves.peek();
 	}
 
 	/**
 	 * Dequeues the head of the waves queue.
 	 */
-	public void dequeueWave() {
+	public void dequeueHeadWave() {
 		waves.poll();
 	}
 
@@ -125,17 +117,34 @@ public abstract class Level {
 	 *
 	 * @return true if the head wave is defeated, false otherwise.
 	 */
-	public boolean isWaveDefeated() {
-		return getWave().isDefeated();
+	public boolean isHeadWaveDefeated() {
+		return getHeadWave().isDefeated();
 	}
 
 	/**
-	 * Returns whether this level is beat.
+	 * Returns whether this level is beat. This level is considered beat if all
+	 * queued waves are void of zombies and there are no zombies on the map.
 	 *
 	 * @return true if this level is beat, false otherwise.
 	 */
 	public boolean isBeat() {
-		return isWaveDefeated() && waves.size() < 2;
+
+		for (Wave wave : waves) {
+			if (wave.getTotalNumZombies() != 0) {
+				return false;
+			}
+		}
+
+		for (int x = 0; x < getNumCols(); ++x) {
+			for (int y = 0; y < getNumRows(); ++y) {
+				if (getCell(x, y) instanceof Zombie) {
+					return false;
+				}
+			}
+		}
+
+		return true;
+
 	}
 
 	/**
@@ -155,17 +164,24 @@ public abstract class Level {
 	}
 
 	/**
-	 * Gets the previous turn.
+	 * Gets the number of sunflowers on the map.
 	 *
-	 * @return The previous turn.
+	 * @return The number of sunflowers on the map.
 	 */
-	public int getPrevTurn() {
-		return turn - 1;
-		// TODO : implement properly (meld w/ Abdi's logic) ...
+	public int getNumSunflowers() {
+		int numSunflowers = 0;
+		for (int x = 0; x < getNumCols(); ++x) {
+			for (int y = 0; y < getNumRows(); ++y) {
+				if (getCell(x, y) instanceof Sunflower) {
+					++numSunflowers;
+				}
+			}
+		}
+		return numSunflowers;
 	}
 
 	/**
-	 * Gets the cell located at the given coordinates.
+	 * Gets the contents of the cell located at the given coordinates.
 	 *
 	 * @param x The x-coordinate (column number).
 	 * @param y The y-coordinate (row number).
