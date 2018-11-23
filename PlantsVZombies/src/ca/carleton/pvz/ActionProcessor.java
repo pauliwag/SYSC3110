@@ -174,8 +174,16 @@ public class ActionProcessor {
 				Actor a = lvl.getCell(x, y);
 				if (a instanceof Zombie) {
 					Zombie z = (Zombie) a;
-					lvl.placeActor(z, new Point(x - z.getSpeed(), y));
-					lvl.placeActor(null, new Point(x, y));
+					int xNew = x - z.getSpeed();
+					// failsafe: if xNew < 0, place zombie at (0, y)
+					if (xNew < 0) {
+						xNew = 0;
+					}
+					lvl.placeActor(z, new Point(xNew, y));
+					// ensure all cells in zombie's path are nullified
+					for (int xAux = xNew + 1; xAux <= x; ++xAux) {
+						lvl.placeActor(null, new Point(xAux, y));
+					}
 				}
 			}
 		}
