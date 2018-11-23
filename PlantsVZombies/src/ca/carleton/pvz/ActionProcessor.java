@@ -173,7 +173,8 @@ public class ActionProcessor {
 			for (int y = 0; y < numCols; ++y) {
 				Actor a = lvl.getCell(x, y);
 				if (a instanceof Zombie) {
-					lvl.placeActor(a, new Point(x - ((Zombie) a).getSpeed(), y));
+					Zombie z = (Zombie) a;
+					lvl.placeActor(z, new Point(x - z.getSpeed(), y));
 					lvl.placeActor(null, new Point(x, y));
 				}
 			}

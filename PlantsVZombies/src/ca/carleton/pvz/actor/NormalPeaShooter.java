@@ -64,15 +64,15 @@ public class NormalPeaShooter extends PeaShooter {
 
 		// TODO : Emigrate this method ...
 
-		for (int i = 0; i < level.getDimension().height; ++i) {
-			for (int j = 0; j < level.getDimension().width; ++j) {
+		for (int i = 0; i < level.getNumRows(); ++i) {
+			for (int j = 0; j < level.getNumCols(); ++j) {
 				Actor o = level.getCell(i, j);
 				if (o instanceof NormalPeaShooter) { // if peashooter, shoot all
 					// zombies to the right of
 					// peashooter
 					((NormalPeaShooter) o).newTurn();
 					int i1 = i;
-					for (int index = i1; index < level.getDimension().height; ++index) {
+					for (int index = i1; index < level.getNumRows(); ++index) {
 						Actor o1 = level.getCell(index, j);
 						if (o1 instanceof Zombie) {
 							while (((NormalPeaShooter) o).getHits() < 4) {
@@ -89,7 +89,7 @@ public class NormalPeaShooter extends PeaShooter {
 								// shooting, progress to zombies to
 								// right
 								if (((Zombie) o1).getHealth() == 0 && ((NormalPeaShooter) o).getHits() < 4) {
-									for (int i2 = i1 + 1; i2 < level.getDimension().height; ++i2) {
+									for (int i2 = i1 + 1; i2 < level.getNumRows(); ++i2) {
 										Actor o2 = level.getCell(i2, j);
 										if (o2 instanceof Zombie) {
 											while (((NormalPeaShooter) o).getHits() < 4) {
