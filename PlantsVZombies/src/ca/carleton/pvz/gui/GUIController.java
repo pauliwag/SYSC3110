@@ -7,7 +7,7 @@ import java.util.ResourceBundle;
 import ca.carleton.pvz.PlantsVZombies;
 import ca.carleton.pvz.actor.Actor;
 import ca.carleton.pvz.actor.CooldownManager;
-import ca.carleton.pvz.actor.PeaShooter;
+import ca.carleton.pvz.actor.NormalPeaShooter;
 import ca.carleton.pvz.actor.Plant;
 import ca.carleton.pvz.actor.Sunflower;
 import javafx.application.Platform;
@@ -128,7 +128,7 @@ public class GUIController {
 		peashooterButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				selectedPlant = new PeaShooter();
+				selectedPlant = new NormalPeaShooter();
 			}
 		});
 

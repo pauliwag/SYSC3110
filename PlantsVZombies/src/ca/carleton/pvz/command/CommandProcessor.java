@@ -3,7 +3,7 @@ package ca.carleton.pvz.command;
 import java.awt.Point;
 import ca.carleton.pvz.PlantsVZombies;
 import ca.carleton.pvz.actor.Actor;
-import ca.carleton.pvz.actor.PeaShooter;
+import ca.carleton.pvz.actor.NormalPeaShooter;
 import ca.carleton.pvz.actor.Sunflower;
 import ca.carleton.pvz.actor.Zombie;
 
@@ -179,7 +179,7 @@ public class CommandProcessor {
 
 		if (plantType.equalsIgnoreCase("peashooter")) {
 
-			game.getActionProcessor().processPlaceActor(new PeaShooter(), xPos, yPos);
+			game.getActionProcessor().processPlaceActor(new NormalPeaShooter(), xPos, yPos);
 
 		} else if (plantType.equalsIgnoreCase("sunflower")) {
 
