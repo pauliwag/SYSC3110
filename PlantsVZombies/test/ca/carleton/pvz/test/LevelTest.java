@@ -27,7 +27,7 @@ public class LevelTest {
 	 */
 	@Test
 	public void testCompletion() {
-		assertFalse(testLevel.isWaveDefeated());
+		assertFalse(testLevel.isHeadWaveDefeated());
 		assertFalse(testLevel.isBeat());
 	}
 	

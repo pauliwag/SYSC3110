@@ -37,7 +37,6 @@ public class GUIController {
 	private PlantsVZombies game;
 	private Plant selectedPlant;
 
-
 	@FXML
 	private ResourceBundle resources;
 
@@ -46,16 +45,16 @@ public class GUIController {
 
 	@FXML
 	private Label peashooterCooldown;
-	
+
 	@FXML
 	private Label levelLabel;
-	
+
 	@FXML
 	private Label waveLabel;
-	
+
 	@FXML
 	private Label sunpointLabel;
-	
+
 	@FXML
 	private Button nextTurnButton;
 
@@ -64,7 +63,7 @@ public class GUIController {
 
 	@FXML
 	private Button nextLevelButton;
-	
+
 	@FXML
 	private Button peashooterButton;
 
@@ -79,10 +78,10 @@ public class GUIController {
 
 	@FXML
 	private MenuItem quitButton;
-	
+
 	@FXML
 	private MenuItem aboutButton;
-	
+
 	@FXML
 	public void initialize() {
 		assert peashooterCooldown != null : "fx:id=\"peashooterCooldown\" was not injected: check your FXML file 'pvzgui.fxml'.";
@@ -98,23 +97,25 @@ public class GUIController {
 		assert nextLevelButton != null : "fx:id=\"nextLevelButton\" was not injected: check your FXML file 'pvzgui.fxml'.";
 		assert quitButton != null : "fx:id=\"quitButton\" was not injected: check your FXML file 'pvzgui.fxml'.";
 		assert aboutButton != null : "fx:id=\"aboutButton\" was not injected: check your FXML file 'pvzgui.fxml'.";
-		
+
 		setupMenuButtons();
 		setupPlantSelectionButtons();
 		setupNextTurnButton();
 		initGameGrid();
-		nextLevelButton.setDisable(true); // we only have one Level in this version, so disable button
+		nextLevelButton.setDisable(true); // we only have one Level in this
+											// version, so disable button
 	}
 
 	/**
 	 * This empty constructor is required for proper loading of the JavaFX GUI
 	 * controller
 	 */
-	public GUIController() { }
+	public GUIController() {
+	}
 
 	/**
-	 * Sets up plant button event handlers. When button is pressed, sets currently
-	 * selected plant object to correct type.
+	 * Sets up plant button event handlers. When button is pressed, sets
+	 * currently selected plant object to correct type.
 	 */
 	private void setupPlantSelectionButtons() {
 		selectedPlant = new Sunflower();
@@ -147,13 +148,12 @@ public class GUIController {
 					return;
 				}
 
-				
 				updateGameGrid();
 
 			}
 		});
 	}
-	
+
 	/**
 	 * Sets up menu button actions
 	 */
@@ -164,16 +164,17 @@ public class GUIController {
 				Platform.exit();
 			}
 		});
-		
+
 		aboutButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent arg0) {
-				showAlert("About", "Plants VS Zombies Group 5", 
-						"Created by Paul Roode, Abdillahi Nur, Sameed Mohammed, and Jacob Laboissonniere", 
+				showAlert("About", "Plants VS Zombies Group 5",
+						"Created by Paul Roode, Abdillahi Nur, Sameed Mohammed, and Jacob Laboissonniere",
 						AlertType.INFORMATION);
 			}
 		});
 	}
+
 	/**
 	 * Initializes the game grid to grass images and adds event handlers to each
 	 * grid slot.
@@ -197,7 +198,8 @@ public class GUIController {
 						if (GridPane.getRowIndex(imgView) != null && GridPane.getColumnIndex(imgView) != null) {
 							row = GridPane.getRowIndex(imgView);
 							column = GridPane.getColumnIndex(imgView);
-							game.getActionProcessor().processPlaceActor(selectedPlant, column, row);
+							game.getActionProcessor().processPlaceActor(game.getWorld().getCurrentLevel(),
+									selectedPlant, column, row);
 						}
 						updateGameGrid();
 						event.consume();
@@ -217,21 +219,21 @@ public class GUIController {
 		peashooterCooldown.setText(Integer.toString(CooldownManager.getNormalPeaTimeLeftOnCD()));
 		sunflowerCooldown.setText(Integer.toString(CooldownManager.getSunTimeLeftOnCD()));
 	}
-	
+
 	/**
 	 * Updates sunpoint label on UI
 	 */
 	private void updateSunpointLabel() {
 		sunpointLabel.setText("  Sunpoints: " + Integer.toString(game.getWorld().getCurrentLevel().getSunpoints()));
 	}
-	
+
 	/**
 	 * Updates the wave label on UI
 	 */
 	private void updateWaveNumber() {
 		waveLabel.setText("  Wave: " + Integer.toString(game.getActionProcessor().getWave().getNum()));
 	}
-	
+
 	/**
 	 * Sets up the game grid sprites to represent the current level's state.
 	 */
@@ -261,9 +263,10 @@ public class GUIController {
 		updateSunpointLabel();
 		updateCooldownDisplay();
 	}
-	
+
 	/**
-	 * Called when game is over. Disables buttons we don't want pressed and alerts user.
+	 * Called when game is over. Disables buttons we don't want pressed and
+	 * alerts user.
 	 */
 	public void notifyGameOver() {
 		updateGameGrid();
@@ -278,15 +281,11 @@ public class GUIController {
 
 	/**
 	 * Shows the user a pop-up alert dialog
-	 * 
-	 * @param title
-	 *            Title of the alert dialog
-	 * @param header
-	 *            Header of the alert dialog (can be null for no header)
-	 * @param content
-	 *            Content of the alert dialog
-	 * @param type
-	 *            Type of alert - see AlertType documentation
+	 *
+	 * @param title Title of the alert dialog
+	 * @param header Header of the alert dialog (can be null for no header)
+	 * @param content Content of the alert dialog
+	 * @param type Type of alert - see AlertType documentation
 	 */
 	public void showAlert(String title, String header, String content, AlertType type) {
 		Alert alert = new Alert(type);
@@ -314,8 +313,7 @@ public class GUIController {
 	/**
 	 * Set the game that this controller controls
 	 *
-	 * @param game
-	 *            to control
+	 * @param game to control
 	 */
 	public void setGame(PlantsVZombies game) {
 		this.game = game;

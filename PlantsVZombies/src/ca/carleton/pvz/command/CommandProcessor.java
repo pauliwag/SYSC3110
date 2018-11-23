@@ -38,7 +38,7 @@ public class CommandProcessor {
 		Command command = parser.getCommand();
 
 		if (command.isUnknown()) {
-			
+
 			return false;
 		}
 
@@ -47,9 +47,9 @@ public class CommandProcessor {
 		switch (commandWord) {
 		case "help":
 			if (command.hasSecondWord()) {
-				//processHelp(command);
+				// processHelp(command);
 			} else {
-			
+
 			}
 			break;
 		case "place":
@@ -62,7 +62,7 @@ public class CommandProcessor {
 			break;
 		case "restart":
 			if (command.hasSecondWord()) {
-				
+
 			} else {
 				new PlantsVZombies();
 			}
@@ -86,25 +86,25 @@ public class CommandProcessor {
 
 			switch (command.getSecondWord()) {
 			case "quit":
-				//game.print(Presets.QUIT_HELP);
+				// game.print(Presets.QUIT_HELP);
 				break;
 			case "place":
-				//game.print(Presets.PLACE_HELP);
+				// game.print(Presets.PLACE_HELP);
 				break;
 			case "next":
-				//game.print(Presets.NEXT_HELP);
+				// game.print(Presets.NEXT_HELP);
 				break;
 			case "restart":
-				//game.print(Presets.RESTART_HELP);
+				// game.print(Presets.RESTART_HELP);
 				break;
 			default:
-				//game.print(Presets.INVALID);
+				// game.print(Presets.INVALID);
 				break;
 			}
 
 		} else {
 
-			//game.print(Presets.INVALID);
+			// game.print(Presets.INVALID);
 
 		}
 	}
@@ -117,7 +117,6 @@ public class CommandProcessor {
 	private void processNext(Command command) {
 
 		if (!command.hasSecondWord()) {
-		
 
 		} else if (command.getSecondWord().equals("turn")) {
 
@@ -148,7 +147,7 @@ public class CommandProcessor {
 
 			return;
 		} else if (!command.hasThirdWord()) {
-		
+
 			return;
 		} else if (!command.hasFourthWord()) {
 
@@ -179,11 +178,12 @@ public class CommandProcessor {
 
 		if (plantType.equalsIgnoreCase("peashooter")) {
 
-			game.getActionProcessor().processPlaceActor(new NormalPeaShooter(), xPos, yPos);
+			game.getActionProcessor().processPlaceActor(game.getWorld().getCurrentLevel(), new NormalPeaShooter(), xPos,
+					yPos);
 
 		} else if (plantType.equalsIgnoreCase("sunflower")) {
 
-			game.getActionProcessor().processPlaceActor(new Sunflower(), xPos, yPos);
+			game.getActionProcessor().processPlaceActor(game.getWorld().getCurrentLevel(), new Sunflower(), xPos, yPos);
 
 		} else {
 
