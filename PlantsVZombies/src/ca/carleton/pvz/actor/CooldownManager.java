@@ -1,16 +1,19 @@
 package ca.carleton.pvz.actor;
 
 /**
- * Manages global cooldowns.
+ * Manages global cooldowns. "Time" is currently represented by turns; i.e., one
+ * unit of time = one turn.
  *
  */
 public final class CooldownManager {
 
 	private static final int SUNFLOWER_CD = 2;
-	private static final int PEASHOOTER_CD = 2;
+	private static final int NORMAL_PEASHOOTER_CD = 2;
+	private static final int GATLING_PEASHOOTER_CD = 2;
 
 	private static int sunTimeLeftOnCD;
-	private static int peaTimeLeftOnCD;
+	private static int normalPeaTimeLeftOnCD;
+	private static int gatlingPeaTimeLeftOnCD;
 
 	// render this class as uninstantiable
 	private CooldownManager() {}
@@ -21,7 +24,8 @@ public final class CooldownManager {
 	public static void decTimeOnCD() {
 
 		if (sunTimeLeftOnCD > 0) --sunTimeLeftOnCD;
-		if (peaTimeLeftOnCD > 0) --peaTimeLeftOnCD;
+		if (normalPeaTimeLeftOnCD > 0) --normalPeaTimeLeftOnCD;
+		if (gatlingPeaTimeLeftOnCD > 0) --gatlingPeaTimeLeftOnCD;
 
 	}
 
@@ -31,7 +35,8 @@ public final class CooldownManager {
 	public static void resetCDs() {
 
 		sunTimeLeftOnCD = 0;
-		peaTimeLeftOnCD = 0;
+		normalPeaTimeLeftOnCD = 0;
+		gatlingPeaTimeLeftOnCD = 0;
 
 	}
 
@@ -47,13 +52,26 @@ public final class CooldownManager {
 	}
 
 	/**
-	 * Returns whether the peashooter cooldown is in effect.
+	 * Returns whether the normal pea shooter cooldown is in effect.
 	 *
-	 * @return true if the peashooter cooldown is in effect, false otherwise.
+	 * @return true if the normal pea shooter cooldown is in effect, false
+	 *         otherwise.
 	 */
-	public static boolean isPeaOnCD() {
+	public static boolean isNormalPeaOnCD() {
 
-		return peaTimeLeftOnCD > 0;
+		return normalPeaTimeLeftOnCD > 0;
+
+	}
+
+	/**
+	 * Returns whether the gatling pea shooter cooldown is in effect.
+	 *
+	 * @return true if the gatling pea shooter cooldown is in effect, false
+	 *         otherwise.
+	 */
+	public static boolean isGatlingPeaOnCD() {
+
+		return gatlingPeaTimeLeftOnCD > 0;
 
 	}
 
@@ -67,27 +85,54 @@ public final class CooldownManager {
 	}
 
 	/**
-	 * Starts the peashooter cooldown.
+	 * Starts the normal pea shooter cooldown.
 	 */
-	public static void startPeaCD() {
+	public static void startNormalPeaCD() {
 
-		peaTimeLeftOnCD = PEASHOOTER_CD;
+		normalPeaTimeLeftOnCD = NORMAL_PEASHOOTER_CD;
 
 	}
-	
-	/** 
-	 * Get the current time left on Sunflower cooldown
-	 * @return returns the sunflower cooldown time remaining
+
+	/**
+	 * Starts the gatling pea shooter cooldown.
 	 */
-	public static int getCurrentSunCD() {
+	public static void startGatlingPeaCD() {
+
+		gatlingPeaTimeLeftOnCD = GATLING_PEASHOOTER_CD;
+
+	}
+
+	/**
+	 * Gets the remaining sunflower cooldown.
+	 *
+	 * @return The remaining sunflower cooldown.
+	 */
+	public static int getSunTimeLeftOnCD() {
+
 		return sunTimeLeftOnCD;
+
 	}
-	
-	/** 
-	 * Get the current time left on Peashooter cooldown
-	 * @return returns the peashooter cooldown time remaining
+
+	/**
+	 * Gets the remaining normal pea shooter cooldown.
+	 *
+	 * @return The remaining normal pea shooter cooldown.
 	 */
-	public static int getCurrentPeaCD() {
-		return peaTimeLeftOnCD;
+	public static int getNormalPeaTimeLeftOnCD() {
+
+		return normalPeaTimeLeftOnCD;
+
 	}
+
+	/**
+	 * Gets the remaining gatling pea shooter cooldown.
+	 *
+	 * @return The remaining gatling pea shooter cooldown.
+	 */
+	public static int getGatlingPeaTimeLeftOnCD() {
+
+		return gatlingPeaTimeLeftOnCD;
+
+	}
+
 }

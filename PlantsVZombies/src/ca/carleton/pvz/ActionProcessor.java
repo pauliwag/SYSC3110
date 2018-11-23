@@ -159,13 +159,13 @@ public class ActionProcessor {
 
 			if (actor instanceof NormalPeaShooter) {
 
-				if (CooldownManager.isPeaOnCD()) {
+				if (CooldownManager.isNormalPeaOnCD()) {
 
 				} else if (game.getWorld().getCurrentLevel().getSunpoints() - 100 < 0) {
 				} else {
 					game.getWorld().getCurrentLevel().placeActor(new NormalPeaShooter(), new Point(xPos, yPos));
 					game.getWorld().getCurrentLevel().subtractFromSunpoints(100);
-					CooldownManager.startPeaCD();
+					CooldownManager.startNormalPeaCD();
 
 				}
 			} else if (actor instanceof Sunflower) {

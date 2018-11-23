@@ -214,8 +214,8 @@ public class GUIController {
 	 * Update the plant cooldown labels to represent CooldownManager values
 	 */
 	private void updateCooldownDisplay() {
-		peashooterCooldown.setText(Integer.toString(CooldownManager.getCurrentPeaCD()));
-		sunflowerCooldown.setText(Integer.toString(CooldownManager.getCurrentSunCD()));
+		peashooterCooldown.setText(Integer.toString(CooldownManager.getNormalPeaTimeLeftOnCD()));
+		sunflowerCooldown.setText(Integer.toString(CooldownManager.getSunTimeLeftOnCD()));
 	}
 	
 	/**
