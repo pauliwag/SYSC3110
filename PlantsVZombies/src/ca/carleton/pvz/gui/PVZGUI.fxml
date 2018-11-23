@@ -7,32 +7,25 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="615.0" prefWidth="1030.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.carleton.pvz.gui.GUIController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="615.0" prefWidth="1360.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.carleton.pvz.gui.GUIController">
    <left>
       <VBox prefHeight="589.0" prefWidth="215.0" BorderPane.alignment="CENTER">
          <children>
             <AnchorPane prefHeight="6.0" prefWidth="215.0" style="-fx-background-color: #555555;" />
             <HBox prefHeight="165.0" prefWidth="215.0">
                <children>
-                  <VBox prefHeight="181.0" prefWidth="149.0">
+                  <VBox prefHeight="165.0" prefWidth="104.0">
                      <children>
-                        <Label alignment="CENTER" prefHeight="31.0" prefWidth="149.0" text="Plant Type" wrapText="true">
+                        <Label alignment="CENTER" prefHeight="31.0" prefWidth="99.0" text="Plant Type" wrapText="true">
                            <font>
                               <Font name="Agency FB" size="16.0" />
                            </font>
                         </Label>
                         <Group fx:id="plantGroup">
                            <children>
-                              <Button fx:id="sunflowerButton" layoutX="9.0" layoutY="1.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="148.0" text="Sunflower">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Button>
-                              <Button fx:id="peashooterButton" layoutX="8.0" layoutY="29.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="149.0" text="Peashooter">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Button>
+                              <Button fx:id="sunflowerButton" layoutX="9.0" layoutY="1.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="91.0" text="Sunflower" />
+                              <Button fx:id="peashooterButton" layoutX="8.0" layoutY="29.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="92.0" text="Peashooter" />
+                              <Button fx:id="threepeaterButton" layoutX="8.0" layoutY="60.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="92.0" text="Threepeater" />
                            </children>
                         </Group>
                      </children>
@@ -46,6 +39,31 @@
                            </font>
                         </Label>
                         <Label fx:id="peashooterCooldown" alignment="CENTER" prefHeight="29.0" prefWidth="66.0" text="0">
+                           <font>
+                              <Font name="Consolas Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="threepeaterCooldown" alignment="CENTER" prefHeight="29.0" prefWidth="66.0" text="0">
+                           <font>
+                              <Font name="Consolas Bold" size="12.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="32.0" prefWidth="66.0" text="Cost" />
+                        <Label fx:id="sunflowerCost" alignment="CENTER" prefHeight="27.0" prefWidth="66.0" text="0">
+                           <font>
+                              <Font name="Consolas Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="peashooterCost" alignment="CENTER" prefHeight="29.0" prefWidth="66.0" text="0">
+                           <font>
+                              <Font name="Consolas Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="threepeaterCost" alignment="CENTER" prefHeight="29.0" prefWidth="66.0" text="0">
                            <font>
                               <Font name="Consolas Bold" size="12.0" />
                            </font>
@@ -113,6 +131,8 @@
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints />
+            <ColumnConstraints />
         </columnConstraints>
         <rowConstraints>
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -147,6 +167,16 @@
             <ImageView fitHeight="121.0" fitWidth="163.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="2" />
             <ImageView fitHeight="121.0" fitWidth="163.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="3" />
             <ImageView fitHeight="121.0" fitWidth="163.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+            <ImageView fitHeight="121.0" fitWidth="163.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="0" />
+            <ImageView fitHeight="121.0" fitWidth="163.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+            <ImageView fitHeight="121.0" fitWidth="163.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="2" />
+            <ImageView fitHeight="121.0" fitWidth="163.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="3" />
+            <ImageView fitHeight="121.0" fitWidth="163.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.rowIndex="4" />
+            <ImageView fitHeight="121.0" fitWidth="163.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="0" />
+            <ImageView fitHeight="121.0" fitWidth="163.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="1" />
+            <ImageView fitHeight="121.0" fitWidth="163.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="2" />
+            <ImageView fitHeight="121.0" fitWidth="163.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="3" />
+            <ImageView fitHeight="121.0" fitWidth="163.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="4" />
          </children>
       </GridPane>
    </center>
