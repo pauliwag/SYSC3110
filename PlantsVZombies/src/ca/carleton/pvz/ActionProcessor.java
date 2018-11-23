@@ -180,9 +180,10 @@ public class ActionProcessor {
 						xNew = 0;
 					}
 					lvl.placeActor(z, new Point(xNew, y));
-					// ensure all cells in zombie's path are nullified
+					// ensure all non-zombie cells in zombie's path are nullified
 					for (int xAux = xNew + 1; xAux <= x; ++xAux) {
-						lvl.placeActor(null, new Point(xAux, y));
+						if (!(lvl.getCell(xAux, y) instanceof Zombie))
+							lvl.placeActor(null, new Point(xAux, y));
 					}
 				}
 			}
