@@ -5,6 +5,7 @@ import java.util.Random;
 
 import ca.carleton.pvz.actor.Actor;
 import ca.carleton.pvz.actor.CooldownManager;
+import ca.carleton.pvz.actor.GatlingPeaShooter;
 import ca.carleton.pvz.actor.NormalPeaShooter;
 import ca.carleton.pvz.actor.NormalZombie;
 import ca.carleton.pvz.actor.PeaShooter;
@@ -252,10 +253,10 @@ public class ActionProcessor {
 
 				if (CooldownManager.isNormalPeaOnCD()) {
 
-				} else if (lvl.getSunpoints() - 100 < 0) {
+				} else if (lvl.getSunpoints() - NormalPeaShooter.NORMAL_PEA_COST < 0) {
 				} else {
 					lvl.placeActor(new NormalPeaShooter(), new Point(xPos, yPos));
-					lvl.subtractFromSunpoints(100);
+					lvl.subtractFromSunpoints(NormalPeaShooter.NORMAL_PEA_COST);
 					CooldownManager.startNormalPeaCD();
 
 				}
@@ -263,7 +264,7 @@ public class ActionProcessor {
 
 				if (CooldownManager.isSunOnCD()) {
 
-				} else if (lvl.getSunpoints() - 50 < 0) {
+				} else if (lvl.getSunpoints() - Sunflower.SUNFLOWER_COST < 0) {
 					// game.print(Presets.NOT_ENOUGH_SUNPOINTS + plantType +
 					// "\n");
 
@@ -271,8 +272,22 @@ public class ActionProcessor {
 					Sunflower plantToPlace = new Sunflower();
 					plantToPlace.setTurnPlaced(lvl.getTurn());
 					lvl.placeActor(plantToPlace, new Point(xPos, yPos));
-					lvl.subtractFromSunpoints(50);
+					lvl.subtractFromSunpoints(Sunflower.SUNFLOWER_COST);
 					CooldownManager.startSunCD();
+				}
+			} else if (actor instanceof GatlingPeaShooter) {
+
+				if (CooldownManager.isGatlingPeaOnCD()) {
+
+				} else if (lvl.getSunpoints() - GatlingPeaShooter.GATLING_PEA_COST < 0) {
+					// game.print(Presets.NOT_ENOUGH_SUNPOINTS + plantType +
+					// "\n");
+
+				} else {
+					GatlingPeaShooter plantToPlace = new GatlingPeaShooter();
+					lvl.placeActor(plantToPlace, new Point(xPos, yPos));
+					lvl.subtractFromSunpoints(GatlingPeaShooter.GATLING_PEA_COST);
+					CooldownManager.startGatlingPeaCD();
 				}
 			}
 		} else {

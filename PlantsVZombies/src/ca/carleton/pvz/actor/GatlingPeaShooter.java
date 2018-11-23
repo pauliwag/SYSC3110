@@ -30,9 +30,8 @@ public class GatlingPeaShooter extends PeaShooter {
 	 */
 	@Override
 	public Image getSprite() {
-		InputStream stream = getClass().getResourceAsStream("peashooter.png");
+		InputStream stream = getClass().getResourceAsStream("threepeater.png");
 		return new Image(stream);
-		// TODO : Get proper sprite ...
 	}
 
 }
