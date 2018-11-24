@@ -2,7 +2,9 @@ package ca.carleton.pvz.level;
 
 import java.awt.Dimension;
 import java.awt.Point;
+import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.PriorityQueue;
 import ca.carleton.pvz.actor.Actor;
 import ca.carleton.pvz.actor.Sunflower;
@@ -58,7 +60,7 @@ public abstract class Level {
 		turn = 0;
 
 		// initialize waves queue such that a lower wave number is prioritized
-		waves = new PriorityQueue<>(11, (wave1, wave2) -> {
+		waves = new PriorityQueue<>(11, (Comparator<Wave> & Serializable) (wave1, wave2) -> {
 			return wave2.getNum() - wave1.getNum();
 		});
 		initWaves();
