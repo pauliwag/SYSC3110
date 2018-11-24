@@ -15,8 +15,6 @@ public class Sunflower extends Plant {
 	public static final int SUNFLOWER_COST = 100; // in sunpoints
 	public static final int PASSIVE_SUNPOINT_BOOST = 15; // every two turns
 
-	private int turnPlaced; // the turn this sunflower was planted
-
 	/**
 	 * Creates a new sunflower.
 	 */
@@ -24,26 +22,6 @@ public class Sunflower extends Plant {
 
 		super(SUNFLOWER_COST);
 
-		turnPlaced = 0;
-
-	}
-
-	/**
-	 * Sets the turn this sunflower was planted.
-	 *
-	 * @param turnNumber The turn this sunflower was planted.
-	 */
-	public void setTurnPlaced(int turnNumber) {
-		turnPlaced = turnNumber;
-	}
-
-	/**
-	 * Gets the turn this sunflower was planted.
-	 *
-	 * @return The turn this sunflower was planted.
-	 */
-	public int getTurnPlaced() {
-		return turnPlaced;
 	}
 
 	/**

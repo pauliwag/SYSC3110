@@ -117,8 +117,8 @@ public abstract class Level {
 	 *
 	 * @return true if the head wave is defeated, false otherwise.
 	 */
-	public boolean isHeadWaveDefeated() {
-		return getHeadWave().isDefeated();
+	public boolean isHeadWaveEmpty() {
+		return getHeadWave().isEmpty();
 	}
 
 	/**

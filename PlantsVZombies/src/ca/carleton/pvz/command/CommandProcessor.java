@@ -178,12 +178,12 @@ public class CommandProcessor {
 
 		if (plantType.equalsIgnoreCase("peashooter")) {
 
-			game.getActionProcessor().processPlaceActor(game.getWorld().getCurrentLevel(), new NormalPeaShooter(), xPos,
+			game.getActionProcessor().processPlanting(game.getWorld().getCurrentLevel(), new NormalPeaShooter(), xPos,
 					yPos);
 
 		} else if (plantType.equalsIgnoreCase("sunflower")) {
 
-			game.getActionProcessor().processPlaceActor(game.getWorld().getCurrentLevel(), new Sunflower(), xPos, yPos);
+			game.getActionProcessor().processPlanting(game.getWorld().getCurrentLevel(), new Sunflower(), xPos, yPos);
 
 		} else {
 
