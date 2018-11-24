@@ -61,7 +61,7 @@ public abstract class Level {
 
 		// initialize waves queue such that a lower wave number is prioritized
 		waves = new PriorityQueue<>(11, (Comparator<Wave> & Serializable) (wave1, wave2) -> {
-			return wave2.getNum() - wave1.getNum();
+			return wave1.getNum() - wave2.getNum();
 		});
 		initWaves();
 
