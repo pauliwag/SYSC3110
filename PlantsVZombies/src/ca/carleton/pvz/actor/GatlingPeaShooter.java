@@ -10,8 +10,8 @@ import javafx.scene.image.Image;
  */
 public class GatlingPeaShooter extends PeaShooter {
 
-	public static final int GATLING_PEA_COST = 500; // in sunpoints
-	public static final int GATLING_PEA_DAMAGE = 900;
+	public static final int GATLING_PEA_COST = 300; // in sunpoints
+	public static final int GATLING_PEA_DAMAGE = 500;
 
 	/**
 	 * Constructs a new gatling pea-shooting plant, which deals more damage per

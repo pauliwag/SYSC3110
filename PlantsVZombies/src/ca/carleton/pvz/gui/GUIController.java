@@ -67,25 +67,25 @@ public class GUIController {
 
 	@FXML
 	private Button peashooterButton;
-	
+
 	@FXML
 	private Button threepeaterButton;
-	
+
 	@FXML
 	private Label sunflowerCooldown;
-	
+
 	@FXML
 	private Label threepeaterCooldown;
-	
+
 	@FXML
 	private Label threepeaterCost;
-	
+
 	@FXML
 	private Label sunflowerCost;
-	
+
 	@FXML
 	private Label peashooterCost;
-	
+
 	@FXML
 	private GridPane gameGrid;
 
@@ -118,7 +118,7 @@ public class GUIController {
 		assert threepeaterCost != null : "fx:id=\"threepeaterCost\" was not injected: check your FXML file 'pvzgui.fxml'.";
 		assert threepeaterCooldown != null : "fx:id=\"threepeaterCooldown\" was not injected: check your FXML file 'pvzgui.fxml'.";
 		assert threepeaterButton != null : "fx:id=\"threepeaterButton\" was not injected: check your FXML file 'pvzgui.fxml'.";
-		
+
 		setupMenuButtons();
 		setupPlantSelectionButtons();
 		setupNextTurnButton();
@@ -154,7 +154,7 @@ public class GUIController {
 				selectedPlant = new NormalPeaShooter();
 			}
 		});
-		
+
 		threepeaterButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
@@ -249,7 +249,7 @@ public class GUIController {
 		sunflowerCooldown.setText(Integer.toString(CooldownManager.getSunTimeLeftOnCD()));
 		threepeaterCooldown.setText(Integer.toString(CooldownManager.getGatlingPeaTimeLeftOnCD()));
 	}
-	
+
 	/**
 	 * Update the plant cooldown labels to represent CooldownManager values
 	 */
