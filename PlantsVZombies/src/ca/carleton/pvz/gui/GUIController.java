@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 import ca.carleton.pvz.PlantsVZombies;
 import ca.carleton.pvz.actor.Actor;
 import ca.carleton.pvz.actor.CooldownManager;
+import ca.carleton.pvz.actor.GatlingPeaShooter;
 import ca.carleton.pvz.actor.NormalPeaShooter;
 import ca.carleton.pvz.actor.Plant;
 import ca.carleton.pvz.actor.Sunflower;
@@ -66,10 +67,25 @@ public class GUIController {
 
 	@FXML
 	private Button peashooterButton;
-
+	
+	@FXML
+	private Button threepeaterButton;
+	
 	@FXML
 	private Label sunflowerCooldown;
-
+	
+	@FXML
+	private Label threepeaterCooldown;
+	
+	@FXML
+	private Label threepeaterCost;
+	
+	@FXML
+	private Label sunflowerCost;
+	
+	@FXML
+	private Label peashooterCost;
+	
 	@FXML
 	private GridPane gameGrid;
 
@@ -97,10 +113,16 @@ public class GUIController {
 		assert nextLevelButton != null : "fx:id=\"nextLevelButton\" was not injected: check your FXML file 'pvzgui.fxml'.";
 		assert quitButton != null : "fx:id=\"quitButton\" was not injected: check your FXML file 'pvzgui.fxml'.";
 		assert aboutButton != null : "fx:id=\"aboutButton\" was not injected: check your FXML file 'pvzgui.fxml'.";
-
+		assert sunflowerCost != null : "fx:id=\"sunflowerCost\" was not injected: check your FXML file 'pvzgui.fxml'.";
+		assert peashooterCost != null : "fx:id=\"peashooterCost\" was not injected: check your FXML file 'pvzgui.fxml'.";
+		assert threepeaterCost != null : "fx:id=\"threepeaterCost\" was not injected: check your FXML file 'pvzgui.fxml'.";
+		assert threepeaterCooldown != null : "fx:id=\"threepeaterCooldown\" was not injected: check your FXML file 'pvzgui.fxml'.";
+		assert threepeaterButton != null : "fx:id=\"threepeaterButton\" was not injected: check your FXML file 'pvzgui.fxml'.";
+		
 		setupMenuButtons();
 		setupPlantSelectionButtons();
 		setupNextTurnButton();
+		updateCostDisplay();
 		initGameGrid();
 		nextLevelButton.setDisable(true); // we only have one Level in this
 											// version, so disable button
@@ -130,6 +152,13 @@ public class GUIController {
 			@Override
 			public void handle(ActionEvent e) {
 				selectedPlant = new NormalPeaShooter();
+			}
+		});
+		
+		threepeaterButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				selectedPlant = new GatlingPeaShooter();
 			}
 		});
 
@@ -218,6 +247,16 @@ public class GUIController {
 	private void updateCooldownDisplay() {
 		peashooterCooldown.setText(Integer.toString(CooldownManager.getNormalPeaTimeLeftOnCD()));
 		sunflowerCooldown.setText(Integer.toString(CooldownManager.getSunTimeLeftOnCD()));
+		threepeaterCooldown.setText(Integer.toString(CooldownManager.getGatlingPeaTimeLeftOnCD()));
+	}
+	
+	/**
+	 * Update the plant cooldown labels to represent CooldownManager values
+	 */
+	private void updateCostDisplay() {
+		peashooterCost.setText(Integer.toString(NormalPeaShooter.NORMAL_PEA_COST));
+		sunflowerCost.setText(Integer.toString(Sunflower.SUNFLOWER_COST));
+		threepeaterCost.setText(Integer.toString(GatlingPeaShooter.GATLING_PEA_COST));
 	}
 
 	/**
@@ -271,8 +310,6 @@ public class GUIController {
 	public void notifyGameOver() {
 		updateGameGrid();
 		nextTurnButton.setDisable(true);
-		peashooterButton.setDisable(true);
-		sunflowerButton.setDisable(true);
 		gameGrid.setDisable(true);
 		plantGroup.setDisable(true);
 		showAlert("Game Over", null, "Game over! You failed to protect your home from the zombies :(",

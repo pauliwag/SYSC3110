@@ -34,7 +34,7 @@ public class PlantsVZombies extends Application {
 		// Get the Controller from the FXMLLoader
 		controller = loader.getController();
 		controller.setGame(this);
-		Scene scene = new Scene(borderPane, 1030, 615);
+		Scene scene = new Scene(borderPane, 1360.0, 615.0);
 		primaryStage.setTitle("Plants VS Zombies Group 5");
 		primaryStage.setScene(scene);
 		primaryStage.show();

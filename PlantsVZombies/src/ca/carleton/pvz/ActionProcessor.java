@@ -229,7 +229,6 @@ public class ActionProcessor {
 				lvl.placeActor(new GatlingPeaShooter(), new Point(xPos, yPos));
 				lvl.subtractFromSunpoints(GatlingPeaShooter.GATLING_PEA_COST);
 				CooldownManager.startGatlingPeaCD();
-			}
 
 		} else { // alert the user that the specified cell is already occupied
 			game.getController().showAlert("No room!", null, "There's already something placed here!",
