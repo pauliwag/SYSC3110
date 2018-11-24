@@ -11,7 +11,7 @@ import javafx.scene.image.Image;
  */
 public class FastZombie extends Zombie {
 
-	public static final int FAST_ZOMBIE_HEALTH = 450;
+	public static final int FAST_ZOMBIE_HEALTH = 400;
 	public static final int FAST_ZOMBIE_SPEED = 2; // tiles moved to the left per turn
 
 	/**

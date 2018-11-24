@@ -11,7 +11,7 @@ import javafx.scene.image.Image;
 public class NormalPeaShooter extends PeaShooter {
 
 	public static final int NORMAL_PEA_COST = 200; // in sunpoints
-	public static final int NORMAL_PEA_DAMAGE = 300;
+	public static final int NORMAL_PEA_DAMAGE = 200;
 
 	/**
 	 * Creates a new normal pea-shooting plant. This type of plant can shoot and

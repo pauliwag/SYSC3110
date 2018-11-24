@@ -204,7 +204,7 @@ public class ActionProcessor {
 		}
 
 		// if the head wave is void of zombies, dequeue it
-		if (lvl.isHeadWaveEmpty() && lvl.getNumWaves() > 1) {
+		if (lvl.isHeadWaveEmpty()) {
 			lvl.dequeueHeadWave();
 		}
 

@@ -11,6 +11,7 @@ import ca.carleton.pvz.actor.GatlingPeaShooter;
 import ca.carleton.pvz.actor.NormalPeaShooter;
 import ca.carleton.pvz.actor.Plant;
 import ca.carleton.pvz.actor.Sunflower;
+import ca.carleton.pvz.level.Level;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -270,7 +271,11 @@ public class GUIController {
 	 * Updates the wave label on UI
 	 */
 	private void updateWaveNumber() {
-		waveLabel.setText("  Wave: " + Integer.toString(game.getWorld().getCurrentLevel().getHeadWave().getNum()));
+		Level lvl = game.getWorld().getCurrentLevel();
+		// failsafe: prevent NPE
+		if (lvl.getNumWaves() > 0) {
+			waveLabel.setText("  Wave: " + Integer.toString(lvl.getHeadWave().getNum()));
+		}
 	}
 
 	/**

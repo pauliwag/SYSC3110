@@ -13,7 +13,7 @@ import javafx.scene.image.Image;
 public class Sunflower extends Plant {
 
 	public static final int SUNFLOWER_COST = 100; // in sunpoints
-	public static final int PASSIVE_SUNPOINT_BOOST = 15; // every two turns
+	public static final int PASSIVE_SUNPOINT_BOOST = 50; // every turn
 
 	/**
 	 * Creates a new sunflower.

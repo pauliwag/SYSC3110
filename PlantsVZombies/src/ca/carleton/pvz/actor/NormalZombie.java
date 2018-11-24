@@ -10,7 +10,7 @@ import javafx.scene.image.Image;
  */
 public class NormalZombie extends Zombie {
 
-	public static final int NORMAL_ZOMBIE_HEALTH = 600;
+	public static final int NORMAL_ZOMBIE_HEALTH = 500;
 	public static final int NORMAL_ZOMBIE_SPEED = 1; // tiles moved to the left per turn
 
 	/**

@@ -1,7 +1,5 @@
 package ca.carleton.pvz;
 
-import ca.carleton.pvz.command.CommandProcessor;
-import ca.carleton.pvz.command.Presets;
 import ca.carleton.pvz.gui.GUIController;
 import ca.carleton.pvz.level.LevelOne;
 import javafx.application.Application;
@@ -17,7 +15,6 @@ import javafx.stage.Stage;
 public class PlantsVZombies extends Application {
 
 	private World gameWorld; // stores the levels to be played
-	private CommandProcessor commandProcessor; // processes user input
 	private ActionProcessor actionProcessor;
 	private boolean gameOver;
 	private static GUIController controller;
@@ -40,6 +37,11 @@ public class PlantsVZombies extends Application {
 		primaryStage.show();
 	}
 
+	/**
+	 * Gets this game's GUI controller.
+	 *
+	 * @return This game's GUI controller.
+	 */
 	public GUIController getController() {
 		return controller;
 	}
@@ -75,25 +77,12 @@ public class PlantsVZombies extends Application {
 	}
 
 	/**
-	 * Print out the current level being played.
-	 */
-
-	/**
 	 * Get the game's action processor
 	 *
 	 * @return the game action processor
 	 */
 	public ActionProcessor getActionProcessor() {
 		return actionProcessor;
-	}
-
-	/**
-	 * Shorthand for printing to the terminal.
-	 *
-	 * @param s The String to be printed.
-	 */
-	public void print(String s) {
-		System.out.println(s);
 	}
 
 }
