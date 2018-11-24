@@ -14,7 +14,9 @@ import ca.carleton.pvz.actor.Zombie;
  * The abstract class from which all game levels inherit.
  *
  */
-public abstract class Level {
+public abstract class Level implements Serializable {
+
+	private static final long serialVersionUID = 8845013896074447924L;
 
 	/** The name of this level; e.g., "Level 1". */
 	private String levelName;

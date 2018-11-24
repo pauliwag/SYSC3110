@@ -41,7 +41,10 @@ public class ActionProcessor {
 	 * Turn" button.
 	 */
 	public void processNextTurn() {
-
+		if(game.getController().logMoves()) {
+			game.addToUndoStack(game.getWorld());
+		}
+		
 		Level lvl = game.getWorld().getCurrentLevel();
 
 		// increment turn by one
@@ -237,7 +240,10 @@ public class ActionProcessor {
 	 * @param yPos The y-coordinate at which to plant the given plant.
 	 */
 	public void processPlanting(Level lvl, Plant plant, int xPos, int yPos) {
-
+		if(game.getController().logMoves()) {
+			game.addToUndoStack(game.getWorld());
+		}
+		
 		if (lvl.getCell(xPos, yPos) == null) {
 
 			if (plant.getClass() == Sunflower.class) {

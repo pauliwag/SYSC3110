@@ -8,6 +8,7 @@ import ca.carleton.pvz.level.Wave.Difficulty;
  */
 public class LevelOne extends Level {
 
+	private static final long serialVersionUID = 1662701129794850021L;
 	private static final int WIDTH = 7;
 	private static final int HEIGHT = 5;
 	private static final int STARTING_SUNPOINTS = 500;

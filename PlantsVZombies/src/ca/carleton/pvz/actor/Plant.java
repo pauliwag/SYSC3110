@@ -6,6 +6,7 @@ package ca.carleton.pvz.actor;
  */
 public abstract class Plant extends Actor {
 
+	private static final long serialVersionUID = 3363197584704708351L;
 	/** The cost, in sunpoints, of this plant. */
 	private int cost;
 

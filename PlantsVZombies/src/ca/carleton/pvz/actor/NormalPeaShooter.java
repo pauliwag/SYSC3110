@@ -10,6 +10,7 @@ import javafx.scene.image.Image;
  */
 public class NormalPeaShooter extends PeaShooter {
 
+	private static final long serialVersionUID = -5722345411858347989L;
 	public static final int NORMAL_PEA_COST = 200; // in sunpoints
 	public static final int NORMAL_PEA_DAMAGE = 200;
 

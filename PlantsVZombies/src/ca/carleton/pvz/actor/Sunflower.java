@@ -12,6 +12,7 @@ import javafx.scene.image.Image;
  */
 public class Sunflower extends Plant {
 
+	private static final long serialVersionUID = 6879988409404943345L;
 	public static final int SUNFLOWER_COST = 100; // in sunpoints
 	public static final int PASSIVE_SUNPOINT_BOOST = 50; // every turn
 
