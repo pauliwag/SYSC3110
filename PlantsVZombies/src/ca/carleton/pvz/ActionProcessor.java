@@ -66,7 +66,7 @@ public class ActionProcessor {
 			return;
 		}
 
-		// spawn a zombie at least every other turn
+		// normal difficulty: spawn a zombie every one or two turns
 		if (!lvl.zombieSpawnedLastTurn()) {
 			spawnZombie(lvl);
 			lvl.zombieSpawned();
@@ -74,6 +74,14 @@ public class ActionProcessor {
 			spawnZombie(lvl);
 		} else {
 			lvl.zombieNotSpawned();
+		}
+
+		// augment ramped difficulty
+		if (lvl.getHeadWave().isRamped()) {
+			spawnZombie(lvl);
+			if (lvl.getHeadWave().isSuperRamped()) {
+				spawnZombie(lvl);
+			}
 		}
 
 		// level is beat if queued waves are empty and
@@ -189,7 +197,7 @@ public class ActionProcessor {
 			// create an array list of the keys
 			ArrayList<Class<? extends Zombie>> keysAsArray = new ArrayList<>(zombies.keySet());
 
-			// remove keys (from array list) with value of 0
+			// remove keys from array list with hash value of 0
 			keysAsArray.removeIf(z -> zombies.get(z) == 0);
 
 			// randomly select a zombie type
@@ -197,13 +205,20 @@ public class ActionProcessor {
 
 			// try placing a zombie of the randomly selected type
 			// in the rightmost column and in a random row
+			int rightmostCol = lvl.getNumCols() - 1;
+			int randomRow = r.nextInt(lvl.getNumRows());
+			while (lvl.getCell(rightmostCol, randomRow) instanceof Zombie) {
+				randomRow = r.nextInt(lvl.getNumRows());
+			}
 			try {
-				lvl.placeActor(zombieTypeToSpawn.newInstance(),
-						new Point(lvl.getNumCols() - 1, r.nextInt(lvl.getNumRows())));
-				zombies.replace(zombieTypeToSpawn, zombies.get(zombieTypeToSpawn) - 1);
+				lvl.placeActor(zombieTypeToSpawn.newInstance(), new Point(rightmostCol, randomRow));
 			} catch (InstantiationException | IllegalAccessException e) {
 				return;
 			}
+
+			// decrement the hash value of the placed zombie type by one
+			zombies.replace(zombieTypeToSpawn, zombies.get(zombieTypeToSpawn) - 1);
+
 		}
 
 		// if the head wave is void of zombies, dequeue it

@@ -22,20 +22,61 @@ public class Wave {
 	private HashMap<Class<? extends Zombie>, Integer> zombies;
 
 	/**
+	 * The possible difficulty levels of a wave. Harder difficulty entails
+	 * greater zombie spawn rate.
+	 */
+	public enum Difficulty {
+
+		NORMAL, RAMPED, SUPER_RAMPED
+
+	};
+
+	/** This wave's difficulty level. */
+	private Difficulty difficulty;
+
+	/**
 	 * Creates a new wave comprising the specified numbers of zombies.
 	 *
 	 * @param waveNum This wave's sequence number.
+	 * @param difficulty This wave's difficulty level.
 	 * @param numNormalZombies The number of normal zombies initially in this
 	 *            wave.
+	 * @param numShieldZombies The number of shield zombies initiallty in this
+	 *            wave.
+	 * @param numFastZombies The number of fast zombies initially in this wave.
 	 */
-	public Wave(int waveNum, int numNormalZombies, int numShieldZombies, int numFastZombies) {
+	public Wave(int waveNum, Difficulty difficulty, int numNormalZombies, int numShieldZombies, int numFastZombies) {
 
 		this.waveNum = waveNum;
+
+		this.difficulty = difficulty;
 
 		zombies = new HashMap<>();
 		zombies.put(NormalZombie.class, numNormalZombies);
 		zombies.put(ShieldZombie.class, numShieldZombies);
 		zombies.put(FastZombie.class, numFastZombies);
+
+	}
+
+	/**
+	 * Gets whether this wave's difficulty is ramped.
+	 *
+	 * @return true if this wave is ramped, false otherwise.
+	 */
+	public boolean isRamped() {
+
+		return difficulty != Difficulty.NORMAL;
+
+	}
+
+	/**
+	 * Gets whether this wave's difficulty is super ramped.
+	 *
+	 * @return true if this wave is super ramped, false otherwise.
+	 */
+	public boolean isSuperRamped() {
+
+		return difficulty == Difficulty.SUPER_RAMPED;
 
 	}
 
