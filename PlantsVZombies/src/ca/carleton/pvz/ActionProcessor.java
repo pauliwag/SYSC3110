@@ -50,11 +50,9 @@ public class ActionProcessor {
 		// decrement global cooldowns by one
 		CooldownManager.decTimeOnCD();
 
-		// passively boost sunpoints every other turn
+		// passively boost sunpoints every turn
 		// based on the number of sunflowers on the map
-		if (lvl.getTurn() % 2 == 0) {
-			lvl.addToSunpoints(lvl.getNumSunflowers() * Sunflower.PASSIVE_SUNPOINT_BOOST);
-		}
+		lvl.addToSunpoints(lvl.getNumSunflowers() * Sunflower.PASSIVE_SUNPOINT_BOOST);
 
 		// actuate shooting by all shooting plants in the given level
 		shootZombies(lvl);
