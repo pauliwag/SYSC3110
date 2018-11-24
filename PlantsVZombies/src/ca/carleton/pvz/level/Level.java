@@ -56,10 +56,6 @@ public abstract class Level {
 	 * @param height The height (number of vertical cells) of the level.
 	 * @param startingSunPoints The sun points the player has at the start of
 	 *            the level.
-	 * @param waveToRamp The wave number at which zombies start spawning at an
-	 *            increased rate.
-	 * @param waveToSuperRamp The wave number at which zombies start spawning at
-	 *            a super fast rate.
 	 */
 	public Level(String levelName, int width, int height, int startingSunPoints) {
 
