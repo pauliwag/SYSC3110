@@ -6,6 +6,8 @@ package ca.carleton.pvz.actor;
  */
 public abstract class Zombie extends Actor {
 
+	private static final long serialVersionUID = -6031527031278709506L;
+
 	/** The health points of this zombie. */
 	private int health;
 

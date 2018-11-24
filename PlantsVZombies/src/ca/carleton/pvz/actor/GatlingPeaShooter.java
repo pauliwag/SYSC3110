@@ -10,6 +10,7 @@ import javafx.scene.image.Image;
  */
 public class GatlingPeaShooter extends PeaShooter {
 
+	private static final long serialVersionUID = -9009721810436148422L;
 	public static final int GATLING_PEA_COST = 300; // in sunpoints
 	public static final int GATLING_PEA_DAMAGE = 350;
 

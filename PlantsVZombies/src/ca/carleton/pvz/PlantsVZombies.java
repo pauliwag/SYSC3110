@@ -1,5 +1,7 @@
 package ca.carleton.pvz;
 
+import java.util.Stack;
+
 import ca.carleton.pvz.gui.GUIController;
 import ca.carleton.pvz.level.LevelOne;
 import javafx.application.Application;
@@ -18,7 +20,9 @@ public class PlantsVZombies extends Application {
 	private ActionProcessor actionProcessor;
 	private boolean gameOver;
 	private static GUIController controller;
-
+	private Stack<World> undoStack;
+	private Stack<World> redoStack;
+	
 	/**
 	 * The start method for the JavaFX GUI. Loads GUI from fxml file and
 	 * creates/shows a scene containing it.
@@ -33,6 +37,8 @@ public class PlantsVZombies extends Application {
 		controller.setGame(this);
 		Scene scene = new Scene(borderPane, 1360.0, 615.0);
 		primaryStage.setTitle("Plants VS Zombies Group 5");
+		primaryStage.setResizable(false);
+		
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
@@ -54,6 +60,9 @@ public class PlantsVZombies extends Application {
 		actionProcessor = new ActionProcessor(this);
 		gameWorld.addLevel(new LevelOne());
 		gameOver = false;
+		undoStack = new Stack<World>();
+		redoStack = new Stack<World>();
+		addToUndoStack(gameWorld);
 	}
 
 	public World getWorld() {
@@ -84,5 +93,41 @@ public class PlantsVZombies extends Application {
 	public ActionProcessor getActionProcessor() {
 		return actionProcessor;
 	}
-
+	
+	
+	public void addToUndoStack(World world) {
+		System.out.println("undostack: " + undoStack.size());
+		undoStack.push(World.copy(world));
+	}
+	
+	public void undo() {
+		addToRedoStack(getWorld());
+		setGameWorld(undoStack.pop());
+	}
+	
+	public void addToRedoStack(World world) {
+		redoStack.push(World.copy(world));
+		System.out.println("redostack: " + redoStack.size());
+	}
+	
+	public void redo() {
+		addToUndoStack(redoStack.peek());
+		setGameWorld(redoStack.pop());
+	}
+	
+	public boolean hasUndo() {
+		return !undoStack.isEmpty();
+	}
+	
+	public boolean hasRedo() {
+		return !redoStack.isEmpty();
+	}
+	
+	public void emptyUndoRedo() {
+		redoStack.clear();
+		undoStack.clear();
+	}
+	public void setGameWorld(World world) {
+		gameWorld = world;
+	}
 }

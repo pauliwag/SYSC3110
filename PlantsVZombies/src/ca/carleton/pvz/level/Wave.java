@@ -1,5 +1,6 @@
 package ca.carleton.pvz.level;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import ca.carleton.pvz.actor.FastZombie;
 import ca.carleton.pvz.actor.NormalZombie;
@@ -10,7 +11,9 @@ import ca.carleton.pvz.actor.Zombie;
  * Stores a wave of zombies.
  *
  */
-public class Wave {
+public class Wave implements Serializable {
+
+	private static final long serialVersionUID = -714596874847714954L;
 
 	/**
 	 * This wave's number; determines when this wave will be deployed via the

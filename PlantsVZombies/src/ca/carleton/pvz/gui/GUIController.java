@@ -22,6 +22,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
@@ -71,7 +72,13 @@ public class GUIController {
 
 	@FXML
 	private Button threepeaterButton;
-
+	
+	@FXML
+	private Button undoButton;
+	
+	@FXML
+	private Button redoButton;
+	
 	@FXML
 	private Label sunflowerCooldown;
 
@@ -98,7 +105,10 @@ public class GUIController {
 
 	@FXML
 	private MenuItem aboutButton;
-
+	
+	@FXML
+	private CheckBox allowUndoRedo;
+	
 	@FXML
 	public void initialize() {
 		assert peashooterCooldown != null : "fx:id=\"peashooterCooldown\" was not injected: check your FXML file 'pvzgui.fxml'.";
@@ -119,7 +129,11 @@ public class GUIController {
 		assert threepeaterCost != null : "fx:id=\"threepeaterCost\" was not injected: check your FXML file 'pvzgui.fxml'.";
 		assert threepeaterCooldown != null : "fx:id=\"threepeaterCooldown\" was not injected: check your FXML file 'pvzgui.fxml'.";
 		assert threepeaterButton != null : "fx:id=\"threepeaterButton\" was not injected: check your FXML file 'pvzgui.fxml'.";
-
+		assert undoButton != null : "fx:id=\"undoButton\" was not injected: check your FXML file 'pvzgui.fxml'.";
+		assert redoButton != null : "fx:id=\"redoButton\" was not injected: check your FXML file 'pvzgui.fxml'.";
+		assert allowUndoRedo != null : "fx:id=\"allowUndoRedo\" was not injected: check your FXML file 'pvzgui.fxml'.";
+		
+		setupUndoRedo();
 		setupMenuButtons();
 		setupPlantSelectionButtons();
 		setupNextTurnButton();
@@ -127,6 +141,8 @@ public class GUIController {
 		initGameGrid();
 		nextLevelButton.setDisable(true); // we only have one Level in this
 											// version, so disable button
+		redoButton.setDisable(true);
+		undoButton.setDisable(true);
 	}
 
 	/**
@@ -164,7 +180,20 @@ public class GUIController {
 		});
 
 	}
-
+	
+	private void updateUndoRedo() {
+		if(game.hasRedo()) {
+			redoButton.setDisable(false);
+		} else {
+			redoButton.setDisable(true);
+		}
+		
+		if(game.hasUndo()) {
+			undoButton.setDisable(false);
+		} else {
+			undoButton.setDisable(true);
+		}
+	}
 	/**
 	 * Sets up the next turn button's event handler
 	 */
@@ -179,11 +208,56 @@ public class GUIController {
 				}
 
 				updateGameGrid();
-
 			}
 		});
 	}
-
+	
+	private void setupUndoRedo() {
+		undoButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent arg0) {
+				if(game.hasUndo()) {
+					System.out.println("old: " + game.getWorld());
+					game.undo();
+					System.out.println("new: " + game.getWorld());
+					updateGameGrid();
+				}
+				
+			}
+			
+		});
+		
+		redoButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent arg0) {
+				if(game.hasRedo()) {
+					System.out.println("old: " + game.getWorld());
+					game.redo();
+					System.out.println("new: " + game.getWorld());
+					updateGameGrid();
+				}
+				
+			}
+			
+		});
+		
+		allowUndoRedo.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				if(allowUndoRedo.isSelected()) {
+					redoButton.setDisable(false);
+					undoButton.setDisable(false);
+				} else {
+					redoButton.setDisable(true);
+					undoButton.setDisable(true);
+					game.emptyUndoRedo();
+				}
+				
+			}
+			
+		});
+	}
+	
 	/**
 	 * Sets up menu button actions
 	 */
@@ -302,6 +376,9 @@ public class GUIController {
 				}
 			}
 		}
+		if(logMoves()) {
+			updateUndoRedo();
+		}	
 		updateWaveNumber();
 		updateSunpointLabel();
 		updateCooldownDisplay();
@@ -316,6 +393,9 @@ public class GUIController {
 		nextTurnButton.setDisable(true);
 		gameGrid.setDisable(true);
 		plantGroup.setDisable(true);
+		redoButton.setDisable(true);
+		undoButton.setDisable(true);
+		allowUndoRedo.setDisable(true);
 		showAlert("Game Over", null, "Game over! You failed to protect your home from the zombies :(",
 				AlertType.INFORMATION);
 	}
@@ -358,5 +438,9 @@ public class GUIController {
 	 */
 	public void setGame(PlantsVZombies game) {
 		this.game = game;
+	}
+	
+	public boolean logMoves() {
+		return allowUndoRedo.isSelected();
 	}
 }

@@ -1,5 +1,6 @@
 package ca.carleton.pvz.actor;
 
+
 /**
  * Manages global cooldowns. "Time" is currently represented by turns; i.e., one
  * unit of time = one turn.
