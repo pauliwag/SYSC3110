@@ -227,8 +227,8 @@ public class GUIController {
 						if (GridPane.getRowIndex(imgView) != null && GridPane.getColumnIndex(imgView) != null) {
 							row = GridPane.getRowIndex(imgView);
 							column = GridPane.getColumnIndex(imgView);
-							game.getActionProcessor().processPlaceActor(game.getWorld().getCurrentLevel(),
-									selectedPlant, column, row);
+							game.getActionProcessor().processPlanting(game.getWorld().getCurrentLevel(), selectedPlant,
+									column, row);
 						}
 						updateGameGrid();
 						event.consume();
@@ -270,7 +270,7 @@ public class GUIController {
 	 * Updates the wave label on UI
 	 */
 	private void updateWaveNumber() {
-		waveLabel.setText("  Wave: " + Integer.toString(game.getActionProcessor().getWave().getNum()));
+		waveLabel.setText("  Wave: " + Integer.toString(game.getWorld().getCurrentLevel().getHeadWave().getNum()));
 	}
 
 	/**

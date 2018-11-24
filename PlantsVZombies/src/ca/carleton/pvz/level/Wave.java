@@ -44,7 +44,7 @@ public class Wave {
 	 *
 	 * @return true if this wave is defeated, false otherwise.
 	 */
-	public boolean isDefeated() {
+	public boolean isEmpty() {
 
 		return getTotalNumZombies() == 0;
 
@@ -74,6 +74,17 @@ public class Wave {
 	public int getNum() {
 
 		return waveNum;
+
+	}
+
+	/**
+	 * Gets this wave's hash table of zombies.
+	 *
+	 * @return This wave's hash table of zombies.
+	 */
+	public HashMap<Class<? extends Zombie>, Integer> getZombies() {
+
+		return zombies;
 
 	}
 

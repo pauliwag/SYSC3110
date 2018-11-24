@@ -1,40 +1,45 @@
 package ca.carleton.pvz;
 
 import java.awt.Point;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 import ca.carleton.pvz.actor.Actor;
 import ca.carleton.pvz.actor.CooldownManager;
 import ca.carleton.pvz.actor.GatlingPeaShooter;
 import ca.carleton.pvz.actor.NormalPeaShooter;
-import ca.carleton.pvz.actor.NormalZombie;
 import ca.carleton.pvz.actor.PeaShooter;
+import ca.carleton.pvz.actor.Plant;
 import ca.carleton.pvz.actor.Sunflower;
 import ca.carleton.pvz.actor.Zombie;
 import ca.carleton.pvz.level.Level;
-import ca.carleton.pvz.level.Wave;
 import javafx.scene.control.Alert.AlertType;
 
 /**
- * Updates the model as dictated by GUIController.
+ * Updates the given game's model as dictated by GUIController.
  *
  */
 public class ActionProcessor {
 
-	private boolean waveDefeated;
-
-	private Wave wave;
 	private PlantsVZombies game;
-
 	private Random r;
 
+	/**
+	 * Constructs an action processor.
+	 *
+	 * @param game The game whose model will be updated by this action
+	 *            processor.
+	 */
 	public ActionProcessor(PlantsVZombies game) {
 		this.game = game;
-		wave = new Wave(1, 3, 0, 0);
-		waveDefeated = false;
 		r = new Random();
 	}
 
+	/**
+	 * Called by GUIController to update game's model upon clicking the "Next
+	 * Turn" button.
+	 */
 	public void processNextTurn() {
 
 		Level lvl = game.getWorld().getCurrentLevel();
@@ -57,78 +62,55 @@ public class ActionProcessor {
 		// actuate movement of all zombies in the given level
 		moveZombies(lvl);
 
-		// --------------------------------------------------------------------------------------
-		// TODO : Refactor code below here ...
-		// --------------------------------------------------------------------------------------
-
-		if (wave.getNum() == 1 && lvl.getTurn() >= 3 && wave.getTotalNumZombies() > 0) { // zombies
-			// spawn
-			// after
-			// lvl.getTurn()
-			// ==
-			// 3
-			// for
-			// first
-			// wave
-
-			game.getWorld().updateCurrentLevel(spawnZombie(lvl));
-			wave.setNumZombies(NormalZombie.class, wave.getTotalNumZombies() - 1);
-		}
-
-		if (wave.getNum() == 2 && lvl.getTurn() >= 3 && wave.getTotalNumZombies() > 0) {
-			game.getWorld().updateCurrentLevel(spawnZombie(lvl));
-			wave.setNumZombies(NormalZombie.class, wave.getTotalNumZombies() - 1);
-		}
-
-		if (wave.getNum() == 3 && lvl.getTurn() >= 3 && wave.getTotalNumZombies() > 0) {
-
-			game.getWorld().updateCurrentLevel(spawnZombie(lvl));
-			wave.setNumZombies(NormalZombie.class, wave.getTotalNumZombies() - 1);
-		}
-
-		isGameOver();
-
+		// check if there are any zombies in the leftmost column
 		if (isGameOver()) {
 			game.setGameOver();
 			return;
 		}
 
-		if ((wave.getNum() == 1 && lvl.getTurn() >= 6) || (wave.getNum() == 2 && lvl.getTurn() >= 8)
-				|| (wave.getNum() == 3 && lvl.getTurn() >= 10)) {
-			waveDefeated = true;
-			for (int i = 0; i < lvl.getNumRows(); ++i) {
-				for (int j = 0; j < lvl.getNumCols(); ++j) {
-					Actor o = lvl.getCell(i, j);
-					if (o instanceof Zombie) {
-						waveDefeated = false;
+		// spawn a zombie every other turn
+		if (lvl.getTurn() % 2 == 0) {
+			spawnZombie(lvl);
+		}
+
+		// level is beat if queued waves are empty and
+		// there are no zombies on the map
+		if (lvl.isBeat()) {
+			game.getController().showAlert("You won!", null,
+					"Congrats! You beat " + lvl.getLevelName() + " of Plants vs. Zombies!", AlertType.INFORMATION);
+		}
+
+	}
+
+	/**
+	 * Actuates shooting by all shooting plants in the given level.
+	 *
+	 */
+	private void shootZombies(Level lvl) {
+
+		// traverse col-by-col starting top-left as (0, 0)
+		for (int x1 = 0; x1 < lvl.getNumCols(); ++x1) {
+			for (int y = 0; y < lvl.getNumRows(); ++y) {
+				Actor a1 = lvl.getCell(x1, y);
+				if (a1 instanceof PeaShooter) {
+					PeaShooter pS = (PeaShooter) a1;
+					// look for zombie to right of pea shooter
+					for (int x2 = x1; x2 < lvl.getNumCols(); ++x2) {
+						Actor a2 = lvl.getCell(x2, y);
+						if (a2 instanceof Zombie) {
+							Zombie z = (Zombie) a2;
+							z.setHealth(z.getHealth() - pS.getPeaDamage());
+							if (z.getHealth() <= 0) {
+								lvl.placeActor(null, new Point(x2, y));
+							}
+							break; // so that trailing zombies (in same row)
+									// don't also get hit
+						}
 					}
 				}
 			}
 		}
 
-		if (game.isGameOver()) {
-			game.setGameOver();
-			return;
-		}
-
-		if (wave.getNum() == 1 && waveDefeated) {
-			waveDefeated = false;
-			wave.setNumZombies(NormalZombie.class, 5);
-			wave.setWaveNum(2);
-			return;
-		}
-
-		if (wave.getNum() == 2 && waveDefeated) {
-			waveDefeated = false;
-			wave.setNumZombies(NormalZombie.class, 7);
-			wave.setWaveNum(3);
-			return;
-		}
-
-		if (wave.getNum() >= 3 && waveDefeated) {
-			game.getController().showAlert("You won!", null, "Congrats, you beat the first level of Plants VS Zombies!",
-					AlertType.INFORMATION);
-		}
 	}
 
 	/**
@@ -168,37 +150,6 @@ public class ActionProcessor {
 	}
 
 	/**
-	 * Actuates shooting by all shooting plants in the given level.
-	 *
-	 */
-	private void shootZombies(Level lvl) {
-
-		// traverse col-by-col starting top-left as (0, 0)
-		for (int x1 = 0; x1 < lvl.getNumCols(); ++x1) {
-			for (int y = 0; y < lvl.getNumRows(); ++y) {
-				Actor a1 = lvl.getCell(x1, y);
-				if (a1 instanceof PeaShooter) {
-					PeaShooter pS = (PeaShooter) a1;
-					// look for zombie to right of pea shooter
-					for (int x2 = x1; x2 < lvl.getNumCols(); ++x2) {
-						Actor a2 = lvl.getCell(x2, y);
-						if (a2 instanceof Zombie) {
-							Zombie z = (Zombie) a2;
-							z.setHealth(z.getHealth() - pS.getPeaDamage());
-							if (z.getHealth() <= 0) {
-								lvl.placeActor(null, new Point(x2, y));
-							}
-							break; // so that trailing zombies (in same row)
-									// don't also get hit
-						}
-					}
-				}
-			}
-		}
-
-	}
-
-	/**
 	 * Scans the leftmost column for any zombies. If there is a zombie in the
 	 * leftmost column, it is game over.
 	 *
@@ -223,89 +174,67 @@ public class ActionProcessor {
 	 * @param lvl The level on which to spawn a zombie.
 	 * @return The level on which a zombie was spawned.
 	 */
-	private Level spawnZombie(Level lvl) {
-		int randomRow = r.nextInt(lvl.getNumRows());
-		Zombie zombie = new NormalZombie();
-		lvl.placeActor(zombie, new Point(lvl.getNumCols() - 1, randomRow));
-		return lvl;
+	private void spawnZombie(Level lvl) {
+
+		HashMap<Class<? extends Zombie>, Integer> zombies = lvl.getHeadWave().getZombies();
+		ArrayList<Class<? extends Zombie>> keysAsArray = new ArrayList<>(zombies.keySet());
+		for (Class<? extends Zombie> zombieType : keysAsArray) {
+			if (zombies.get(zombieType) == 0) {
+				keysAsArray.remove(zombieType);
+			}
+		}
+		Class<? extends Zombie> zombieTypeToSpawn = keysAsArray.get(r.nextInt(keysAsArray.size()));
+		try {
+			lvl.placeActor(zombieTypeToSpawn.newInstance(),
+					new Point(lvl.getNumCols() - 1, r.nextInt(lvl.getNumRows())));
+			zombies.replace(zombieTypeToSpawn, zombies.get(zombieTypeToSpawn) - 1);
+		} catch (InstantiationException | IllegalAccessException e) {
+			return;
+		}
+		if (lvl.isHeadWaveEmpty()) {
+			lvl.dequeueHeadWave();
+		}
+
 	}
 
 	/**
-	 * Deploys the wave at the head of the waves queue.
-	 */
-	public void deployHeadWave(Level lvl) {
-		Wave wave = lvl.getHeadWave();
-		// TODO : implement ...
-	}
-
-	/**
-	 * Places the given Actor object at the given coordinates.
+	 * Processes planting the given plant at the given coordinates.
 	 *
-	 * @param actor The Actor object to place.
-	 * @param xPos The x-coordinate at which to place the given actor.
-	 * @param yPos The y-coordinate at which to place the given actor.
+	 * @param lvl The level on which to plant the given plant.
+	 * @param plant The plant that will be planted.
+	 * @param xPos The x-coordinate at which to plant the given plant.
+	 * @param yPos The y-coordinate at which to plant the given plant.
 	 */
-	public void processPlaceActor(Level lvl, Actor actor, int xPos, int yPos) {
+	public void processPlanting(Level lvl, Plant plant, int xPos, int yPos) {
 
 		if (lvl.getCell(xPos, yPos) == null) {
 
-			if (actor instanceof NormalPeaShooter) {
-
-				if (CooldownManager.isNormalPeaOnCD()) {
-
-				} else if (lvl.getSunpoints() - NormalPeaShooter.NORMAL_PEA_COST < 0) {
-				} else {
-					lvl.placeActor(new NormalPeaShooter(), new Point(xPos, yPos));
-					lvl.subtractFromSunpoints(NormalPeaShooter.NORMAL_PEA_COST);
-					CooldownManager.startNormalPeaCD();
-
-				}
-			} else if (actor instanceof Sunflower) {
-
-				if (CooldownManager.isSunOnCD()) {
-
-				} else if (lvl.getSunpoints() - Sunflower.SUNFLOWER_COST < 0) {
-					// game.print(Presets.NOT_ENOUGH_SUNPOINTS + plantType +
-					// "\n");
-
-				} else {
-					Sunflower plantToPlace = new Sunflower();
-					plantToPlace.setTurnPlaced(lvl.getTurn());
-					lvl.placeActor(plantToPlace, new Point(xPos, yPos));
+			if (plant.getClass() == Sunflower.class) {
+				if (!CooldownManager.isSunOnCD() && lvl.getSunpoints() - Sunflower.SUNFLOWER_COST >= 0) {
+					lvl.placeActor(new Sunflower(), new Point(xPos, yPos));
 					lvl.subtractFromSunpoints(Sunflower.SUNFLOWER_COST);
 					CooldownManager.startSunCD();
 				}
-			} else if (actor instanceof GatlingPeaShooter) {
-
-				if (CooldownManager.isGatlingPeaOnCD()) {
-
-				} else if (lvl.getSunpoints() - GatlingPeaShooter.GATLING_PEA_COST < 0) {
-					// game.print(Presets.NOT_ENOUGH_SUNPOINTS + plantType +
-					// "\n");
-
-				} else {
-					GatlingPeaShooter plantToPlace = new GatlingPeaShooter();
-					lvl.placeActor(plantToPlace, new Point(xPos, yPos));
-					lvl.subtractFromSunpoints(GatlingPeaShooter.GATLING_PEA_COST);
-					CooldownManager.startGatlingPeaCD();
-				}
 			}
-		} else {
-			// grid position already in use, show alert to user
+
+		} else if (plant.getClass() == NormalPeaShooter.class) {
+			if (!CooldownManager.isNormalPeaOnCD() && lvl.getSunpoints() - NormalPeaShooter.NORMAL_PEA_COST >= 0) {
+				lvl.placeActor(new NormalPeaShooter(), new Point(xPos, yPos));
+				lvl.subtractFromSunpoints(NormalPeaShooter.NORMAL_PEA_COST);
+				CooldownManager.startNormalPeaCD();
+			}
+
+		} else if (plant.getClass() == GatlingPeaShooter.class) {
+			if (!CooldownManager.isGatlingPeaOnCD() && lvl.getSunpoints() - GatlingPeaShooter.GATLING_PEA_COST >= 0) {
+				lvl.placeActor(new GatlingPeaShooter(), new Point(xPos, yPos));
+				lvl.subtractFromSunpoints(GatlingPeaShooter.GATLING_PEA_COST);
+				CooldownManager.startGatlingPeaCD();
+
+		} else { // alert the user that the specified cell is already occupied
 			game.getController().showAlert("No room!", null, "There's already something placed here!",
 					AlertType.INFORMATION);
 		}
+
 	}
 
-	/**
-	 * Temporary way to get wave from action processor
-	 *
-	 * @return Returns action processor wave
-	 */
-	public Wave getWave() {
-		// TODO When ActionProcessor is properly integrated to use Level's wave
-		// objects,
-		// this won't be needed
-		return wave;
-	}
 }
