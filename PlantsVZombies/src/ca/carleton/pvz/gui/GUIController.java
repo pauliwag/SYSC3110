@@ -272,8 +272,7 @@ public class GUIController {
 	 */
 	private void updateWaveNumber() {
 		Level lvl = game.getWorld().getCurrentLevel();
-		// failsafe: prevent NPE
-		if (lvl.getNumWaves() > 0) {
+		if (lvl.getNumWaves() > 0) { // failsafe: prevent NPE
 			waveLabel.setText("  Wave: " + Integer.toString(lvl.getHeadWave().getNum()));
 		}
 	}
