@@ -150,6 +150,15 @@ public abstract class Level {
 	}
 
 	/**
+	 * Gets the number of waves in queue.
+	 *
+	 * @return The number of waves in queue.
+	 */
+	public int getNumWaves() {
+		return waves.size();
+	}
+
+	/**
 	 * Gets the current turn.
 	 *
 	 * @return The current turn.
