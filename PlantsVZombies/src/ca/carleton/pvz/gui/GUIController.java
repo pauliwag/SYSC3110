@@ -181,6 +181,9 @@ public class GUIController {
 
 	}
 	
+	/**
+	 * Update the undo/redo buttons to represent if undo/redo is possible.
+	 */
 	private void updateUndoRedo() {
 		if(game.hasRedo()) {
 			redoButton.setDisable(false);
@@ -194,6 +197,7 @@ public class GUIController {
 			undoButton.setDisable(true);
 		}
 	}
+	
 	/**
 	 * Sets up the next turn button's event handler
 	 */
