@@ -215,24 +215,28 @@ public class ActionProcessor {
 					lvl.subtractFromSunpoints(Sunflower.SUNFLOWER_COST);
 					CooldownManager.startSunCD();
 				}
+
+			} else if (plant.getClass() == NormalPeaShooter.class) {
+				if (!CooldownManager.isNormalPeaOnCD() && lvl.getSunpoints() - NormalPeaShooter.NORMAL_PEA_COST >= 0) {
+					lvl.placeActor(new NormalPeaShooter(), new Point(xPos, yPos));
+					lvl.subtractFromSunpoints(NormalPeaShooter.NORMAL_PEA_COST);
+					CooldownManager.startNormalPeaCD();
+				}
+
+			} else if (plant.getClass() == GatlingPeaShooter.class) {
+				if (!CooldownManager.isGatlingPeaOnCD()
+						&& lvl.getSunpoints() - GatlingPeaShooter.GATLING_PEA_COST >= 0) {
+					lvl.placeActor(new GatlingPeaShooter(), new Point(xPos, yPos));
+					lvl.subtractFromSunpoints(GatlingPeaShooter.GATLING_PEA_COST);
+					CooldownManager.startGatlingPeaCD();
+				}
+
+			} else { // alert the user that the specified cell is already
+						// occupied
+				game.getController().showAlert("No room!", null, "There's already something placed here!",
+						AlertType.INFORMATION);
 			}
 
-		} else if (plant.getClass() == NormalPeaShooter.class) {
-			if (!CooldownManager.isNormalPeaOnCD() && lvl.getSunpoints() - NormalPeaShooter.NORMAL_PEA_COST >= 0) {
-				lvl.placeActor(new NormalPeaShooter(), new Point(xPos, yPos));
-				lvl.subtractFromSunpoints(NormalPeaShooter.NORMAL_PEA_COST);
-				CooldownManager.startNormalPeaCD();
-			}
-
-		} else if (plant.getClass() == GatlingPeaShooter.class) {
-			if (!CooldownManager.isGatlingPeaOnCD() && lvl.getSunpoints() - GatlingPeaShooter.GATLING_PEA_COST >= 0) {
-				lvl.placeActor(new GatlingPeaShooter(), new Point(xPos, yPos));
-				lvl.subtractFromSunpoints(GatlingPeaShooter.GATLING_PEA_COST);
-				CooldownManager.startGatlingPeaCD();
-
-		} else { // alert the user that the specified cell is already occupied
-			game.getController().showAlert("No room!", null, "There's already something placed here!",
-					AlertType.INFORMATION);
 		}
 
 	}
