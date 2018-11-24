@@ -42,6 +42,9 @@ public abstract class Level {
 	/** The player's unspent sun points in this level. */
 	private int sunPoints;
 
+	/** Indicates whether a zombie was spawned. */
+	private boolean zombieSpawned;
+
 	/**
 	 * Initializes the fields of a level object.
 	 *
@@ -58,6 +61,7 @@ public abstract class Level {
 		sunPoints = startingSunPoints;
 		grid = new Actor[width][height];
 		turn = 0;
+		zombieSpawned = false;
 
 		// initialize waves queue such that a lower wave number is prioritized
 		waves = new PriorityQueue<>(11, (Comparator<Wave> & Serializable) (wave1, wave2) -> {
@@ -189,6 +193,29 @@ public abstract class Level {
 			}
 		}
 		return numSunflowers;
+	}
+
+	/**
+	 * Gets whether a zombie was spawned in the previous turn.
+	 *
+	 * @return true if a zombie was spawned last turn, false otherwise.
+	 */
+	public boolean zombieSpawnedLastTurn() {
+		return zombieSpawned;
+	}
+
+	/**
+	 * Sets zombieSpawned to true.
+	 */
+	public void zombieSpawned() {
+		zombieSpawned = true;
+	}
+
+	/**
+	 * Sets zombieSpawned to false.
+	 */
+	public void zombieNotSpawned() {
+		zombieSpawned = false;
 	}
 
 	/**

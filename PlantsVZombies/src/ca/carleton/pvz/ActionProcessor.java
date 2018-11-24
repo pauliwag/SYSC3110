@@ -66,9 +66,14 @@ public class ActionProcessor {
 			return;
 		}
 
-		// spawn a zombie every other turn
-		if (lvl.getTurn() % 2 == 0) {
+		// spawn a zombie at least every other turn
+		if (!lvl.zombieSpawnedLastTurn()) {
 			spawnZombie(lvl);
+			lvl.zombieSpawned();
+		} else if (r.nextBoolean()) {
+			spawnZombie(lvl);
+		} else {
+			lvl.zombieNotSpawned();
 		}
 
 		// level is beat if queued waves are empty and
