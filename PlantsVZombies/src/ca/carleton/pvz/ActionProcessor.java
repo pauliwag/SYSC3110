@@ -140,8 +140,8 @@ public class ActionProcessor {
 					// ensure all non-zombie cells in zombie's path are
 					// nullified
 					for (int xAux = xNew + 1; xAux <= x; ++xAux) {
-						if (!(lvl.getCell(xAux, y) instanceof Zombie))
-							lvl.placeActor(null, new Point(xAux, y));
+						// if (!(lvl.getCell(xAux, y) instanceof Zombie))
+						lvl.placeActor(null, new Point(xAux, y));
 					}
 				}
 			}
