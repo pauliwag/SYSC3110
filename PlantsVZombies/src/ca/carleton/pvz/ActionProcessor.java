@@ -43,10 +43,10 @@ public class ActionProcessor {
 	 * Turn" button.
 	 */
 	public void processNextTurn() {
-		if(game.getController().logMoves()) {
+		if (game.getController().logMoves()) {
 			game.addToUndoStack(game.getWorld());
 		}
-		
+
 		Level lvl = game.getWorld().getCurrentLevel();
 
 		// increment turn by one
@@ -55,9 +55,13 @@ public class ActionProcessor {
 		// decrement global cooldowns by one
 		CooldownManager.decTimeOnCD();
 
-		// passively boost sunpoints every turn
-		// based on the number of sunflowers on the map
-		lvl.addToSunpoints(lvl.getNumSunflowers() * Sunflower.PASSIVE_SUNPOINT_BOOST);
+		// boost sunpoints every turn based on
+		// the number of sunflowers on the map
+		lvl.addToSunpoints(lvl.getNumSunflowers() * Sunflower.SUNFLOWER_SUNPOINT_BOOST);
+
+		// passively boost sunpoints every other turn
+		if (lvl.getTurn() % 2 == 0)
+			lvl.addToSunpoints(Level.PASSIVE_SUNPOINT_BOOST);
 
 		// actuate shooting by all shooting plants in the given level
 		shootZombies(lvl);
@@ -242,10 +246,10 @@ public class ActionProcessor {
 	 * @param yPos The y-coordinate at which to plant the given plant.
 	 */
 	public void processPlanting(Level lvl, Plant plant, int xPos, int yPos) {
-		if(game.getController().logMoves()) {
+		if (game.getController().logMoves()) {
 			game.addToUndoStack(game.getWorld());
 		}
-		
+
 		if (lvl.getCell(xPos, yPos) == null) {
 
 			if (plant.getClass() == Sunflower.class) {
