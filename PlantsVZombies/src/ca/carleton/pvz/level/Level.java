@@ -42,6 +42,9 @@ public abstract class Level {
 	/** The player's unspent sun points in this level. */
 	private int sunPoints;
 
+	/** Indicates whether a zombie was spawned. */
+	private boolean zombieSpawned;
+
 	/**
 	 * Initializes the fields of a level object.
 	 *
@@ -58,6 +61,7 @@ public abstract class Level {
 		sunPoints = startingSunPoints;
 		grid = new Actor[width][height];
 		turn = 0;
+		zombieSpawned = false;
 
 		// initialize waves queue such that a lower wave number is prioritized
 		waves = new PriorityQueue<>(11, (Comparator<Wave> & Serializable) (wave1, wave2) -> {
@@ -192,6 +196,29 @@ public abstract class Level {
 	}
 
 	/**
+	 * Gets whether a zombie was spawned in the previous turn.
+	 *
+	 * @return true if a zombie was spawned last turn, false otherwise.
+	 */
+	public boolean zombieSpawnedLastTurn() {
+		return zombieSpawned;
+	}
+
+	/**
+	 * Sets zombieSpawned to true.
+	 */
+	public void zombieSpawned() {
+		zombieSpawned = true;
+	}
+
+	/**
+	 * Sets zombieSpawned to false.
+	 */
+	public void zombieNotSpawned() {
+		zombieSpawned = false;
+	}
+
+	/**
 	 * Gets the contents of the cell located at the given coordinates.
 	 *
 	 * @param x The x-coordinate (column number).
@@ -283,28 +310,6 @@ public abstract class Level {
 	public int getSunpoints() {
 
 		return sunPoints;
-	}
-
-	/**
-	 * Returns this level's grid as a String.
-	 *
-	 * @return This level's grid as a String.
-	 */
-	@Override
-	public String toString() {
-		String s = "";
-		for (int row = 0; row < levelDimension.height; ++row) {
-			s += "| ";
-			for (int col = 0; col < levelDimension.width; ++col) {
-				if (grid[col][row] != null) {
-					s += grid[col][row] + " | ";
-				} else {
-					s += "  | ";
-				}
-			}
-			s += "\n";
-		}
-		return s;
 	}
 
 }

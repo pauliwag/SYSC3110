@@ -50,11 +50,9 @@ public class ActionProcessor {
 		// decrement global cooldowns by one
 		CooldownManager.decTimeOnCD();
 
-		// passively boost sunpoints every other turn
+		// passively boost sunpoints every turn
 		// based on the number of sunflowers on the map
-		if (lvl.getTurn() % 2 == 0) {
-			lvl.addToSunpoints(lvl.getNumSunflowers() * Sunflower.PASSIVE_SUNPOINT_BOOST);
-		}
+		lvl.addToSunpoints(lvl.getNumSunflowers() * Sunflower.PASSIVE_SUNPOINT_BOOST);
 
 		// actuate shooting by all shooting plants in the given level
 		shootZombies(lvl);
@@ -68,9 +66,14 @@ public class ActionProcessor {
 			return;
 		}
 
-		// spawn a zombie every other turn
-		if (lvl.getTurn() % 2 == 0) {
+		// spawn a zombie at least every other turn
+		if (!lvl.zombieSpawnedLastTurn()) {
 			spawnZombie(lvl);
+			lvl.zombieSpawned();
+		} else if (r.nextBoolean()) {
+			spawnZombie(lvl);
+		} else {
+			lvl.zombieNotSpawned();
 		}
 
 		// level is beat if queued waves are empty and
@@ -178,26 +181,29 @@ public class ActionProcessor {
 	 */
 	private void spawnZombie(Level lvl) {
 
-		// get head wave's hash table of zombies
-		HashMap<Class<? extends Zombie>, Integer> zombies = lvl.getHeadWave().getZombies();
+		if (!lvl.isHeadWaveEmpty()) { // failsafe: prevent IAE
 
-		// create an array list of the keys
-		ArrayList<Class<? extends Zombie>> keysAsArray = new ArrayList<>(zombies.keySet());
+			// get head wave's hash table of zombies
+			HashMap<Class<? extends Zombie>, Integer> zombies = lvl.getHeadWave().getZombies();
 
-		// remove keys (from array list) with value of 0
-		keysAsArray.removeIf(z -> zombies.get(z) == 0);
+			// create an array list of the keys
+			ArrayList<Class<? extends Zombie>> keysAsArray = new ArrayList<>(zombies.keySet());
 
-		// randomly select a zombie type
-		Class<? extends Zombie> zombieTypeToSpawn = keysAsArray.get(r.nextInt(keysAsArray.size()));
+			// remove keys (from array list) with value of 0
+			keysAsArray.removeIf(z -> zombies.get(z) == 0);
 
-		// try placing a zombie of the randomly selected type
-		// in the rightmost column and in a random row
-		try {
-			lvl.placeActor(zombieTypeToSpawn.newInstance(),
-					new Point(lvl.getNumCols() - 1, r.nextInt(lvl.getNumRows())));
-			zombies.replace(zombieTypeToSpawn, zombies.get(zombieTypeToSpawn) - 1);
-		} catch (InstantiationException | IllegalAccessException e) {
-			return;
+			// randomly select a zombie type
+			Class<? extends Zombie> zombieTypeToSpawn = keysAsArray.get(r.nextInt(keysAsArray.size()));
+
+			// try placing a zombie of the randomly selected type
+			// in the rightmost column and in a random row
+			try {
+				lvl.placeActor(zombieTypeToSpawn.newInstance(),
+						new Point(lvl.getNumCols() - 1, r.nextInt(lvl.getNumRows())));
+				zombies.replace(zombieTypeToSpawn, zombies.get(zombieTypeToSpawn) - 1);
+			} catch (InstantiationException | IllegalAccessException e) {
+				return;
+			}
 		}
 
 		// if the head wave is void of zombies, dequeue it

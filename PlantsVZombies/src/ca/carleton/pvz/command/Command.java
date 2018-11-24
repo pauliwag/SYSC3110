@@ -12,13 +12,13 @@ public class Command {
 	private String fourthWord;
 
 	/**
-	 * Create a command object. 1st, 2nd, 3rd and 4th words must be supplied, but
-	 * any (or all) can be null.
+	 * Create a command object. 1st, 2nd, 3rd and 4th words must be supplied,
+	 * but any (or all) can be null.
 	 *
-	 * @param firstWord  The first word of the command. Null if the command was not
-	 *                   recognized.
+	 * @param firstWord The first word of the command. Null if the command was
+	 *            not recognized.
 	 * @param secondWord The second word of the command.
-	 * @param thirdWord  The third word of the command.
+	 * @param thirdWord The third word of the command.
 	 * @param fourthWord The fourth word of the command.
 	 */
 	public Command(String firstWord, String secondWord, String thirdWord, String fourthWord) {
@@ -29,8 +29,8 @@ public class Command {
 	}
 
 	/**
-	 * Return the command word (the first word) of this command. If the command was
-	 * not understood, the result is null.
+	 * Return the command word (the first word) of this command. If the command
+	 * was not understood, the result is null.
 	 *
 	 * @return The command word, or null if not understood.
 	 */
@@ -39,8 +39,8 @@ public class Command {
 	}
 
 	/**
-	 * Returns the second word of the command. Returns null if there was no second
-	 * word.
+	 * Returns the second word of the command. Returns null if there was no
+	 * second word.
 	 *
 	 * @return The second word of this command, or null if only one word.
 	 */
@@ -59,8 +59,8 @@ public class Command {
 	}
 
 	/**
-	 * Returns the fourth word of the command. Returns null if there was no fourth
-	 * word.
+	 * Returns the fourth word of the command. Returns null if there was no
+	 * fourth word.
 	 *
 	 * @return The fourth word of this command, or null if only three words.
 	 */
