@@ -178,11 +178,7 @@ public class ActionProcessor {
 
 		HashMap<Class<? extends Zombie>, Integer> zombies = lvl.getHeadWave().getZombies();
 		ArrayList<Class<? extends Zombie>> keysAsArray = new ArrayList<>(zombies.keySet());
-		for (Class<? extends Zombie> zombieType : keysAsArray) {
-			if (zombies.get(zombieType) == 0) {
-				keysAsArray.remove(zombieType);
-			}
-		}
+		keysAsArray.removeIf(z -> zombies.get(z) == 0);
 		Class<? extends Zombie> zombieTypeToSpawn = keysAsArray.get(r.nextInt(keysAsArray.size()));
 		try {
 			lvl.placeActor(zombieTypeToSpawn.newInstance(),
