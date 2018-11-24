@@ -31,8 +31,11 @@ public class Sunflower extends Plant {
 	 */
 	@Override
 	public Image getSprite() {
+
 		InputStream stream = getClass().getResourceAsStream("sunflower.png");
+
 		return new Image(stream);
+
 	}
 
 }

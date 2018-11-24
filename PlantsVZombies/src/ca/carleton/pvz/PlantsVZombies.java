@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 
 /**
  * This class manages the flow of the game.
- * 
+ *
  */
 public class PlantsVZombies extends Application {
 
@@ -54,20 +54,6 @@ public class PlantsVZombies extends Application {
 		gameOver = false;
 	}
 
-	// TODO We likely won't need this playGame method anymore... as we don't
-	// constantly poll for new commands with GUI.
-	/**
-	 * Repeatedly prompts the user for input until "quit" is entered.
-	 */
-	public void playGame() {
-		print(Presets.WELCOME);
-		print(gameWorld.getCurrentLevel().toString());
-		boolean finished = false;
-		while (!finished) {
-			finished = commandProcessor.processCommand();
-		}
-	}
-
 	public World getWorld() {
 		return gameWorld;
 	}
@@ -81,7 +67,7 @@ public class PlantsVZombies extends Application {
 
 	/**
 	 * Is game over?
-	 * 
+	 *
 	 * @return true if game is over, false otherwise.
 	 */
 	public boolean isGameOver() {
@@ -92,10 +78,9 @@ public class PlantsVZombies extends Application {
 	 * Print out the current level being played.
 	 */
 
-
 	/**
 	 * Get the game's action processor
-	 * 
+	 *
 	 * @return the game action processor
 	 */
 	public ActionProcessor getActionProcessor() {
@@ -104,9 +89,8 @@ public class PlantsVZombies extends Application {
 
 	/**
 	 * Shorthand for printing to the terminal.
-	 * 
-	 * @param s
-	 *            The String to be printed.
+	 *
+	 * @param s The String to be printed.
 	 */
 	public void print(String s) {
 		System.out.println(s);

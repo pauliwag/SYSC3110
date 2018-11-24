@@ -28,8 +28,11 @@ public class NormalZombie extends Zombie {
 	 * @return The normal zombie sprite.
 	 */
 	public Image getSprite() {
+
 		InputStream stream = getClass().getResourceAsStream("zombie_tutorial.png");
+
 		return new Image(stream);
+
 	}
 
 }

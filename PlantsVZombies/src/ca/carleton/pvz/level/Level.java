@@ -312,26 +312,4 @@ public abstract class Level {
 		return sunPoints;
 	}
 
-	/**
-	 * Returns this level's grid as a String.
-	 *
-	 * @return This level's grid as a String.
-	 */
-	@Override
-	public String toString() {
-		String s = "";
-		for (int row = 0; row < levelDimension.height; ++row) {
-			s += "| ";
-			for (int col = 0; col < levelDimension.width; ++col) {
-				if (grid[col][row] != null) {
-					s += grid[col][row] + " | ";
-				} else {
-					s += "  | ";
-				}
-			}
-			s += "\n";
-		}
-		return s;
-	}
-
 }

@@ -28,8 +28,11 @@ public class ShieldZombie extends Zombie {
 	 * @return The shield zombie sprite.
 	 */
 	public Image getSprite() {
+
 		InputStream stream = getClass().getResourceAsStream("shield_zombie.png");
+
 		return new Image(stream);
+
 	}
 
 }

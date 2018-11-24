@@ -29,8 +29,11 @@ public class FastZombie extends Zombie {
 	 * @return The fast zombie sprite.
 	 */
 	public Image getSprite() {
+
 		InputStream stream = getClass().getResourceAsStream("fast_zombie.png");
+
 		return new Image(stream);
+
 	}
 
 }

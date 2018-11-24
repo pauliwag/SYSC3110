@@ -39,7 +39,13 @@ public class World {
 		return levels.peek();
 	}
 
+	/**
+	 * Sets the current level to that given.
+	 *
+	 * @param level The new active level.
+	 */
 	public void updateCurrentLevel(Level level) {
 		levels.set(0, level);
 	}
+
 }
