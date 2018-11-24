@@ -18,6 +18,8 @@ public abstract class Level implements Serializable {
 
 	private static final long serialVersionUID = 8845013896074447924L;
 
+	public static final int PASSIVE_SUNPOINT_BOOST = 25; // every two turns
+
 	/** The name of this level; e.g., "Level 1". */
 	private String levelName;
 
@@ -42,7 +44,7 @@ public abstract class Level implements Serializable {
 	private PriorityQueue<Wave> waves;
 
 	/** The player's unspent sun points in this level. */
-	private int sunPoints;
+	private int sunpoints;
 
 	/**
 	 * Indicates whether a zombie was spawned on this level during the current
@@ -63,7 +65,7 @@ public abstract class Level implements Serializable {
 
 		this.levelName = levelName;
 		levelDimension = new Dimension(width, height);
-		sunPoints = startingSunPoints;
+		sunpoints = startingSunPoints;
 		grid = new Actor[width][height];
 		turn = 0;
 		zombieSpawned = false;
@@ -288,33 +290,30 @@ public abstract class Level implements Serializable {
 	}
 
 	/**
-	 * Adds specified value from sunpoints field
+	 * Increases sunpoints by the given amount.
 	 *
-	 * @param value The value to be added from sunpoints
+	 * @param amt The amount by which to increase sunpoints.
 	 */
-	public void addToSunpoints(int value) {
-
-		sunPoints += value;
+	public void addToSunpoints(int amt) {
+		sunpoints += amt;
 	}
 
 	/**
-	 * Subtracts specified value from sunpoints field
+	 * Decreases sunpoints by the given amount.
 	 *
-	 * @param value The value to be subtracted from sunpoints
+	 * @param amt The amount by which to decrease sunpoints.
 	 */
-	public void subtractFromSunpoints(int value) {
-
-		sunPoints -= value;
+	public void subtractFromSunpoints(int amt) {
+		sunpoints -= amt;
 	}
 
 	/**
-	 * Returns sunPoints at the current state of the game
+	 * Gets the current amount of sunpoints.
 	 *
-	 * @return sunPoints Users current sunpoints
+	 * @return The current amount of sunpoints.
 	 */
 	public int getSunpoints() {
-
-		return sunPoints;
+		return sunpoints;
 	}
 
 }
