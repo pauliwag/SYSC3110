@@ -94,39 +94,69 @@ public class PlantsVZombies extends Application {
 		return actionProcessor;
 	}
 	
-	
+	/**
+	 * Add a world to the undo stack
+	 * @param world to be added to stack
+	 */
 	public void addToUndoStack(World world) {
 		System.out.println("undostack: " + undoStack.size());
 		undoStack.push(World.copy(world));
 	}
 	
+	/**
+	 * Undo a move - sets game world to top of undo stack, and adds to redo stack
+	 */
 	public void undo() {
 		addToRedoStack(getWorld());
 		setGameWorld(undoStack.pop());
 	}
 	
+	/**
+	 * Add a world to the redo stack
+	 * @param world to be added to stack
+	 */
 	public void addToRedoStack(World world) {
 		redoStack.push(World.copy(world));
 		System.out.println("redostack: " + redoStack.size());
 	}
 	
+	/**
+	 * Redo a move that was undone.
+	 */
 	public void redo() {
-		addToUndoStack(redoStack.peek());
+		addToUndoStack(getWorld());
 		setGameWorld(redoStack.pop());
 	}
 	
+	/**
+	 * Are there more states we can undo to?
+	 * @return Returns true if yes, false if no
+	 */
 	public boolean hasUndo() {
 		return !undoStack.isEmpty();
 	}
 	
+	/**
+	 * Are there more states we can redo to?
+	 * @return Returns true if yes, false if no
+	 */
 	public boolean hasRedo() {
 		return !redoStack.isEmpty();
 	}
 	
+	/**
+	 * Empties undo and redo stacks. 
+	 * Called when allow undo/redo checkbox is used. 
+	 */
 	public void emptyUndoRedo() {
 		redoStack.clear();
 		undoStack.clear();
 	}
+	
+	/**
+	 * Updates the current game world.
+	 * @param world
+	 */
 	public void setGameWorld(World world) {
 		gameWorld = world;
 	}
