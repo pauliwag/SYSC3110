@@ -176,10 +176,20 @@ public class ActionProcessor {
 	 */
 	private void spawnZombie(Level lvl) {
 
+		// get head wave's hash table of zombies
 		HashMap<Class<? extends Zombie>, Integer> zombies = lvl.getHeadWave().getZombies();
+
+		// create an array list of the keys
 		ArrayList<Class<? extends Zombie>> keysAsArray = new ArrayList<>(zombies.keySet());
+
+		// remove keys (from array list) with value of 0
 		keysAsArray.removeIf(z -> zombies.get(z) == 0);
+
+		// randomly select a zombie type
 		Class<? extends Zombie> zombieTypeToSpawn = keysAsArray.get(r.nextInt(keysAsArray.size()));
+
+		// try placing a zombie of the randomly selected type
+		// in the rightmost column and in a random row
 		try {
 			lvl.placeActor(zombieTypeToSpawn.newInstance(),
 					new Point(lvl.getNumCols() - 1, r.nextInt(lvl.getNumRows())));
@@ -187,6 +197,8 @@ public class ActionProcessor {
 		} catch (InstantiationException | IllegalAccessException e) {
 			return;
 		}
+
+		// if the head wave is void of zombies, dequeue it
 		if (lvl.isHeadWaveEmpty()) {
 			lvl.dequeueHeadWave();
 		}
