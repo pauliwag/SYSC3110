@@ -1,9 +1,11 @@
 package ca.carleton.pvz;
 
 import java.awt.Point;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
+import java.util.function.Predicate;
 
 import ca.carleton.pvz.actor.Actor;
 import ca.carleton.pvz.actor.CooldownManager;
@@ -198,7 +200,7 @@ public class ActionProcessor {
 			ArrayList<Class<? extends Zombie>> keysAsArray = new ArrayList<>(zombies.keySet());
 
 			// remove keys from array list with hash value of 0
-			keysAsArray.removeIf(z -> zombies.get(z) == 0);
+			keysAsArray.removeIf((Predicate<? super Class<? extends Zombie>> & Serializable) z -> zombies.get(z) == 0);
 
 			// randomly select a zombie type
 			Class<? extends Zombie> zombieTypeToSpawn = keysAsArray.get(r.nextInt(keysAsArray.size()));
