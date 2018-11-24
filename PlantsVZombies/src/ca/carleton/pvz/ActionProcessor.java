@@ -200,7 +200,7 @@ public class ActionProcessor {
 			ArrayList<Class<? extends Zombie>> keysAsArray = new ArrayList<>(zombies.keySet());
 
 			// remove keys from array list with hash value of 0
-			keysAsArray.removeIf((Predicate<? super Class<? extends Zombie>> & Serializable) z -> zombies.get(z) == 0);
+			keysAsArray.removeIf((Predicate<Class<? extends Zombie>> & Serializable) z -> zombies.get(z) == 0);
 
 			// randomly select a zombie type
 			Class<? extends Zombie> zombieTypeToSpawn = keysAsArray.get(r.nextInt(keysAsArray.size()));
