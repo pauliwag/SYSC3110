@@ -10,11 +10,10 @@ import ca.carleton.pvz.actor.Plant;
 
 public class PlantTest {
 
-	Plant testPlant;
 	
 	@Before
 	public void setUp() throws Exception {
-		testPlant = new Plant();
+		
 	}
 
 	/**
@@ -23,7 +22,7 @@ public class PlantTest {
 	 */
 	@Test
 	public void testPlant() {
-		assertTrue(testPlant instanceof Actor);
+		assertTrue(Plant instanceof Actor);
 	}
 
 	// tearDown() is not necessary here, as garbage collection of objects
