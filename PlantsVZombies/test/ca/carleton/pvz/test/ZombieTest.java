@@ -33,6 +33,8 @@ public class ZombieTest {
 		testZombie.setHealth(200);
 		assertEquals(200, testZombie.getHealth());
 		assertEquals(1, testZombie.getSpeed());
+		testZombie.setHealth(testZombie.getHealth() - 0);
+		assertFalse(testZombie.getHealth() == 0);
 	}
 
 	/**
@@ -43,6 +45,7 @@ public class ZombieTest {
 	 */
 	@Test
 	public void testSprite() {
+		assertFalse(testZombie.getSprite() == null);
 		assertTrue(testZombie.getSprite() instanceof Image);
 	}
 

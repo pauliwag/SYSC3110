@@ -31,6 +31,8 @@ public class ShieldZombieTest {
 		assertTrue(testZombie instanceof Zombie);
 		assertEquals(700, testZombie.getHealth());
 		assertEquals(1, testZombie.getSpeed());
+		testZombie.setHealth(testZombie.getHealth() - 0);
+		assertFalse(testZombie.getHealth() == 0);
 
 	}
 
@@ -42,6 +44,7 @@ public class ShieldZombieTest {
 	 */
 	@Test
 	public void testSprite() {
+		assertFalse(testZombie.getSprite() == null);
 		assertTrue(testZombie.getSprite() instanceof Image);
 	}
 

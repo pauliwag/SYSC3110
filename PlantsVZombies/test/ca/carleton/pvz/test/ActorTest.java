@@ -9,7 +9,7 @@ import javafx.scene.image.Image;
 import ca.carleton.pvz.actor.Actor;
 
 public class ActorTest {
-	
+
 	private Actor testActor;
 
 	@Before
@@ -19,17 +19,18 @@ public class ActorTest {
 
 	/**
 	 * Tests the image creator method in Actor.
-	 * @result The sprite is generated successfully, as null
+	 * 
+	 * @result The sprite is generated successfully using Actor subtype
 	 */
 	@Test
 	public void testActor() {
+		assertFalse(testActor.getSprite() == null);
 		assertTrue(testActor.getSprite() instanceof Image);
+
 	}
 
-	
-// tearDown() is not necessary here, as garbage collection of objects
-// after the test class concludes. Other things that consume system
-// resources may need tearDown() however.
-
+	// tearDown() is not necessary here, as garbage collection of objects
+	// after the test class concludes. Other things that consume system
+	// resources may need tearDown() however.
 
 }
