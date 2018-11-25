@@ -2,16 +2,15 @@ package ca.carleton.pvz.test;
 
 import static org.junit.Assert.*;
 
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
-import ca.carleton.pvz.actor.Zombie;
-import ca.carleton.pvz.level.Level;
+import ca.carleton.pvz.actor.FastZombie;
+import ca.carleton.pvz.actor.NormalZombie;
+import ca.carleton.pvz.actor.ShieldZombie;
 import ca.carleton.pvz.level.LevelOne;
 import ca.carleton.pvz.level.Wave;
+import ca.carleton.pvz.level.Wave.Difficulty;
 
 public class WaveTest {
 
@@ -20,7 +19,7 @@ public class WaveTest {
 
 	@Before
 	public void setUp() throws Exception {
-		testWave = new Wave(1, 3);
+		testWave = new Wave(1, Difficulty.NORMAL, 3, 1, 0);
 	}
 
 	/**
@@ -30,33 +29,30 @@ public class WaveTest {
 	@Test
 	public void testGetters() {
 		assertEquals(1, testWave.getNum());
-		assertEquals(3, testWave.getTotalNumZombies());
+		assertEquals(4, testWave.getTotalNumZombies());
 		
 		testWave.setWaveNum(2);
 		assertEquals (2, testWave.getNum());
-		
-		testWave.setRemainingZombies(5);
-		assertEquals(5, testWave.getTotalNumZombies());
+		assertEquals(4, testWave.getTotalNumZombies());
 	}
 	
-	/**
-	 * Tests the complex method for spawning zombies
-	 * @result A level is used in this test case, the level should have a zombie on the last column after the spawnZombieOnLevel() method is called, and the test ensures that the Actor found in the last column is an instance of Zombie
-	 */
 	@Test
-	public void testSpawnZombie() {
-		testLevel = new LevelOne();
-		Wave.spawnZombieOnLevel(testLevel);
+	public void testNumZombies() {
+		assertEquals(3, testWave.getNumZombies(NormalZombie.class));
+		assertEquals(1, testWave.getNumZombies(ShieldZombie.class));
+		assertEquals(0, testWave.getNumZombies(FastZombie.class));
 		
-		boolean flag = false;
-		for (int i = 0; i < 5; i++) {
-			if (testLevel.getCell(4, i) instanceof Zombie) {
-				flag = true;
-			}
-		}
-		assertTrue(flag);
+		testWave.setNumZombies(NormalZombie.class, 4);
+		assertEquals(4, testWave.getNumZombies(NormalZombie.class));
+		
+		testWave.setNumZombies(ShieldZombie.class, 6);
+		assertEquals(6, testWave.getNumZombies(ShieldZombie.class));
+		
+		testWave.setNumZombies(FastZombie.class, 5);
+		assertEquals(5, testWave.getNumZombies(FastZombie.class));
+		
+		assertEquals(15, testWave.getTotalNumZombies());
 	}
-	
 	// tearDown() is not necessary here, as garbage collection of objects
 	// after the test class concludes. Other things that consume system
 	// resources may need tearDown() however (like GUI).
