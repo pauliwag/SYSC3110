@@ -18,8 +18,8 @@ public class SunflowerTest {
 	}
 
 	/**
-	 * Tests the "turns" functionality of the Sunflower
-	 * @result The turns should be working as intended, where it starts at 0 initially
+	 * Tests the "cost" functionality of the Sunflower
+	 * @result The cost values should be working as intended... looking for expected values.
 	 */
 	@Test
 	public void testCost() {

@@ -29,7 +29,7 @@ public class NormalPeaShooterTest {
 	}
 
 	/**
-	 * Tests the hits field of the PeaShooter
+	 * Tests the damage of the PeaShooter
 	 * @result Hits behaves as expected, including the newTurn() method, which resets the hits to 0.
 	 */
 	@Test
