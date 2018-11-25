@@ -87,7 +87,12 @@ The sequence diagram features the sequences entailing:
 ***Known issues***
 
 None.
-There is a linear increase in memory usage if the allow undo/redo checkbox is selected. This is because we are storing a deep copy of the game world whenver it is changed. If playing on a computer with less than 4GB of RAM, you may not want to use the undo/redo feature.
+
+---
+
+***Performance***
+
+There is a linear increase in memory usage if the allow undo/redo checkbox is selected. This is because we are storing a deep copy of the game world whenever it is changed. If playing on a computer with less than 4GB of RAM, you may not want to use the undo/redo feature.
 
 ---
 
