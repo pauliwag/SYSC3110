@@ -99,7 +99,6 @@ public class PlantsVZombies extends Application {
 	 * @param world to be added to stack
 	 */
 	public void addToUndoStack(World world) {
-		System.out.println("undostack: " + undoStack.size());
 		undoStack.push(World.copy(world));
 	}
 	
@@ -117,7 +116,6 @@ public class PlantsVZombies extends Application {
 	 */
 	public void addToRedoStack(World world) {
 		redoStack.push(World.copy(world));
-		System.out.println("redostack: " + redoStack.size());
 	}
 	
 	/**
