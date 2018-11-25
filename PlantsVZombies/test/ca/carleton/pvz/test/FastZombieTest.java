@@ -6,22 +6,22 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ca.carleton.pvz.actor.Zombie;
-import ca.carleton.pvz.actor.NormalZombie;
-
+import ca.carleton.pvz.actor.FastZombie;
 import javafx.scene.image.Image;
 
-public class ZombieTest {
+public class FastZombieTest {
 
 	Zombie testZombie;
 
 	@Before
 	public void setUp() throws Exception {
-		testZombie = new NormalZombie();
+		testZombie = new FastZombie();
+
 	}
 
 	/**
-	 * Tests the basic getter methods of the Zombie class Subclasses of Zombie will
-	 * be used to ensure methods are working as intended
+	 * Tests the basic getter methods of the FastZombie class Subclasses of Zombie
+	 * will be used to ensure methods are working as intended
 	 * 
 	 * @result All getter methods should be working as intended and returns the
 	 *         correct values
@@ -29,14 +29,13 @@ public class ZombieTest {
 	@Test
 	public void testGetters() {
 		assertTrue(testZombie instanceof Zombie);
-		assertEquals(500, testZombie.getHealth());
-		testZombie.setHealth(200);
-		assertEquals(200, testZombie.getHealth());
-		assertEquals(1, testZombie.getSpeed());
+		assertEquals(400, testZombie.getHealth());
+		assertEquals(2, testZombie.getSpeed());
+
 	}
 
 	/**
-	 * Tests the Sprite method for Zombie
+	 * Tests the Sprite method for FastZombie
 	 * 
 	 * @result The expected type for the Object returned by this method should be an
 	 *         Image type

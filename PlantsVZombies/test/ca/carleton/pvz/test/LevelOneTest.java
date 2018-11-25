@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import ca.carleton.pvz.level.LevelOne;
 import ca.carleton.pvz.level.Wave;
+import ca.carleton.pvz.level.Wave.Difficulty;
 
 public class LevelOneTest {
 	
@@ -26,16 +27,16 @@ public class LevelOneTest {
 		Wave testWave;
 		
 		testLevelOne.initWaves();
-		testWave = new Wave(1,2);
+		testWave = new Wave(1, Difficulty.NORMAL, 3, 1, 0);
 		assertEquals(testWave.getNum(), testLevelOne.getHeadWave().getNum());
 		assertEquals(testWave.getTotalNumZombies(), testLevelOne.getHeadWave().getTotalNumZombies());
 		
-		testWave = new Wave(2,3);
+		testWave = new Wave(2, Difficulty.RAMPED, 2, 2, 0);
 		testLevelOne.dequeueHeadWave();
 		assertEquals(testWave.getNum(), testLevelOne.getHeadWave().getNum());
 		assertEquals(testWave.getTotalNumZombies(), testLevelOne.getHeadWave().getTotalNumZombies());
 		
-		testWave = new Wave(3,4);
+		testWave = new Wave(3, Difficulty.SUPER_RAMPED, 0, 3, 20);
 		testLevelOne.dequeueHeadWave();
 		assertEquals(testWave.getNum(), testLevelOne.getHeadWave().getNum());
 		assertEquals(testWave.getTotalNumZombies(), testLevelOne.getHeadWave().getTotalNumZombies());
