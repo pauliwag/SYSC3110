@@ -30,7 +30,7 @@ Abdillahi Nur
 <br>
 
 Paul Roode
-> UML class and sequence diagrams. Added new Plant and Zombie subclasses. Added zombies hash table to Wave. Revamped moveZombie() and shootZombie(). Created/implemented ActionProcessor::spawnZombie. Added Difficulty enum to Wave and melded w/ logic for zombie spawn rate control. Refactored/de-smelled model, especially ActionProcessor. Playtested, debugged, failsafed. Reformatted and contributed to README. Contributed to design decisions justifications doc.
+> UML class and sequence diagrams. Added new Plant and Zombie subclasses. Added zombies hash table to Wave. Revamped moveZombie() and shootZombie(). Created/implemented ActionProcessor::spawnZombie. Added Difficulty enum to Wave and melded w/ logic for zombie spawn rate control. Refactored/de-smelled model, especially ActionProcessor. Playtested, debugged, failsafed. Reformatted and contributed to README. Wrote *Data structs employed in zombie wave and spawn logic* and *About the global CooldownManager class* sections in the Design Decisions Justifications document.
 
 ---
 
@@ -42,7 +42,7 @@ Paul Roode
 - user guide
 - UML class diagram
 - UML sequence diagram
-- .docx justifying design decisions
+- .pdf justifying design decisions
 
 ---
 
@@ -58,7 +58,7 @@ The sequence diagram features the sequences entailing:
 
 ---
 
-***Changelog***
+***Changelog (v2.0 → 3.0)***
 
 - added waves priority queue to Level
 - added new Plant and Zombie subtypes
@@ -70,18 +70,17 @@ The sequence diagram features the sequences entailing:
 - de-centralized ActionProcessor logic; maximized abstraction, delegation and extensibility
 - added various failsafes
 - added/modified test classes to match changes relative to iteration 3
-- zombie health and peashooter damage were reworked in order to promote balance in the game
-- undo/redo functionality added to Level allowing user to undo/redo moves when possiblw
+- zombie health and speed, peashooter damage, and sunpoint accumulation were tuned in order to promote balance
+- turn undo/redo features were implemented via serialization
 
 ---
 
 ***User-visible changes***
 
-- GUI grid length now extended to 8x5
-- Game now includes multiple different plant types and zombie types
-- User can now undo/redo any moves they have made
-- Prices of plants have been adjusted to promote balance, and can now be seen on the GUI
-- Next wave of zombies now spawn immediately after current wave of zombies complete spawning
+- Level 1 map width extended to 8 tiles (from 5) for balance purposes.
+- New sprites added for the new plant and zombie types.
+- Undo and redo buttons, which can be toggled on or off, provide the option of undoing and redoing turns ad infinitum.
+- Spawn rate visibly increases or decreases depending on the difficulty setting of the active wave.
 
 ---
 
@@ -93,12 +92,6 @@ None.
 
 ***Roadmap for iteration 4***
 
-**`TODO : Update ...`**
+The augmentation of save/load features will be expedited as our project already uses serialization (for undo/redo).
 
-Significant rearchitecting was performed in preparation for iteration 3 (when markers start docking for smelly code) with the intention of decentralizing the core logic of the game that primarily resides in the ActionProcessor class; e.g., the Level class now has a field that is a priority queue of Wave objects. Waves are prioritized in order of ascending wave number (i.e., lower wave number is prioritized) to ensure zombie waves are deployed in the correct sequence (1, 2, ... , *n*).
-
-Many other refactorings were performed to maximize delegation of tasks, e.g., from ActionProcessor to other classes, thereby maximizing abstraction, encapsulation and extensibility. These refactorings have yet to be melded with the core logic of the game (namely the logic in ActionProcessor).
-
-With the introduction of different zombie types in the next iteration, the ArrayList<Zombie> field in the Wave class will be refactored into a HashMap<? extends Zombie, Integer> to keep track of the numbers of different types of zombies in a given wave.
-  
-With the introduction of more plant types, the global CooldownManager class will be updated accordingly.
+**`TODO : Add more ...`**
