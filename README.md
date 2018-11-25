@@ -80,7 +80,7 @@ The sequence diagram features the sequences entailing:
 - Level 1 map width extended to 8 tiles (from 5) for balance purposes.
 - New sprites added for the new plant and zombie types.
 - Undo and redo buttons, which can be toggled on or off, provide the option of undoing and redoing turns ad infinitum.
-- Spawn rate visibly increases or decreases depending on the difficulty setting of the active wave.
+- Zombie spawn rate visibly increases or decreases depending on the difficulty setting of the active wave.
 
 ---
 
