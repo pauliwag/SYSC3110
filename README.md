@@ -1,6 +1,6 @@
 # [SYSC 3110 F18] Software Design Project
 ## Plants vs. Zombies v3.0
-### Team 5
+### Team 5 – Jacob Laboissonniere, Sameed Mohammed, Abdillahi Nur, Paul Roode
 
 ---
 
@@ -12,17 +12,23 @@
 
 ***Authors and their contributions***
 
-Abdillahi Nur
-> Worked on implementing Zombie, PeaShooter and Zombie logic from iteration one into the GUI. Ensured GameOver and NextTurn logic worked correctly and was implemented accordingly. Wrote the documentation file detailing our design decisions. Added Javadoc to methods.
-
-Paul Roode
-> UML class and sequence diagrams; model rearchitecting and refactoring in preparation for iteration 3; de-smelling of code; generated API documentation; javadocs; etc.
-
 Jacob Laboissonniere
 > Worked on inital game model classes (world, level, actor subclasses). Wrote USERMANUAL.md. Created GUI fxml file and GUIController class and integrated with existing model. Number of small changes to clean up code.
 
+<br>
+
 Sameed Mohammed
 > Worked on test classes for all classes in project, added Javadoc comments. Reviewed/edited design decision justufication document.
+
+<br>
+
+Abdillahi Nur
+> Worked on implementing Zombie, PeaShooter and Zombie logic from iteration one into the GUI. Ensured GameOver and NextTurn logic worked correctly and was implemented accordingly. Wrote the documentation file detailing our design decisions. Added Javadoc to methods.
+
+<br>
+
+Paul Roode
+> UML class and sequence diagrams; model rearchitecting and refactoring in preparation for iteration 3; de-smelling of code; generated API documentation; javadocs; etc.
 
 ---
 
@@ -50,11 +56,11 @@ The sequence diagram features the sequences entailing:
 
 ***Known issues***
 
-None of which we are aware.
+None.
 
 ---
 
-***For the next deliverable***
+***For the next deliverable...***
 
 **`TODO : Update ...`**
 
