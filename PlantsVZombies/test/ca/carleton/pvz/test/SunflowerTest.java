@@ -22,14 +22,9 @@ public class SunflowerTest {
 	 * @result The turns should be working as intended, where it starts at 0 initially
 	 */
 	@Test
-	public void testTurns() {
-		assertEquals(0, testSunflower.getTurnPlaced());
-		testSunflower.setTurnPlaced(5);
-		assertEquals(5,testSunflower.getTurnPlaced());
+	public void testCost() {
+		assertEquals(100, testSunflower.getCost());
 	}
-	
-	// not testing toString() method of testSunflower because GUI is implemented, and that will be removed
-	// in future versions!
 	
 	/**
 	 * Testing Sprite method to make sure that it generates an Image
