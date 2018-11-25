@@ -69,18 +69,19 @@ The sequence diagram features the sequences entailing:
 - refactored/de-smelled entire model
 - de-centralized ActionProcessor logic; maximized abstraction, delegation and extensibility
 - added various failsafes
-
-**`TODO : Add more ...`**
+- added/modified test classes to match changes relative to iteration 3
+- zombie health and peashooter damage were reworked in order to promote balance in the game
+- undo/redo functionality added to Level allowing user to undo/redo moves when possiblw
 
 ---
 
 ***User-visible changes***
 
-**`TODO : Update ...`**
-
-- Game is no longer text-based! It implements a GUI built using FXML.
-- Grid squares hold .png images of the various actors in the game (e.g., Sunflower, Zombie, etc.).
-- Labels indicate cooldown periods, unspent sunpoints, etc.
+- GUI grid length now extended to 8x5
+- Game now includes multiple different plant types and zombie types
+- User can now undo/redo any moves they have made
+- Prices of plants have been adjusted to promote balance, and can now be seen on the GUI
+- Next wave of zombies now spawn immediately after current wave of zombies complete spawning
 
 ---
 
