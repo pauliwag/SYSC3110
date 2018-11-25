@@ -2,14 +2,12 @@ package ca.carleton.pvz.test;
 
 import static org.junit.Assert.*;
 
-import java.awt.Point;
-
 import org.junit.Before;
 import org.junit.Test;
 
 import ca.carleton.pvz.actor.Zombie;
 import ca.carleton.pvz.actor.NormalZombie;
-import ca.carleton.pvz.level.Level;
+
 import ca.carleton.pvz.level.LevelOne;
 import javafx.scene.image.Image;
 

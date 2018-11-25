@@ -8,18 +8,15 @@ import org.junit.Test;
 import ca.carleton.pvz.actor.Zombie;
 import ca.carleton.pvz.actor.NormalZombie;
 
-import ca.carleton.pvz.level.LevelOne;
 import javafx.scene.image.Image;
 
 public class ZombieTest {
 
 	Zombie testZombie;
-	LevelOne testLevel;
 
 	@Before
 	public void setUp() throws Exception {
 		testZombie = new NormalZombie();
-		testLevel = new LevelOne();
 	}
 
 	/**
