@@ -4,8 +4,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
-
-
+import ca.carleton.pvz.actor.NormalZombie;
+import javafx.scene.image.Image;
 import ca.carleton.pvz.actor.Actor;
 
 public class ActorTest {
@@ -14,7 +14,7 @@ public class ActorTest {
 
 	@Before
 	public void setUp() throws Exception {
-		testActor = new Actor();
+		testActor = new NormalZombie();
 	}
 
 	/**
@@ -23,7 +23,7 @@ public class ActorTest {
 	 */
 	@Test
 	public void testActor() {
-		assertTrue(testActor.getSprite() == null);
+		assertTrue(testActor.getSprite() instanceof Image);
 	}
 
 	
