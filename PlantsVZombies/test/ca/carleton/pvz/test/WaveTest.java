@@ -36,6 +36,10 @@ public class WaveTest {
 		assertEquals(4, testWave.getTotalNumZombies());
 	}
 	
+	/**
+	 * Tests the wave and the configurations that one can setup with the parameters of the getNumZombies() method
+	 * @result All the set configurations should have values as expected, which is tested accordingly.
+	 */
 	@Test
 	public void testNumZombies() {
 		assertEquals(3, testWave.getNumZombies(NormalZombie.class));
