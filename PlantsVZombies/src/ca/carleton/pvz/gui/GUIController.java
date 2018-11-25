@@ -221,9 +221,7 @@ public class GUIController {
 			@Override
 			public void handle(ActionEvent arg0) {
 				if(game.hasUndo()) {
-					System.out.println("old: " + game.getWorld());
 					game.undo();
-					System.out.println("new: " + game.getWorld());
 					updateGameGrid();
 				}
 				
@@ -235,9 +233,7 @@ public class GUIController {
 			@Override
 			public void handle(ActionEvent arg0) {
 				if(game.hasRedo()) {
-					System.out.println("old: " + game.getWorld());
 					game.redo();
-					System.out.println("new: " + game.getWorld());
 					updateGameGrid();
 				}
 				
