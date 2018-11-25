@@ -106,7 +106,7 @@ public class ActionProcessor {
 	 * Actuates shooting by all shooting plants in the given level.
 	 *
 	 */
-	private void shootZombies(Level lvl) {
+	public void shootZombies(Level lvl) {
 
 		// traverse col-by-col starting top-left as (0, 0)
 		for (int x1 = 0; x1 < lvl.getNumCols(); ++x1) {
