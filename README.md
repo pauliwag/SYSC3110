@@ -15,7 +15,7 @@ Check out the user guide for getting started and learning how to play.
 ***Authors and their contributions***
 
 Jacob Laboissonniere
-> Worked on inital game model classes (world, level, actor subclasses). Wrote USERMANUAL.md. Created GUI fxml file and GUIController class and integrated with existing model. Number of small changes to clean up code.
+> Worked on inital game model classes (world, level, actor subclasses). Wrote USERMANUAL.md. Created GUI fxml file and GUIController class and integrated with existing model. Implemented undo/redo feature using serialization. Number of small changes to clean up code. Playtesting.
 
 <br>
 
@@ -87,6 +87,7 @@ The sequence diagram features the sequences entailing:
 ***Known issues***
 
 None.
+There is a linear increase in memory usage if the allow undo/redo checkbox is selected. This is because we are storing a deep copy of the game world whenver it is changed. If playing on a computer with less than 4GB of RAM, you may not want to use the undo/redo feature.
 
 ---
 
