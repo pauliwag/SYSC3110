@@ -1,12 +1,14 @@
-# [SYSC 3110 F18] Software Design Project
-## Plants vs. Zombies v3.0
+# Plants vs. Zombies v3.0
+## SYSC 3110 F18 – Software Design Project
 ### Team 5 – Jacob Laboissonniere, Sameed Mohammed, Abdillahi Nur, Paul Roode
 
 ---
 
-**Welcome to the 3rd iteration of our GUI-based Plants vs. Zombies game!**
+***Welcome!***
 
-**Check out the user guide for getting started and learning how to play.**
+We hope you enjoy the 3rd iteration of our GUI-based Plants vs. Zombies game.
+
+Check out the user guide for getting started and learning how to play.
 
 ---
 
