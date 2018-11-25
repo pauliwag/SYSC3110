@@ -6,14 +6,15 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ca.carleton.pvz.actor.Actor;
-import ca.carleton.pvz.actor.Plant;
+import ca.carleton.pvz.actor.Sunflower;
 
 public class PlantTest {
 
+	Sunflower testPlant;
 	
 	@Before
 	public void setUp() throws Exception {
-		
+		testPlant = new Sunflower();
 	}
 
 	/**
@@ -22,7 +23,7 @@ public class PlantTest {
 	 */
 	@Test
 	public void testPlant() {
-		assertTrue(Plant instanceof Actor);
+		assertTrue(testPlant instanceof Actor);
 	}
 
 	// tearDown() is not necessary here, as garbage collection of objects
