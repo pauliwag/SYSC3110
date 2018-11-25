@@ -30,7 +30,7 @@ Abdillahi Nur
 <br>
 
 Paul Roode
-> UML class and sequence diagrams; model rearchitecting and refactoring in preparation for iteration 3; de-smelling of code; generated API documentation; javadocs; etc.
+> UML class and sequence diagrams. Added new Plant and Zombie subclasses. Added zombies hash table to Wave. Revamped moveZombie() and shootZombie(). Created/implemented ActionProcessor::spawnZombie. Added Difficulty enum to Wave and melded w/ logic for zombie spawn rate control. Refactored/de-smelled model, especially ActionProcessor. Playtested, debugged, failsafed.
 
 ---
 
