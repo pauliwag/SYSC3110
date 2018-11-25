@@ -34,6 +34,8 @@ public class NormalZombieTest {
 		assertTrue(testZombie instanceof Zombie);
 		assertEquals(500, testZombie.getHealth());
 		assertEquals(1, testZombie.getSpeed());
+		testZombie.setHealth(testZombie.getHealth() - 0);
+		assertFalse(testZombie.getHealth() == 0);
 
 	}
 
@@ -45,6 +47,7 @@ public class NormalZombieTest {
 	 */
 	@Test
 	public void testSprite() {
+		assertFalse(testZombie.getSprite() == null);
 		assertTrue(testZombie.getSprite() instanceof Image);
 	}
 
