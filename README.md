@@ -25,7 +25,7 @@ Sameed Mohammed
 <br>
 
 Abdillahi Nur
-> Worked on implementing Zombie, PeaShooter and Zombie logic from iteration one into the GUI. Ensured GameOver and NextTurn logic worked correctly and was implemented accordingly. Wrote the documentation file detailing our design decisions. Added Javadoc to methods.
+> Worked on implementing new test classes for new zombie/plant subtypes. Also modified existing test classes to reflect changes for iteration 3. Searched for and repaired bugs in program where applicable. Wrote the documentation file detailing our design decisions. Added Javadoc to methods.
 
 <br>
 
