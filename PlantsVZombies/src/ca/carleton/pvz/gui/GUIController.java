@@ -72,13 +72,13 @@ public class GUIController {
 
 	@FXML
 	private Button threepeaterButton;
-	
+
 	@FXML
 	private Button undoButton;
-	
+
 	@FXML
 	private Button redoButton;
-	
+
 	@FXML
 	private Label sunflowerCooldown;
 
@@ -105,10 +105,10 @@ public class GUIController {
 
 	@FXML
 	private MenuItem aboutButton;
-	
+
 	@FXML
 	private CheckBox allowUndoRedo;
-	
+
 	@FXML
 	public void initialize() {
 		assert peashooterCooldown != null : "fx:id=\"peashooterCooldown\" was not injected: check your FXML file 'pvzgui.fxml'.";
@@ -132,7 +132,7 @@ public class GUIController {
 		assert undoButton != null : "fx:id=\"undoButton\" was not injected: check your FXML file 'pvzgui.fxml'.";
 		assert redoButton != null : "fx:id=\"redoButton\" was not injected: check your FXML file 'pvzgui.fxml'.";
 		assert allowUndoRedo != null : "fx:id=\"allowUndoRedo\" was not injected: check your FXML file 'pvzgui.fxml'.";
-		
+
 		setupUndoRedo();
 		setupMenuButtons();
 		setupPlantSelectionButtons();
@@ -153,8 +153,8 @@ public class GUIController {
 	}
 
 	/**
-	 * Sets up plant button event handlers. When button is pressed, sets
-	 * currently selected plant object to correct type.
+	 * Sets up plant button event handlers. When button is pressed, sets currently
+	 * selected plant object to correct type.
 	 */
 	private void setupPlantSelectionButtons() {
 		selectedPlant = new Sunflower();
@@ -180,24 +180,24 @@ public class GUIController {
 		});
 
 	}
-	
+
 	/**
 	 * Update the undo/redo buttons to represent if undo/redo is possible.
 	 */
 	private void updateUndoRedo() {
-		if(game.hasRedo()) {
+		if (game.hasRedo()) {
 			redoButton.setDisable(false);
 		} else {
 			redoButton.setDisable(true);
 		}
-		
-		if(game.hasUndo()) {
+
+		if (game.hasUndo()) {
 			undoButton.setDisable(false);
 		} else {
 			undoButton.setDisable(true);
 		}
 	}
-	
+
 	/**
 	 * Sets up the next turn button's event handler
 	 */
@@ -215,36 +215,36 @@ public class GUIController {
 			}
 		});
 	}
-	
+
 	private void setupUndoRedo() {
 		undoButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent arg0) {
-				if(game.hasUndo()) {
+				if (game.hasUndo()) {
 					game.undo();
 					updateGameGrid();
 				}
-				
+
 			}
-			
+
 		});
-		
+
 		redoButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent arg0) {
-				if(game.hasRedo()) {
+				if (game.hasRedo()) {
 					game.redo();
 					updateGameGrid();
 				}
-				
+
 			}
-			
+
 		});
-		
+
 		allowUndoRedo.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				if(allowUndoRedo.isSelected()) {
+				if (allowUndoRedo.isSelected()) {
 					redoButton.setDisable(false);
 					undoButton.setDisable(false);
 				} else {
@@ -252,12 +252,12 @@ public class GUIController {
 					undoButton.setDisable(true);
 					game.emptyUndoRedo();
 				}
-				
+
 			}
-			
+
 		});
 	}
-	
+
 	/**
 	 * Sets up menu button actions
 	 */
@@ -376,17 +376,17 @@ public class GUIController {
 				}
 			}
 		}
-		if(logMoves()) {
+		if (logMoves()) {
 			updateUndoRedo();
-		}	
+		}
 		updateWaveNumber();
 		updateSunpointLabel();
 		updateCooldownDisplay();
 	}
 
 	/**
-	 * Called when game is over. Disables buttons we don't want pressed and
-	 * alerts user.
+	 * Called when game is over. Disables buttons we don't want pressed and alerts
+	 * user.
 	 */
 	public void notifyGameOver() {
 		updateGameGrid();
@@ -403,10 +403,14 @@ public class GUIController {
 	/**
 	 * Shows the user a pop-up alert dialog
 	 *
-	 * @param title Title of the alert dialog
-	 * @param header Header of the alert dialog (can be null for no header)
-	 * @param content Content of the alert dialog
-	 * @param type Type of alert - see AlertType documentation
+	 * @param title
+	 *            Title of the alert dialog
+	 * @param header
+	 *            Header of the alert dialog (can be null for no header)
+	 * @param content
+	 *            Content of the alert dialog
+	 * @param type
+	 *            Type of alert - see AlertType documentation
 	 */
 	public void showAlert(String title, String header, String content, AlertType type) {
 		Alert alert = new Alert(type);
@@ -434,28 +438,29 @@ public class GUIController {
 	/**
 	 * Set the game that this controller controls
 	 *
-	 * @param game to control
+	 * @param game
+	 *            to control
 	 */
 	public void setGame(PlantsVZombies game) {
 		this.game = game;
 	}
-	
+
 	public boolean logMoves() {
 		return allowUndoRedo.isSelected();
 	}
-	
+
 	public Plant getSelectedPlant() {
 		return selectedPlant;
 	}
-	
+
 	public Button getSunflowerButton() {
 		return sunflowerButton;
 	}
-	
+
 	public Button getNextLevelButton() {
 		return nextLevelButton;
 	}
-	
+
 	public Button getPeaShooterButton() {
 		return peashooterButton;
 	}
@@ -464,16 +469,30 @@ public class GUIController {
 		return threepeaterButton;
 	}
 
+	public PlantsVZombies getGame() {
+		return game;
+	}
+	
+	public CheckBox getCheckbox() {
+		return allowUndoRedo;
+	}
+	
+	public Button getUndoButton() {
+		return undoButton;
+	}
+	
+	public Button getRedoButton() {
+		return redoButton;
+	}
+
 }
 
-/*	private Button sunflowerButton;
-
-	@FXML
-	private Button nextLevelButton;
-
-	@FXML
-	private Button peashooterButton;
-
-	@FXML
-	private Button threepeaterButton;
-	*/
+/*
+ * private Button sunflowerButton;
+ * 
+ * @FXML private Button nextLevelButton;
+ * 
+ * @FXML private Button peashooterButton;
+ * 
+ * @FXML private Button threepeaterButton;
+ */
