@@ -443,4 +443,37 @@ public class GUIController {
 	public boolean logMoves() {
 		return allowUndoRedo.isSelected();
 	}
+	
+	public Plant getSelectedPlant() {
+		return selectedPlant;
+	}
+	
+	public Button getSunflowerButton() {
+		return sunflowerButton;
+	}
+	
+	public Button getNextLevelButton() {
+		return nextLevelButton;
+	}
+	
+	public Button getPeaShooterButton() {
+		return peashooterButton;
+	}
+
+	public Button getThreepeaterButton() {
+		return threepeaterButton;
+	}
+
 }
+
+/*	private Button sunflowerButton;
+
+	@FXML
+	private Button nextLevelButton;
+
+	@FXML
+	private Button peashooterButton;
+
+	@FXML
+	private Button threepeaterButton;
+	*/
