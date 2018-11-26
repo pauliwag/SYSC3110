@@ -98,4 +98,4 @@ There is a linear increase in memory usage if the *allow undo/redo* checkbox is 
 
 ***Roadmap for iteration 4***
 
-Our project already implements serialization (for undo/redo), thereby expediting the augmentation of save/load features in iteration 4. World::copy will be utilized to create deep copies of the game world; these worlds or game states will be stored in XML data files. As for level building, the user will be able to specify level dimensions (width by height) and perhaps maybe more.
+Our project already implements serialization (for undo/redo), thereby expediting the augmentation of save/load features in iteration 4. World::copy will be utilized to create deep copies of the game world; said copies of game states will be stored in XML data files. As for level building, the user will be able to specify level dimensions (width by height) and perhaps more.
