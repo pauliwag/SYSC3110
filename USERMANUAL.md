@@ -77,13 +77,13 @@ In this early version of the game there are two different plant types.
 
 There are currently three different types of zombies in the game.
 
- * **Normal Zombie: **
+ * **Normal Zombie:**
   The normal zombie has **500 health** and moves at a speed of *one tile per turn**
   
- * **Shield Zombie: **
+ * **Shield Zombie:**
   The shield zombie has **500 health** and moves at a speed of *one tile per turn**
   
- * **Fast Zombie: **
+ * **Fast Zombie:**
   The fast zombie has **400 health** and moves at a speed of *two tiles per turn**
   
 Zombies spawn on random rows to the far right of the level.
