@@ -445,42 +445,98 @@ public class GUIController {
 		this.game = game;
 	}
 
+	/**
+	 * Returns boolean letting user know if allowUndoRedo checkbox is selected
+	 *
+	 * @return allowUndoRedo.isSelected(); Boolean letting user know if
+	 *         allowUndoRedo checkbox is selected
+	 */
 	public boolean logMoves() {
 		return allowUndoRedo.isSelected();
 	}
 
+	/**
+	 * Returns plant selected by user
+	 *
+	 * @return selectedPlant plant selected by user
+	 */
 	public Plant getSelectedPlant() {
 		return selectedPlant;
 	}
 
+	/**
+	 * Returns sunflower button on GUI
+	 *
+	 * @return sunflowerButton sunflower button on GUI
+	 */
 	public Button getSunflowerButton() {
 		return sunflowerButton;
 	}
-
+	/**
+	 * Returns next level button on GUI
+	 *
+	 * @return nextLevelButton sunflower button on GUI
+	 */
 	public Button getNextLevelButton() {
 		return nextLevelButton;
 	}
-
+	/**
+	 * Returns next turn button on GUI
+	 *
+	 * @return nextTurnButton sunflower button on GUI
+	 */
+	public Button getNextTurnButton() {
+		return nextTurnButton;
+	}
+	/**
+	 * Returns PeaShooter button on GUI
+	 *
+	 * @return peashooterButton sunflower button on GUI
+	 */
 	public Button getPeaShooterButton() {
 		return peashooterButton;
 	}
-
+	/**
+	 * Returns Threepeater button on GUI
+	 *
+	 * @return peashooterButton sunflower button on GUI
+	 */
 	public Button getThreepeaterButton() {
 		return threepeaterButton;
 	}
 
+	/**
+	 * Returns game modified by controller 
+	 *
+	 * @return game   game modified by controller 
+	 */
 	public PlantsVZombies getGame() {
 		return game;
 	}
 	
+	
+	/**
+	 * Returns undo/redo checkbox on GUI
+	 *
+	 * @return allowUndoRedo undo/redo checkbox on GUI
+	 */
 	public CheckBox getCheckbox() {
 		return allowUndoRedo;
 	}
-	
+	/**
+	 * Returns undo button on GUI
+	 *
+	 * @return undoButton undo button on GUI
+	 */
+
 	public Button getUndoButton() {
 		return undoButton;
 	}
-	
+	/**
+	 * Returns redo button on GUI
+	 *
+	 * @return redoButton undo button on GUI
+	 */
 	public Button getRedoButton() {
 		return redoButton;
 	}
