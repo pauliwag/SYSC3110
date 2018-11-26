@@ -43,6 +43,9 @@ public class ActionProcessor {
 	 * Turn" button.
 	 */
 	public void processNextTurn() {
+
+		// if the undo/redo toggle is on, add a deep copy of the
+		// game world (current game state) to the undo stack
 		if (game.getController().logMoves()) {
 			game.addToUndoStack(game.getWorld());
 		}
@@ -274,11 +277,11 @@ public class ActionProcessor {
 					CooldownManager.startGatlingPeaCD();
 				}
 
-			} 
+			}
 		} else {
 			// alert the user that the specified cell is already occupied
 			game.getController().showAlert("No room!", null, "There's already something placed here!",
-											AlertType.INFORMATION);
+					AlertType.INFORMATION);
 		}
 
 	}
