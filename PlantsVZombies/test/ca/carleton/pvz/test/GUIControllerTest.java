@@ -40,10 +40,12 @@ public class GUIControllerTest {
 		t.start();
 		Thread.sleep(1000);
 	}
-	
+
 	/**
 	 * Tests if sunflower button behaves as intended
-	 * @result Behaves as expected, returns only sunflower subtype, no other plant subtype
+	 * 
+	 * @result Behaves as expected, returns only sunflower subtype, no other plant
+	 *         subtype
 	 */
 
 	@Test
@@ -57,19 +59,21 @@ public class GUIControllerTest {
 	}
 
 	@Test
-	public void testNextLevelButton() {
+	public void testNextTurnButton() {
 		int i = 0;
 		while (i < 8) {
-			controller.getNextLevelButton().fire();
+			controller.getNextTurnButton().fire();
 			i++;
 		}
-		assertTrue(controller.getNextLevelButton().isDisabled());
+		assertTrue(controller.getNextTurnButton().isDisabled());
 
 	}
 
 	/**
 	 * Tests if peashooter button behaves as intended
-	 * @result Behaves as expected, returns only peashooter  subtype, no other plant subtype
+	 * 
+	 * @result Behaves as expected, returns only peashooter subtype, no other plant
+	 *         subtype
 	 */
 	@Test
 	public void testPeaShooterButton() {
@@ -83,7 +87,9 @@ public class GUIControllerTest {
 
 	/**
 	 * Tests if threepeater (gatling peashooter) button behaves as intended
-	 * @result Behaves as expected, returns only (gatling peashooter) subtype, no other plant subtype
+	 * 
+	 * @result Behaves as expected, returns only (gatling peashooter) subtype, no
+	 *         other plant subtype
 	 */
 	@Test
 	public void testThreepeaterButton() {
@@ -94,6 +100,5 @@ public class GUIControllerTest {
 		assertFalse(controller.getSelectedPlant() instanceof Sunflower);
 
 	}
-
 
 }
