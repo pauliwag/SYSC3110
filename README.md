@@ -20,7 +20,7 @@ Jacob Laboissonniere
 <br>
 
 Sameed Mohammed
-> Worked on test classes for all classes in project, added Javadoc comments. Reviewed/edited design decision justufication document.
+> Worked on test classes for all classes in project, in particular, worked on the testing logic and structure for GUIController. Added Javadoc comments to testing classes. Reviewed/edited design decision justufication document.
 
 <br>
 
