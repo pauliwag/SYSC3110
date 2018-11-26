@@ -58,17 +58,6 @@ public class GUIControllerTest {
 
 	}
 
-	@Test
-	public void testNextTurnButton() {
-		int i = 0;
-		while (i < 8) {
-			controller.getNextTurnButton().fire();
-			i++;
-		}
-		assertTrue(controller.getNextTurnButton().isDisabled());
-
-	}
-
 	/**
 	 * Tests if peashooter button behaves as intended
 	 * 
