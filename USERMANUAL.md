@@ -80,7 +80,7 @@ There are currently three different types of zombies in the game.
  * **Normal Zombie: **
   The normal zombie has **500 health** and moves at a speed of *one tile per turn**
   
- **Shield Zombie: **
+ * **Shield Zombie: **
   The shield zombie has **500 health** and moves at a speed of *one tile per turn**
   
  * **Fast Zombie: **
