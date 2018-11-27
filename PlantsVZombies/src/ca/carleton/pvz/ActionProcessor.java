@@ -97,13 +97,6 @@ public class ActionProcessor {
 			}
 		}
 
-		// level is beat if queued waves are empty and
-		// there are no zombies on the map
-		if (lvl.isBeat()) {
-			game.getController().showAlert("You won!", null,
-					"Congrats! You beat " + lvl.getLevelName() + " of Plants vs. Zombies!", AlertType.INFORMATION);
-		}
-
 	}
 
 	/**
@@ -204,6 +197,16 @@ public class ActionProcessor {
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * Returns whether the active level is beat. A level is considered beat when
+	 * its queued waves are empty and there are no zombies on the map.
+	 *
+	 * @return true if the active level is beat, false otherwise.
+	 */
+	public boolean isLevelBeat() {
+		return game.getWorld().isCurrentLevelBeat();
 	}
 
 	/**

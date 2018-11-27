@@ -4,8 +4,9 @@ import java.util.Stack;
 
 import ca.carleton.pvz.gui.GUIController;
 import ca.carleton.pvz.level.LevelOne;
+import ca.carleton.pvz.level.LevelTwo;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader; 
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -22,23 +23,21 @@ public class PlantsVZombies extends Application {
 	private static GUIController controller;
 	private Stack<World> undoStack;
 	private Stack<World> redoStack;
-	
+
 	/**
-	 * The start method for the JavaFX GUI. Loads GUI from fxml file and
+	 * The start method for the JavaFX GUI. Loads GUI from .fxml file and
 	 * creates/shows a scene containing it.
 	 */
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		FXMLLoader loader = new FXMLLoader(GUIController.class.getResource("PVZGUI.fxml"));
 		BorderPane borderPane = loader.load();
-
-		// Get the Controller from the FXMLLoader
+		// get the controller from the FXMLLoader
 		controller = loader.getController();
 		controller.setGame(this);
 		Scene scene = new Scene(borderPane, 1360.0, 615.0);
 		primaryStage.setTitle("Plants VS Zombies Group 5");
 		primaryStage.setResizable(false);
-		
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
@@ -58,6 +57,7 @@ public class PlantsVZombies extends Application {
 	public PlantsVZombies() {
 		gameWorld = new World();
 		actionProcessor = new ActionProcessor(this);
+		gameWorld.addLevel(new LevelTwo());
 		gameWorld.addLevel(new LevelOne());
 		gameOver = false;
 		undoStack = new Stack<World>();
@@ -65,6 +65,11 @@ public class PlantsVZombies extends Application {
 		addToUndoStack(gameWorld);
 	}
 
+	/**
+	 * Gets the active game world, which represents the current game state.
+	 *
+	 * @return The active game world.
+	 */
 	public World getWorld() {
 		return gameWorld;
 	}
@@ -77,85 +82,92 @@ public class PlantsVZombies extends Application {
 	}
 
 	/**
-	 * Is game over?
+	 * Returns whether this game is over; i.e., whether the player has lost.
 	 *
-	 * @return true if game is over, false otherwise.
+	 * @return true if this game is over, false otherwise.
 	 */
 	public boolean isGameOver() {
 		return gameOver;
 	}
 
 	/**
-	 * Get the game's action processor
+	 * Gets this game's action processor.
 	 *
-	 * @return the game action processor
+	 * @return This game's action processor.
 	 */
 	public ActionProcessor getActionProcessor() {
 		return actionProcessor;
 	}
-	
+
 	/**
-	 * Add a world to the undo stack
-	 * @param world to be added to stack
+	 * Adds a world to the undo stack.
+	 *
+	 * @param The world to be added to the undo stack.
 	 */
 	public void addToUndoStack(World world) {
 		undoStack.push(World.copy(world));
 	}
-	
+
 	/**
-	 * Undo a move - sets game world to top of undo stack, and adds to redo stack
+	 * Undo a move - sets game world to top of undo stack, and adds to redo
+	 * stack.
 	 */
 	public void undo() {
 		addToRedoStack(getWorld());
 		setGameWorld(undoStack.pop());
 	}
-	
+
 	/**
-	 * Add a world to the redo stack
-	 * @param world to be added to stack
+	 * Adds a world to the redo stack.
+	 *
+	 * @param The world to be added to the redo stack.
 	 */
 	public void addToRedoStack(World world) {
 		redoStack.push(World.copy(world));
 	}
-	
+
 	/**
-	 * Redo a move that was undone.
+	 * Redoes a move that was undone.
 	 */
 	public void redo() {
 		addToUndoStack(getWorld());
 		setGameWorld(redoStack.pop());
 	}
-	
+
 	/**
 	 * Are there more states we can undo to?
-	 * @return Returns true if yes, false if no
+	 *
+	 * @return true if yes, false if no.
 	 */
 	public boolean hasUndo() {
 		return !undoStack.isEmpty();
 	}
-	
+
 	/**
 	 * Are there more states we can redo to?
-	 * @return Returns true if yes, false if no
+	 *
+	 * @return true if yes, false if no.
 	 */
 	public boolean hasRedo() {
 		return !redoStack.isEmpty();
 	}
-	
+
 	/**
-	 * Empties undo and redo stacks. 
-	 * Called when allow undo/redo checkbox is used. 
+	 * Empties undo and redo stacks. Called when allow undo/redo checkbox is
+	 * ticked.
 	 */
 	public void emptyUndoRedo() {
 		redoStack.clear();
 		undoStack.clear();
 	}
-	
+
 	/**
 	 * Updates the current game world.
-	 * @param world
+	 *
+	 * @param world The new game world.
 	 */
 	public void setGameWorld(World world) {
 		gameWorld = world;
 	}
+
 }
