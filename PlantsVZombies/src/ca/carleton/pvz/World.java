@@ -29,8 +29,7 @@ public class World implements Serializable {
 	/**
 	 * Adds a level to the stack.
 	 *
-	 * @param level
-	 *            The level to be added to the stack.
+	 * @param level The level to be added to the stack.
 	 */
 	public void addLevel(Level level) {
 		if (level != null) {
@@ -48,39 +47,51 @@ public class World implements Serializable {
 	}
 
 	/**
-	 * Sets the current level to that given.
+	 * Returns whether the current level is beat.
 	 *
-	 * @param level
-	 *            The new active level.
+	 * @return true if the current level is beat, false otherwise.
 	 */
-	public void updateCurrentLevel(Level level) {
-		levels.set(0, level);
+	public boolean isCurrentLevelBeat() {
+		return levels.peek().isBeat();
 	}
 
 	/**
-	 * Returns a copy of the object, or null if the object cannot be serialized.
+	 * Pops the current level and gets the next level.
+	 *
+	 * @return The next level.
+	 */
+	public Level nextLevel() {
+		levels.pop();
+		if (levels.empty()) { // failsafe: prevent EmptyStackException
+			return null;
+		}
+		return levels.peek();
+	}
+
+	/**
+	 * Returns a deep copy of the given world, or null if the given world cannot
+	 * be serialized.
 	 */
 	public static World copy(World orig) {
-		World obj = null;
+		World copy = null;
 		try {
-			// Write the object out to a byte array
+			// write the given world out to a byte array
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();
 			ObjectOutputStream out = new ObjectOutputStream(bos);
 			out.writeObject(orig);
 			out.flush();
 			out.close();
-
-			// Make an input stream from the byte array and read
-			// a copy of the object back in.
+			// make an input stream from the byte array and
+			// read a copy of the given world back in
 			ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(bos.toByteArray()));
-			obj = (World) in.readObject();
+			copy = (World) in.readObject();
 			in.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException cnfe) {
 			cnfe.printStackTrace();
 		}
-		return obj;
+		return copy;
 	}
 
 }

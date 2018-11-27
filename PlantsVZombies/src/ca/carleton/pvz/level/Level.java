@@ -21,7 +21,7 @@ public abstract class Level implements Serializable {
 	public static final int PASSIVE_SUNPOINT_BOOST = 25; // every two turns
 
 	/** The name of this level; e.g., "Level 1". */
-	private String levelName;
+	private int levelNum;
 
 	/**
 	 * A Dimension object comprising the height and width, in cells, of this
@@ -55,15 +55,15 @@ public abstract class Level implements Serializable {
 	/**
 	 * Initializes the fields of a level object.
 	 *
-	 * @param levelName The name of the level.
+	 * @param levelNum This level's number.
 	 * @param width The width (number of horizontal cells) of the level.
 	 * @param height The height (number of vertical cells) of the level.
 	 * @param startingSunPoints The sun points the player has at the start of
 	 *            the level.
 	 */
-	public Level(String levelName, int width, int height, int startingSunPoints) {
+	public Level(int levelNum, int width, int height, int startingSunPoints) {
 
-		this.levelName = levelName;
+		this.levelNum = levelNum;
 		levelDimension = new Dimension(width, height);
 		sunpoints = startingSunPoints;
 		grid = new Actor[width][height];
@@ -275,8 +275,8 @@ public abstract class Level implements Serializable {
 	 *
 	 * @return This level's name.
 	 */
-	public String getLevelName() {
-		return levelName;
+	public int getNum() {
+		return levelNum;
 	}
 
 	/**

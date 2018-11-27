@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import ca.carleton.pvz.PlantsVZombies;
+import ca.carleton.pvz.World;
 import ca.carleton.pvz.actor.Actor;
 import ca.carleton.pvz.actor.CooldownManager;
 import ca.carleton.pvz.actor.GatlingPeaShooter;
@@ -37,6 +38,7 @@ import javafx.scene.layout.GridPane;
  *
  */
 public class GUIController {
+
 	private PlantsVZombies game;
 	private Plant selectedPlant;
 
@@ -139,8 +141,8 @@ public class GUIController {
 		setupNextTurnButton();
 		updateCostDisplay();
 		initGameGrid();
-		nextLevelButton.setDisable(true); // we only have one Level in this
-											// version, so disable button
+
+		nextLevelButton.setDisable(true);
 		redoButton.setDisable(true);
 		undoButton.setDisable(true);
 	}
@@ -153,8 +155,8 @@ public class GUIController {
 	}
 
 	/**
-	 * Sets up plant button event handlers. When button is pressed, sets currently
-	 * selected plant object to correct type.
+	 * Sets up plant button event handlers. When button is pressed, sets
+	 * currently selected plant object to correct type.
 	 */
 	private void setupPlantSelectionButtons() {
 		selectedPlant = new Sunflower();
@@ -164,21 +166,18 @@ public class GUIController {
 				selectedPlant = new Sunflower();
 			}
 		});
-
 		peashooterButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
 				selectedPlant = new NormalPeaShooter();
 			}
 		});
-
 		threepeaterButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
 				selectedPlant = new GatlingPeaShooter();
 			}
 		});
-
 	}
 
 	/**
@@ -190,7 +189,6 @@ public class GUIController {
 		} else {
 			redoButton.setDisable(true);
 		}
-
 		if (game.hasUndo()) {
 			undoButton.setDisable(false);
 		} else {
@@ -206,14 +204,67 @@ public class GUIController {
 			@Override
 			public void handle(ActionEvent e) {
 				game.getActionProcessor().processNextTurn();
-				if (game.getActionProcessor().isGameOver()) {
+				updateGameGrid();
+				if (game.isGameOver()) {
 					notifyGameOver();
 					return;
 				}
-
-				updateGameGrid();
+				if (game.getWorld().isCurrentLevelBeat()) {
+					notifyLevelBeat();
+				}
 			}
 		});
+	}
+
+	/**
+	 * Called when the current level is beat.
+	 */
+	private void notifyLevelBeat() {
+
+		World gameWorld = game.getWorld();
+		int beatLevelNum = gameWorld.getCurrentLevel().getNum();
+
+		// pop the current (beat) level and
+		// check if the next level is null
+		if (gameWorld.nextLevel() == null) {
+			notifyGameBeat();
+		}
+
+		else {
+			showAlert("You won!", null, "Congrats! You beat Level " + beatLevelNum + " of Plants vs. Zombies!",
+					AlertType.INFORMATION);
+			CooldownManager.resetCDs();
+			updateGameGrid(); // reset grid for next level
+		}
+
+	}
+
+	/**
+	 * Called when game is over. Disables buttons we don't want pressed and
+	 * alerts user.
+	 */
+	public void notifyGameOver() {
+		nextTurnButton.setDisable(true);
+		gameGrid.setDisable(true);
+		plantGroup.setDisable(true);
+		redoButton.setDisable(true);
+		undoButton.setDisable(true);
+		allowUndoRedo.setDisable(true);
+		showAlert("Game Over", null, "Game over! You failed to protect your home from the zombies :(",
+				AlertType.INFORMATION);
+	}
+
+	/**
+	 * Called when all levels in the game are beat.
+	 */
+	private void notifyGameBeat() {
+		nextTurnButton.setDisable(true);
+		gameGrid.setDisable(true);
+		plantGroup.setDisable(true);
+		redoButton.setDisable(true);
+		undoButton.setDisable(true);
+		allowUndoRedo.setDisable(true);
+		showAlert("You beat the game!", null, "Congrats! You beat all levels in the game!", AlertType.INFORMATION);
 	}
 
 	private void setupUndoRedo() {
@@ -224,11 +275,8 @@ public class GUIController {
 					game.undo();
 					updateGameGrid();
 				}
-
 			}
-
 		});
-
 		redoButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent arg0) {
@@ -236,11 +284,8 @@ public class GUIController {
 					game.redo();
 					updateGameGrid();
 				}
-
 			}
-
 		});
-
 		allowUndoRedo.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
@@ -252,9 +297,7 @@ public class GUIController {
 					undoButton.setDisable(true);
 					game.emptyUndoRedo();
 				}
-
 			}
-
 		});
 	}
 
@@ -268,12 +311,11 @@ public class GUIController {
 				Platform.exit();
 			}
 		});
-
 		aboutButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent arg0) {
-				showAlert("About", "Plants VS Zombies Group 5",
-						"Created by Paul Roode, Abdillahi Nur, Sameed Mohammed, and Jacob Laboissonniere",
+				showAlert("About", "Plants vs. Zombies v4.0 by Team 5",
+						"Authors: Paul Roode, Abdillahi Nur, Sameed Mohammed, Jacob Laboissonniere",
 						AlertType.INFORMATION);
 			}
 		});
@@ -292,13 +334,11 @@ public class GUIController {
 				ImageView imgView = (ImageView) child;
 				imgView.setImage(grass);
 				imgView.setPreserveRatio(false);
-
 				imgView.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
 					@Override
 					public void handle(MouseEvent event) {
 						int row, column;
-
 						if (GridPane.getRowIndex(imgView) != null && GridPane.getColumnIndex(imgView) != null) {
 							row = GridPane.getRowIndex(imgView);
 							column = GridPane.getColumnIndex(imgView);
@@ -307,13 +347,10 @@ public class GUIController {
 						}
 						updateGameGrid();
 						event.consume();
-
 					}
-
 				});
 			}
 		}
-
 	}
 
 	/**
@@ -335,14 +372,22 @@ public class GUIController {
 	}
 
 	/**
-	 * Updates sunpoint label on UI
+	 * Updates sunpoint label on UI.
 	 */
 	private void updateSunpointLabel() {
 		sunpointLabel.setText("  Sunpoints: " + Integer.toString(game.getWorld().getCurrentLevel().getSunpoints()));
 	}
 
 	/**
-	 * Updates the wave label on UI
+	 * Updates level label on UI.
+	 */
+	private void updateLevelLabel() {
+		int levelNum = game.getWorld().getCurrentLevel().getNum();
+		levelLabel.setText("  Level: " + levelNum);
+	}
+
+	/**
+	 * Updates the wave label on UI.
 	 */
 	private void updateWaveNumber() {
 		Level lvl = game.getWorld().getCurrentLevel();
@@ -362,12 +407,10 @@ public class GUIController {
 			if (child instanceof ImageView) {
 				ImageView imgView = (ImageView) child;
 				int row, column;
-
 				if (GridPane.getRowIndex(imgView) != null && GridPane.getColumnIndex(imgView) != null) {
 					row = GridPane.getRowIndex(imgView);
 					column = GridPane.getColumnIndex(imgView);
 					Actor actor = game.getWorld().getCurrentLevel().getCell(column, row);
-
 					if (actor != null) {
 						imgView.setImage(actor.getSprite());
 					} else {
@@ -381,43 +424,23 @@ public class GUIController {
 		}
 		updateWaveNumber();
 		updateSunpointLabel();
+		updateLevelLabel();
 		updateCooldownDisplay();
-	}
-
-	/**
-	 * Called when game is over. Disables buttons we don't want pressed and alerts
-	 * user.
-	 */
-	public void notifyGameOver() {
-		updateGameGrid();
-		nextTurnButton.setDisable(true);
-		gameGrid.setDisable(true);
-		plantGroup.setDisable(true);
-		redoButton.setDisable(true);
-		undoButton.setDisable(true);
-		allowUndoRedo.setDisable(true);
-		showAlert("Game Over", null, "Game over! You failed to protect your home from the zombies :(",
-				AlertType.INFORMATION);
 	}
 
 	/**
 	 * Shows the user a pop-up alert dialog
 	 *
-	 * @param title
-	 *            Title of the alert dialog
-	 * @param header
-	 *            Header of the alert dialog (can be null for no header)
-	 * @param content
-	 *            Content of the alert dialog
-	 * @param type
-	 *            Type of alert - see AlertType documentation
+	 * @param title Title of the alert dialog
+	 * @param header Header of the alert dialog (can be null for no header)
+	 * @param content Content of the alert dialog
+	 * @param type Type of alert - see AlertType documentation
 	 */
 	public void showAlert(String title, String header, String content, AlertType type) {
 		Alert alert = new Alert(type);
 		alert.setTitle(title);
 		alert.setHeaderText(header);
 		alert.setContentText(content);
-
 		alert.showAndWait();
 	}
 
@@ -438,8 +461,7 @@ public class GUIController {
 	/**
 	 * Set the game that this controller controls
 	 *
-	 * @param game
-	 *            to control
+	 * @param game to control
 	 */
 	public void setGame(PlantsVZombies game) {
 		this.game = game;
@@ -472,6 +494,7 @@ public class GUIController {
 	public Button getSunflowerButton() {
 		return sunflowerButton;
 	}
+
 	/**
 	 * Returns next level button on GUI
 	 *
@@ -480,6 +503,7 @@ public class GUIController {
 	public Button getNextLevelButton() {
 		return nextLevelButton;
 	}
+
 	/**
 	 * Returns next turn button on GUI
 	 *
@@ -488,6 +512,7 @@ public class GUIController {
 	public Button getNextTurnButton() {
 		return nextTurnButton;
 	}
+
 	/**
 	 * Returns PeaShooter button on GUI
 	 *
@@ -496,6 +521,7 @@ public class GUIController {
 	public Button getPeaShooterButton() {
 		return peashooterButton;
 	}
+
 	/**
 	 * Returns Threepeater button on GUI
 	 *
@@ -506,15 +532,14 @@ public class GUIController {
 	}
 
 	/**
-	 * Returns game modified by controller 
+	 * Returns game modified by controller
 	 *
-	 * @return game   game modified by controller 
+	 * @return game game modified by controller
 	 */
 	public PlantsVZombies getGame() {
 		return game;
 	}
-	
-	
+
 	/**
 	 * Returns undo/redo checkbox on GUI
 	 *
@@ -523,15 +548,16 @@ public class GUIController {
 	public CheckBox getCheckbox() {
 		return allowUndoRedo;
 	}
+
 	/**
 	 * Returns undo button on GUI
 	 *
 	 * @return undoButton undo button on GUI
 	 */
-
 	public Button getUndoButton() {
 		return undoButton;
 	}
+
 	/**
 	 * Returns redo button on GUI
 	 *
@@ -540,15 +566,4 @@ public class GUIController {
 	public Button getRedoButton() {
 		return redoButton;
 	}
-
 }
-
-/*
- * private Button sunflowerButton;
- * 
- * @FXML private Button nextLevelButton;
- * 
- * @FXML private Button peashooterButton;
- * 
- * @FXML private Button threepeaterButton;
- */
