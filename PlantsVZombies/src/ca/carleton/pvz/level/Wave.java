@@ -5,6 +5,7 @@ import java.util.HashMap;
 import ca.carleton.pvz.actor.FastZombie;
 import ca.carleton.pvz.actor.NormalZombie;
 import ca.carleton.pvz.actor.ShieldZombie;
+import ca.carleton.pvz.actor.WizrobeZombie;
 import ca.carleton.pvz.actor.Zombie;
 
 /**
@@ -47,8 +48,11 @@ public class Wave implements Serializable {
 	 * @param numShieldZombies The number of shield zombies initiallty in this
 	 *            wave.
 	 * @param numFastZombies The number of fast zombies initially in this wave.
+	 * @param numWizrobeZombies The number of WizrobeZombies initially in this
+	 *            wave.
 	 */
-	public Wave(int waveNum, Difficulty difficulty, int numNormalZombies, int numShieldZombies, int numFastZombies) {
+	public Wave(int waveNum, Difficulty difficulty, int numNormalZombies, int numShieldZombies, int numFastZombies,
+			int numWizrobeZombies) {
 
 		this.waveNum = waveNum;
 
@@ -58,6 +62,7 @@ public class Wave implements Serializable {
 		zombies.put(NormalZombie.class, numNormalZombies);
 		zombies.put(ShieldZombie.class, numShieldZombies);
 		zombies.put(FastZombie.class, numFastZombies);
+		zombies.put(WizrobeZombie.class, numWizrobeZombies);
 
 	}
 

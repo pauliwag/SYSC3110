@@ -14,6 +14,7 @@ import ca.carleton.pvz.actor.NormalPeaShooter;
 import ca.carleton.pvz.actor.PeaShooter;
 import ca.carleton.pvz.actor.Plant;
 import ca.carleton.pvz.actor.Sunflower;
+import ca.carleton.pvz.actor.WizrobeZombie;
 import ca.carleton.pvz.actor.Zombie;
 import ca.carleton.pvz.level.Level;
 import javafx.scene.control.Alert.AlertType;
@@ -108,6 +109,7 @@ public class ActionProcessor {
 	/**
 	 * Actuates shooting by all shooting plants in the given level.
 	 *
+	 * @param lvl The active level.
 	 */
 	public void shootZombies(Level lvl) {
 
@@ -140,6 +142,8 @@ public class ActionProcessor {
 	 * Moves all zombies in the given level to the left by the appropriate
 	 * number of cells; i.e., based on zombie speed, which varies across Zombie
 	 * subtypes.
+	 *
+	 * @param lvl The active level.
 	 */
 	private void moveZombies(Level lvl) {
 
@@ -150,24 +154,34 @@ public class ActionProcessor {
 				if (a instanceof Zombie) {
 					Zombie z = (Zombie) a;
 					int xNew = x - z.getSpeed();
+
 					// failsafe: if xNew < 0, place zombie at (0, y)
 					if (xNew < 0) {
 						xNew = 0;
 					}
+
 					// nullify occupied cell
 					lvl.placeActor(null, new Point(x, y));
+
+					// WizrobeZombie teleportation
+					if (z instanceof WizrobeZombie) {
+						y = ((WizrobeZombie) z).rowToTeleportTo(lvl, xNew, y);
+					}
+
 					// constraint: one zombie per cell;
 					// slower zombie gets pushed back one cell
 					if (lvl.getCell(xNew, y) instanceof Zombie) {
 						lvl.placeActor(lvl.getCell(xNew, y), new Point(xNew + 1, y));
 					}
 					lvl.placeActor(z, new Point(xNew, y));
+
 					// ensure all non-zombie cells in zombie's path are
 					// nullified
 					for (int xAux = xNew + 1; xAux <= x; ++xAux) {
 						if (!(lvl.getCell(xAux, y) instanceof Zombie))
 							lvl.placeActor(null, new Point(xAux, y));
 					}
+
 				}
 			}
 		}

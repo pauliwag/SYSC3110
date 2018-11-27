@@ -7,6 +7,7 @@ package ca.carleton.pvz.actor;
 public abstract class PeaShooter extends Plant {
 
 	private static final long serialVersionUID = 1518342918068333369L;
+
 	/** The damage a pea does per hit. */
 	private int peaDamage;
 
