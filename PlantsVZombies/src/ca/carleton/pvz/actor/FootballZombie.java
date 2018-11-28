@@ -5,15 +5,15 @@ import java.io.InputStream;
 import javafx.scene.image.Image;
 
 /**
- * A subtype of Zombie that moves thrice as fast as a normal zombie and has high
+ * A subtype of Zombie that moves twice as fast as a normal zombie and has high
  * health.
  *
  */
 public class FootballZombie extends Zombie {
 
 	private static final long serialVersionUID = 6214923633339415829L;
-	public static final int FOOTBALL_ZOMBIE_HEALTH = 1000;
-	public static final int FOOTBALL_ZOMBIE_SPEED = 3;
+	public static final int FOOTBALL_ZOMBIE_HEALTH = 900;
+	public static final int FOOTBALL_ZOMBIE_SPEED = 2;
 
 	/**
 	 * Constructs a FootballZombie.
