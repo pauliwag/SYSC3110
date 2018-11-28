@@ -11,16 +11,14 @@ import javafx.scene.image.Image;
 public class ShieldZombie extends Zombie {
 
 	private static final long serialVersionUID = 1946845095016310284L;
-	public static final int SHIELD_ZOMBIE_HEALTH = 700;
-	public static final int SHIELD_ZOMBIE_SPEED = 1; // tiles moved to the left per turn
+	public static final int SHIELD_ZOMBIE_HEALTH = 800;
+	public static final int SHIELD_ZOMBIE_SPEED = 1;
 
 	/**
 	 * Constructs a shield zombie.
 	 */
 	public ShieldZombie() {
-
 		super(SHIELD_ZOMBIE_HEALTH, SHIELD_ZOMBIE_SPEED);
-
 	}
 
 	/**
@@ -29,11 +27,8 @@ public class ShieldZombie extends Zombie {
 	 * @return The shield zombie sprite.
 	 */
 	public Image getSprite() {
-
 		InputStream stream = getClass().getResourceAsStream("shield_zombie.png");
-
 		return new Image(stream);
-
 	}
 
 }

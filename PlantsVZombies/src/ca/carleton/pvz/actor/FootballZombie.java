@@ -5,8 +5,8 @@ import java.io.InputStream;
 import javafx.scene.image.Image;
 
 /**
- * A subtype of Zombie that moves twice as fast as a normal zombie but is
- * weaker.
+ * A subtype of Zombie that moves thrice as fast as a normal zombie and has high
+ * health.
  *
  */
 public class FootballZombie extends Zombie {
@@ -16,25 +16,20 @@ public class FootballZombie extends Zombie {
 	public static final int FOOTBALL_ZOMBIE_SPEED = 3;
 
 	/**
-	 * Constructs a fast zombie.
+	 * Constructs a FootballZombie.
 	 */
 	public FootballZombie() {
-
 		super(FOOTBALL_ZOMBIE_HEALTH, FOOTBALL_ZOMBIE_SPEED);
-
 	}
 
 	/**
-	 * Gets the fast zombie sprite.
+	 * Gets the FootballZombie sprite.
 	 *
-	 * @return The fast zombie sprite.
+	 * @return The FootballZombie sprite.
 	 */
 	public Image getSprite() {
-
 		InputStream stream = getClass().getResourceAsStream("football_zombie.png");
-
 		return new Image(stream);
-
 	}
 
 }

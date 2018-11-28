@@ -156,7 +156,7 @@ public class ActionProcessor {
 					// nullify occupied cell
 					lvl.placeActor(null, new Point(x, y));
 
-					// WizrobeZombie teleportation
+					// TeleportingZombie teleportation
 					if (z instanceof WizrobeZombie) {
 						y = ((WizrobeZombie) z).rowToTeleportTo(lvl, xNew, y);
 					}
