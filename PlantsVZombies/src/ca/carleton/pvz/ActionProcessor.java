@@ -14,7 +14,7 @@ import ca.carleton.pvz.actor.NormalPeaShooter;
 import ca.carleton.pvz.actor.PeaShooter;
 import ca.carleton.pvz.actor.Plant;
 import ca.carleton.pvz.actor.Sunflower;
-import ca.carleton.pvz.actor.WizrobeZombie;
+import ca.carleton.pvz.actor.TeleportingZombie;
 import ca.carleton.pvz.actor.Zombie;
 import ca.carleton.pvz.level.Level;
 import javafx.scene.control.Alert.AlertType;
@@ -157,8 +157,8 @@ public class ActionProcessor {
 					lvl.placeActor(null, new Point(x, y));
 
 					// TeleportingZombie teleportation
-					if (z instanceof WizrobeZombie) {
-						y = ((WizrobeZombie) z).rowToTeleportTo(lvl, xNew, y);
+					if (z instanceof TeleportingZombie) {
+						y = ((TeleportingZombie) z).rowToTeleportTo(lvl, xNew, y);
 					}
 
 					// constraint: one zombie per cell;
