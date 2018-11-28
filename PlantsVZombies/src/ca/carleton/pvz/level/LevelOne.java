@@ -30,12 +30,13 @@ public class LevelOne extends Level {
 		clearWaves();
 
 		// specify this level's waves
-		Wave wave1 = new Wave(1, Difficulty.NORMAL, 0, 0, 0, 1);
-		// Wave wave2 = new Wave(2, Difficulty.RAMPED, 0, 0, 0, 4);
-		// Wave wave3 = new Wave(3, Difficulty.SUPER_RAMPED, 0, 2, 20, 0);
+		Wave wave1 = new Wave(1, Difficulty.NORMAL, 3, 1, 0, 1, 0);
+		Wave wave2 = new Wave(2, Difficulty.RAMPED, 0, 1, 0, 1, 0);
+		Wave wave3 = new Wave(3, Difficulty.RAMPED, 0, 0, 3, 0, 0);
+		Wave wave4 = new Wave(4, Difficulty.RAMPED, 0, 0, 0, 0, 1);
 
 		// populate the queue
-		addWaves(wave1);
+		addWaves(wave1, wave2, wave3, wave4);
 
 	}
 

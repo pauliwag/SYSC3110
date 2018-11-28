@@ -94,7 +94,7 @@ public class WizrobeZombie extends Zombie {
 	 * @return The WizrobeZombie sprite.
 	 */
 	public Image getSprite() {
-		InputStream stream = getClass().getResourceAsStream("fast_zombie.png");
+		InputStream stream = getClass().getResourceAsStream("wizrobe_zombie.png");
 		return new Image(stream);
 	}
 

@@ -3,6 +3,7 @@ package ca.carleton.pvz.level;
 import java.io.Serializable;
 import java.util.HashMap;
 import ca.carleton.pvz.actor.FastZombie;
+import ca.carleton.pvz.actor.FootballZombie;
 import ca.carleton.pvz.actor.NormalZombie;
 import ca.carleton.pvz.actor.ShieldZombie;
 import ca.carleton.pvz.actor.WizrobeZombie;
@@ -50,9 +51,11 @@ public class Wave implements Serializable {
 	 * @param numFastZombies The number of fast zombies initially in this wave.
 	 * @param numWizrobeZombies The number of WizrobeZombies initially in this
 	 *            wave.
+	 * @param numFootballZombies The number of FootballZombies initially in this
+	 *            wave.
 	 */
 	public Wave(int waveNum, Difficulty difficulty, int numNormalZombies, int numShieldZombies, int numFastZombies,
-			int numWizrobeZombies) {
+			int numWizrobeZombies, int numFootballZombies) {
 
 		this.waveNum = waveNum;
 
@@ -63,6 +66,7 @@ public class Wave implements Serializable {
 		zombies.put(ShieldZombie.class, numShieldZombies);
 		zombies.put(FastZombie.class, numFastZombies);
 		zombies.put(WizrobeZombie.class, numWizrobeZombies);
+		zombies.put(FootballZombie.class, numFootballZombies);
 
 	}
 
