@@ -234,6 +234,7 @@ public class GUIController {
 			showAlert("You won!", null, "Congrats! You beat Level " + beatLevelNum + " of Plants vs. Zombies!",
 					AlertType.INFORMATION);
 			CooldownManager.resetCDs();
+			game.emptyUndoRedo();
 			updateGameGrid(); // reset grid for next level
 		}
 
