@@ -11,7 +11,7 @@ import javafx.scene.image.Image;
 public class GatlingPeaShooter extends PeaShooter {
 
 	private static final long serialVersionUID = -9009721810436148422L;
-	public static final int GATLING_PEA_COST = 300; // in sunpoints
+	public static final int GATLING_PEA_COST = 300;
 	public static final int GATLING_PEA_DAMAGE = 350;
 
 	/**
@@ -19,9 +19,7 @@ public class GatlingPeaShooter extends PeaShooter {
 	 * shot than a normal pea shooter.
 	 */
 	public GatlingPeaShooter() {
-
 		super(GATLING_PEA_COST, GATLING_PEA_DAMAGE);
-
 	}
 
 	/**
@@ -31,11 +29,8 @@ public class GatlingPeaShooter extends PeaShooter {
 	 */
 	@Override
 	public Image getSprite() {
-
 		InputStream stream = getClass().getResourceAsStream("threepeater.png");
-
 		return new Image(stream);
-
 	}
 
 }
