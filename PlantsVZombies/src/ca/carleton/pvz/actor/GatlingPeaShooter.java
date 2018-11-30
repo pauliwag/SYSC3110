@@ -1,7 +1,5 @@
 package ca.carleton.pvz.actor;
 
-import java.io.InputStream;
-
 import ca.carleton.pvz.level.Level.Climate;
 import javafx.scene.image.Image;
 
@@ -12,6 +10,7 @@ import javafx.scene.image.Image;
 public class GatlingPeaShooter extends PeaShooter {
 
 	private static final long serialVersionUID = -9009721810436148422L;
+
 	public static final int GATLING_PEA_COST = 300;
 	public static final int GATLING_PEA_DAMAGE = 350;
 
@@ -20,7 +19,9 @@ public class GatlingPeaShooter extends PeaShooter {
 	 * shot than a normal pea shooter.
 	 */
 	public GatlingPeaShooter() {
+
 		super(GATLING_PEA_COST, GATLING_PEA_DAMAGE);
+
 	}
 
 	/**
@@ -30,10 +31,18 @@ public class GatlingPeaShooter extends PeaShooter {
 	 */
 	@Override
 	public Image getSprite(Climate climate) {
-		if(climate == Climate.NORMAL) return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/threepeater.png"));
-		if(climate == Climate.DESERT) return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/threepeater_desert.png"));
-		if(climate == Climate.WINTER) return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/threepeater_winter.png"));
+
+		if (climate == Climate.NORMAL)
+			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/threepeater.png"));
+
+		if (climate == Climate.DESERT)
+			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/threepeater_desert.png"));
+
+		if (climate == Climate.WINTER)
+			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/threepeater_winter.png"));
+
 		return null;
+
 	}
 
 }

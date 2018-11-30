@@ -18,7 +18,9 @@ public class LevelTwo extends Level {
 	 * Constructs level 2 with the specified dimensions (8 x 5).
 	 */
 	public LevelTwo() {
+
 		super(2, WIDTH, HEIGHT, STARTING_SUNPOINTS, Climate.DESERT);
+
 	}
 
 	/**
@@ -36,12 +38,12 @@ public class LevelTwo extends Level {
 				//                               normal  heavy   fast    wiz  fball   giga   boss
 				new Wave(1, Difficulty.NORMAL,       2,     2,     0,     0,     0,     0,     0),
 				new Wave(2, Difficulty.NORMAL,       0,     0,     0,     1,     0,     0,     0),
-				new Wave(3, Difficulty.RAMPED,       0,     1,     2,     0,     0,     0,     0),
+				new Wave(3, Difficulty.NORMAL,       0,     1,     2,     0,     0,     0,     0),
 				new Wave(4, Difficulty.RAMPED,       0,     0,     0,     1,     0,     0,     0),
 				new Wave(5, Difficulty.RAMPED,       0,     2,     1,     0,     0,     0,     0),
 				new Wave(6, Difficulty.RAMPED,       0,     0,     2,     1,     0,     0,     0),
 				new Wave(7, Difficulty.RAMPED,       2,     1,     0,     0,     0,     0,     0),
-				new Wave(8, Difficulty.SUPER_RAMPED, 0,     0,     0,     0,     4,     0,     0),
+				new Wave(8, Difficulty.SUPER_RAMPED, 0,     0,     0,     0,     3,     1,     0),
 				new Wave(9, Difficulty.RAMPED,       0,     0,     0,     0,     0,     0,     1)
 
 		};

@@ -1,7 +1,5 @@
 package ca.carleton.pvz.actor;
 
-import java.io.InputStream;
-
 import ca.carleton.pvz.level.Level.Climate;
 import javafx.scene.image.Image;
 
@@ -15,14 +13,17 @@ import javafx.scene.image.Image;
 public class BossZombie extends TeleportingZombie {
 
 	private static final long serialVersionUID = 3104194636098611570L;
-	public static final int BOSS_ZOMBIE_HEALTH = 1100;
+
+	public static final int BOSS_ZOMBIE_HEALTH = 1500;
 	public static final int BOSS_ZOMBIE_SPEED = 2;
 
 	/**
 	 * Constructs a BossZombie.
 	 */
 	public BossZombie() {
+
 		super(BOSS_ZOMBIE_HEALTH, BOSS_ZOMBIE_SPEED);
+
 	}
 
 	/**
@@ -31,11 +32,18 @@ public class BossZombie extends TeleportingZombie {
 	 * @return The BossZombie sprite.
 	 */
 	public Image getSprite(Climate climate) {
-		if(climate == Climate.NORMAL) return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/boss_zombie_normal.png"));
-		if(climate == Climate.DESERT) return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/boss_zombie_desert.png"));
-		if(climate == Climate.WINTER) return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/boss_zombie_winter.png"));
-		return null;
-	}
 
+		if (climate == Climate.NORMAL)
+			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/boss_zombie_normal.png"));
+
+		if (climate == Climate.DESERT)
+			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/boss_zombie_desert.png"));
+
+		if (climate == Climate.WINTER)
+			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/boss_zombie_winter.png"));
+
+		return null;
+
+	}
 
 }

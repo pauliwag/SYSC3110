@@ -1,7 +1,5 @@
 package ca.carleton.pvz.actor;
 
-import java.io.InputStream;
-
 import ca.carleton.pvz.level.Level.Climate;
 import javafx.scene.image.Image;
 
@@ -12,8 +10,9 @@ import javafx.scene.image.Image;
 public class NormalZombie extends Zombie {
 
 	private static final long serialVersionUID = 6255020074190195644L;
+
 	public static final int NORMAL_ZOMBIE_HEALTH = 500;
-	public static final int NORMAL_ZOMBIE_SPEED = 1; // tiles moved to the left per turn
+	public static final int NORMAL_ZOMBIE_SPEED = 1;
 
 	/**
 	 * Constructs a normal zombie.
@@ -30,10 +29,18 @@ public class NormalZombie extends Zombie {
 	 * @return The normal zombie sprite.
 	 */
 	public Image getSprite(Climate climate) {
-		if(climate == Climate.NORMAL) return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/zombie_normal.png"));
-		if(climate == Climate.DESERT) return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/zombie_desert.png"));
-		if(climate == Climate.WINTER) return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/zombie_winter.png"));
+
+		if (climate == Climate.NORMAL)
+			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/zombie_normal.png"));
+
+		if (climate == Climate.DESERT)
+			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/zombie_desert.png"));
+
+		if (climate == Climate.WINTER)
+			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/zombie_winter.png"));
+
 		return null;
+
 	}
 
 }
