@@ -328,7 +328,7 @@ public class GUIController {
 	 */
 	private void initGameGrid() {
 		ObservableList<Node> children = gameGrid.getChildren();
-		InputStream stream = getClass().getResourceAsStream("grass.png");
+		InputStream stream = getClass().getResourceAsStream("/ca/carleton/pvz/resources/grass.png");
 		Image grass = new Image(stream);
 		for (Node child : children) {
 			if (child instanceof ImageView) {
@@ -402,8 +402,7 @@ public class GUIController {
 	 */
 	public void updateGameGrid() {
 		ObservableList<Node> children = gameGrid.getChildren();
-		InputStream stream = getClass().getResourceAsStream("grass.png");
-		Image grass = new Image(stream);
+		Image texture = game.getWorld().getCurrentLevel().getSprite();
 		for (Node child : children) {
 			if (child instanceof ImageView) {
 				ImageView imgView = (ImageView) child;
@@ -413,9 +412,9 @@ public class GUIController {
 					column = GridPane.getColumnIndex(imgView);
 					Actor actor = game.getWorld().getCurrentLevel().getCell(column, row);
 					if (actor != null) {
-						imgView.setImage(actor.getSprite());
+						imgView.setImage(actor.getSprite(game.getWorld().getCurrentLevel().getClimate()));
 					} else {
-						imgView.setImage(grass);
+						imgView.setImage(texture);
 					}
 				}
 			}

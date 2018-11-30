@@ -2,6 +2,7 @@ package ca.carleton.pvz.actor;
 
 import java.io.InputStream;
 
+import ca.carleton.pvz.level.Level.Climate;
 import javafx.scene.image.Image;
 
 /**
@@ -28,9 +29,11 @@ public class NormalPeaShooter extends PeaShooter {
 	 * @return The peashooter sprite.
 	 */
 	@Override
-	public Image getSprite() {
-		InputStream stream = getClass().getResourceAsStream("peashooter.png");
-		return new Image(stream);
+	public Image getSprite(Climate climate) {
+		if(climate == Climate.NORMAL) return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/peashooter.png"));
+		if(climate == Climate.DESERT) return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/peashooter_desert.png"));
+		if(climate == Climate.WINTER) return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/peashooter_winter.png"));
+		return null;
 	}
 
 }
