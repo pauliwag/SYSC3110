@@ -9,7 +9,6 @@ import java.util.PriorityQueue;
 import ca.carleton.pvz.actor.Actor;
 import ca.carleton.pvz.actor.Sunflower;
 import ca.carleton.pvz.actor.Zombie;
-import ca.carleton.pvz.level.Level.Climate;
 import javafx.scene.image.Image;
 
 /**
@@ -53,7 +52,7 @@ public abstract class Level implements Serializable {
 	 * turn.
 	 */
 	private boolean zombieSpawned;
-	
+
 	/**
 	 * Climate type options (determines grid background colour)
 	 */
@@ -62,10 +61,10 @@ public abstract class Level implements Serializable {
 		NORMAL, DESERT, WINTER
 
 	};
-	
+
 	/** Levels climate type **/
 	private Climate climate;
-	
+
 	/**
 	 * Initializes the fields of a level object.
 	 *
@@ -85,9 +84,8 @@ public abstract class Level implements Serializable {
 		zombieSpawned = false;
 		this.climate = climate;
 		// initialize waves queue such that a lower wave number is prioritized
-		waves = new PriorityQueue<>(11, (Comparator<Wave> & Serializable) (wave1, wave2) -> {
-			return wave1.getNum() - wave2.getNum();
-		});
+		waves = new PriorityQueue<>(11,
+				(Comparator<Wave> & Serializable) (wave1, wave2) -> wave1.getNum() - wave2.getNum());
 		initWaves();
 
 		// initialize grid (playable area)
@@ -191,15 +189,16 @@ public abstract class Level implements Serializable {
 	public int getTurn() {
 		return turn;
 	}
-	
+
 	/**
 	 * Get the current level's climate
+	 *
 	 * @return
 	 */
 	public Climate getClimate() {
 		return climate;
 	}
-	
+
 	/**
 	 * Increments turn by one.
 	 */
@@ -337,11 +336,14 @@ public abstract class Level implements Serializable {
 	public int getSunpoints() {
 		return sunpoints;
 	}
-	
+
 	public Image getSprite() {
-		if(climate == Climate.NORMAL) return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/grass.png"));
-		if(climate == Climate.DESERT) return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/sand.png"));
-		if(climate == Climate.WINTER) return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/snow.png"));
+		if (climate == Climate.NORMAL)
+			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/grass.png"));
+		if (climate == Climate.DESERT)
+			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/sand.png"));
+		if (climate == Climate.WINTER)
+			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/snow.png"));
 		return null;
 	}
 

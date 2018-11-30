@@ -3,23 +3,23 @@ package ca.carleton.pvz.level;
 import ca.carleton.pvz.level.Wave.Difficulty;
 
 /**
- * The second level in the game.
+ * The third level in the game.
  *
  */
-public class LevelTwo extends Level {
+public class LevelThree extends Level {
 
-	private static final long serialVersionUID = -4902710599915665805L;
+	private static final long serialVersionUID = 5969900192453400436L;
 
 	private static final int WIDTH = 8;
 	private static final int HEIGHT = 5;
 	private static final int STARTING_SUNPOINTS = 500;
 
 	/**
-	 * Constructs level 2 with the specified dimensions (8 x 5).
+	 * Constructs level 3 with the specified dimensions (8 x 5).
 	 */
-	public LevelTwo() {
+	public LevelThree() {
 
-		super(2, WIDTH, HEIGHT, STARTING_SUNPOINTS, Climate.DESERT);
+		super(3, WIDTH, HEIGHT, STARTING_SUNPOINTS, Climate.WINTER);
 
 	}
 
@@ -33,18 +33,17 @@ public class LevelTwo extends Level {
 		clearWaves();
 
 		// specify this level's waves
-
 		Wave[] waves = {
 				//                               normal  heavy   fast    wiz  fball   giga   boss
 				new Wave(1, Difficulty.NORMAL,       2,     2,     0,     0,     0,     0,     0),
 				new Wave(2, Difficulty.NORMAL,       0,     0,     0,     1,     0,     0,     0),
-				new Wave(3, Difficulty.NORMAL,       0,     1,     2,     0,     0,     0,     0),
+				new Wave(3, Difficulty.RAMPED,       0,     1,     2,     0,     0,     0,     0),
 				new Wave(4, Difficulty.RAMPED,       0,     0,     0,     1,     0,     0,     0),
 				new Wave(5, Difficulty.RAMPED,       0,     2,     1,     0,     0,     0,     0),
-				new Wave(6, Difficulty.RAMPED,       0,     0,     2,     1,     0,     0,     0),
+				new Wave(6, Difficulty.RAMPED,       0,     0,     2,     1,     0,     1,     0),
 				new Wave(7, Difficulty.RAMPED,       2,     1,     0,     0,     0,     0,     0),
-				new Wave(8, Difficulty.SUPER_RAMPED, 0,     0,     0,     0,     3,     1,     0),
-				new Wave(9, Difficulty.RAMPED,       0,     0,     0,     0,     0,     0,     1)
+				new Wave(8, Difficulty.SUPER_RAMPED, 0,     0,     0,     0,     3,     0,     0),
+				new Wave(9, Difficulty.RAMPED,       0,     0,     0,     0,     0,     1,     1)
 
 		};
 

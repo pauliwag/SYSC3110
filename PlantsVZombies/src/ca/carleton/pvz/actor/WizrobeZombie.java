@@ -1,7 +1,5 @@
 package ca.carleton.pvz.actor;
 
-import java.io.InputStream;
-
 import ca.carleton.pvz.level.Level.Climate;
 import javafx.scene.image.Image;
 
@@ -15,6 +13,7 @@ import javafx.scene.image.Image;
 public class WizrobeZombie extends TeleportingZombie {
 
 	private static final long serialVersionUID = 2131337503393053904L;
+
 	public static final int WIZROBE_ZOMBIE_HEALTH = 300 + 300; // health + forcefield
 	public static final int WIZROBE_ZOMBIE_SPEED = 1;
 
@@ -22,7 +21,9 @@ public class WizrobeZombie extends TeleportingZombie {
 	 * Constructs a WizrobeZombie.
 	 */
 	public WizrobeZombie() {
+
 		super(WIZROBE_ZOMBIE_HEALTH, WIZROBE_ZOMBIE_SPEED);
+
 	}
 
 	/**
@@ -31,10 +32,18 @@ public class WizrobeZombie extends TeleportingZombie {
 	 * @return The WizrobeZombie sprite.
 	 */
 	public Image getSprite(Climate climate) {
-		if(climate == Climate.NORMAL) return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/wizard_zombie_normal.png"));
-		if(climate == Climate.DESERT) return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/wizard_zombie_desert.png"));
-		if(climate == Climate.WINTER) return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/wizard_zombie_winter.png"));
+
+		if (climate == Climate.NORMAL)
+			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/wizard_zombie_normal.png"));
+
+		if (climate == Climate.DESERT)
+			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/wizard_zombie_desert.png"));
+
+		if (climate == Climate.WINTER)
+			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/wizard_zombie_winter.png"));
+
 		return null;
+
 	}
 
 }
