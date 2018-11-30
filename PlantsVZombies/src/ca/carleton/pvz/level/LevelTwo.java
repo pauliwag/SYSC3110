@@ -18,7 +18,7 @@ public class LevelTwo extends Level {
 	 * Constructs level 1 with the specified dimensions (8 x 5).
 	 */
 	public LevelTwo() {
-		super(2, WIDTH, HEIGHT, STARTING_SUNPOINTS);
+		super(2, WIDTH, HEIGHT, STARTING_SUNPOINTS, Climate.DESERT);
 	}
 
 	/**

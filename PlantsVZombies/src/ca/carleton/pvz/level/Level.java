@@ -9,6 +9,8 @@ import java.util.PriorityQueue;
 import ca.carleton.pvz.actor.Actor;
 import ca.carleton.pvz.actor.Sunflower;
 import ca.carleton.pvz.actor.Zombie;
+import ca.carleton.pvz.level.Level.Climate;
+import javafx.scene.image.Image;
 
 /**
  * The abstract class from which all game levels inherit.
@@ -51,7 +53,19 @@ public abstract class Level implements Serializable {
 	 * turn.
 	 */
 	private boolean zombieSpawned;
+	
+	/**
+	 * Climate type options (determines grid background colour)
+	 */
+	public enum Climate {
 
+		NORMAL, DESERT, WINTER
+
+	};
+	
+	/** Levels climate type **/
+	private Climate climate;
+	
 	/**
 	 * Initializes the fields of a level object.
 	 *
@@ -61,7 +75,7 @@ public abstract class Level implements Serializable {
 	 * @param startingSunPoints The sun points the player has at the start of
 	 *            the level.
 	 */
-	public Level(int levelNum, int width, int height, int startingSunPoints) {
+	public Level(int levelNum, int width, int height, int startingSunPoints, Climate climate) {
 
 		this.levelNum = levelNum;
 		levelDimension = new Dimension(width, height);
@@ -69,7 +83,7 @@ public abstract class Level implements Serializable {
 		grid = new Actor[width][height];
 		turn = 0;
 		zombieSpawned = false;
-
+		this.climate = climate;
 		// initialize waves queue such that a lower wave number is prioritized
 		waves = new PriorityQueue<>(11, (Comparator<Wave> & Serializable) (wave1, wave2) -> {
 			return wave1.getNum() - wave2.getNum();
@@ -177,7 +191,15 @@ public abstract class Level implements Serializable {
 	public int getTurn() {
 		return turn;
 	}
-
+	
+	/**
+	 * Get the current level's climate
+	 * @return
+	 */
+	public Climate getClimate() {
+		return climate;
+	}
+	
 	/**
 	 * Increments turn by one.
 	 */
@@ -314,6 +336,13 @@ public abstract class Level implements Serializable {
 	 */
 	public int getSunpoints() {
 		return sunpoints;
+	}
+	
+	public Image getSprite() {
+		if(climate == Climate.NORMAL) return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/grass.png"));
+		if(climate == Climate.DESERT) return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/sand.png"));
+		if(climate == Climate.WINTER) return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/snow.png"));
+		return null;
 	}
 
 }

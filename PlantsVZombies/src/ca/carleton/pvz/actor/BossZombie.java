@@ -2,6 +2,7 @@ package ca.carleton.pvz.actor;
 
 import java.io.InputStream;
 
+import ca.carleton.pvz.level.Level.Climate;
 import javafx.scene.image.Image;
 
 /**
@@ -29,9 +30,12 @@ public class BossZombie extends TeleportingZombie {
 	 *
 	 * @return The BossZombie sprite.
 	 */
-	public Image getSprite() {
-		InputStream stream = getClass().getResourceAsStream("boss_zombie.png");
-		return new Image(stream);
+	public Image getSprite(Climate climate) {
+		if(climate == Climate.NORMAL) return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/boss_zombie_normal.png"));
+		if(climate == Climate.DESERT) return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/boss_zombie_desert.png"));
+		if(climate == Climate.WINTER) return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/boss_zombie_winter.png"));
+		return null;
 	}
+
 
 }
