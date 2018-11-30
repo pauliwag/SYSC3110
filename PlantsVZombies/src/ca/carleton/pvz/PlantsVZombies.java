@@ -4,6 +4,7 @@ import java.util.Stack;
 
 import ca.carleton.pvz.gui.GUIController;
 import ca.carleton.pvz.level.LevelOne;
+import ca.carleton.pvz.level.LevelThree;
 import ca.carleton.pvz.level.LevelTwo;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -57,6 +58,7 @@ public class PlantsVZombies extends Application {
 	public PlantsVZombies() {
 		gameWorld = new World();
 		actionProcessor = new ActionProcessor(this);
+		gameWorld.addLevel(new LevelThree());
 		gameWorld.addLevel(new LevelTwo());
 		gameWorld.addLevel(new LevelOne());
 		gameOver = false;

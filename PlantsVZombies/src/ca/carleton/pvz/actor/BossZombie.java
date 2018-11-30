@@ -14,7 +14,7 @@ import javafx.scene.image.Image;
 public class BossZombie extends TeleportingZombie {
 
 	private static final long serialVersionUID = 3104194636098611570L;
-	public static final int BOSS_ZOMBIE_HEALTH = 900;
+	public static final int BOSS_ZOMBIE_HEALTH = 1100;
 	public static final int BOSS_ZOMBIE_SPEED = 2;
 
 	/**

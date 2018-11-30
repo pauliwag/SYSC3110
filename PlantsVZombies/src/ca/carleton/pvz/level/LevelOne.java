@@ -38,7 +38,7 @@ public class LevelOne extends Level {
 				new Wave(4, Difficulty.NORMAL,       1,     1,     1,     0,     0,     0,     0),
 				new Wave(5, Difficulty.RAMPED,       0,     2,     1,     0,     0,     0,     0),
 				new Wave(6, Difficulty.RAMPED,       0,     0,     2,     1,     0,     0,     0),
-				new Wave(7, Difficulty.SUPER_RAMPED, 0,     3,     3,     0,     0,     0,     0),
+				new Wave(7, Difficulty.SUPER_RAMPED, 0,     2,     3,     0,     0,     0,     0),
 				new Wave(8, Difficulty.RAMPED,       0,     0,     0,     0,     0,     2,     0)
 
 		};
