@@ -2,6 +2,7 @@ package ca.carleton.pvz.actor;
 
 import java.io.InputStream;
 
+import ca.carleton.pvz.level.Level.Climate;
 import javafx.scene.image.Image;
 
 /**
@@ -31,12 +32,11 @@ public class Sunflower extends Plant {
 	 * @return The sunflower sprite.
 	 */
 	@Override
-	public Image getSprite() {
-
-		InputStream stream = getClass().getResourceAsStream("sunflower.png");
-
-		return new Image(stream);
-
+	public Image getSprite(Climate climate) {
+		if(climate == Climate.NORMAL) return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/sunflower.png"));
+		if(climate == Climate.DESERT) return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/sunflower_desert.png"));
+		if(climate == Climate.WINTER) return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/sunflower_winter.png"));
+		return null;
 	}
 
 }

@@ -2,6 +2,7 @@ package ca.carleton.pvz.actor;
 
 import java.io.InputStream;
 
+import ca.carleton.pvz.level.Level.Climate;
 import javafx.scene.image.Image;
 
 /**
@@ -28,12 +29,11 @@ public class NormalZombie extends Zombie {
 	 *
 	 * @return The normal zombie sprite.
 	 */
-	public Image getSprite() {
-
-		InputStream stream = getClass().getResourceAsStream("zombie_tutorial.png");
-
-		return new Image(stream);
-
+	public Image getSprite(Climate climate) {
+		if(climate == Climate.NORMAL) return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/zombie_normal.png"));
+		if(climate == Climate.DESERT) return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/zombie_desert.png"));
+		if(climate == Climate.WINTER) return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/zombie_winter.png"));
+		return null;
 	}
 
 }
