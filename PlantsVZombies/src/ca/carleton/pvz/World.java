@@ -6,8 +6,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.Stack;
-
+import java.util.Comparator;
+import java.util.PriorityQueue;
 import ca.carleton.pvz.level.Level;
 
 /**
@@ -16,24 +16,29 @@ import ca.carleton.pvz.level.Level;
  */
 public class World implements Serializable {
 
-	private static final long serialVersionUID = -3482109380250140865L;
-	private Stack<Level> levels;
+	private static final long serialVersionUID = -1136085713229155895L;
+
+	private PriorityQueue<Level> levels; // low level number is prioritized
 
 	/**
 	 * Constructs a new game world.
 	 */
 	public World() {
-		levels = new Stack<>();
+		levels = new PriorityQueue<>(11,
+				(Comparator<Level> & Serializable) (level1, level2) -> level1.getNum() - level2.getNum());
 	}
 
 	/**
-	 * Adds a level to the stack.
+	 * Adds the given level(s) to this world's priority queue of levels.
 	 *
-	 * @param level The level to be added to the stack.
+	 * @param levels The level(s) to be added to this world's priority queue of
+	 *            levels.
 	 */
-	public void addLevel(Level level) {
-		if (level != null) {
-			levels.add(level);
+	public void addLevels(Level... levels) {
+		if (levels.length > 0) {
+			for (Level level : levels) {
+				this.levels.add(level);
+			}
 		}
 	}
 
@@ -56,15 +61,12 @@ public class World implements Serializable {
 	}
 
 	/**
-	 * Pops the current level and gets the next level.
+	 * Removes the current level and gets the next level.
 	 *
 	 * @return The next level.
 	 */
 	public Level nextLevel() {
-		levels.pop();
-		if (levels.empty()) { // failsafe: prevent EmptyStackException
-			return null;
-		}
+		levels.poll();
 		return levels.peek();
 	}
 

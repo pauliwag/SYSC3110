@@ -3,6 +3,7 @@ package ca.carleton.pvz;
 import java.util.Stack;
 
 import ca.carleton.pvz.gui.GUIController;
+import ca.carleton.pvz.level.Level;
 import ca.carleton.pvz.level.LevelOne;
 import ca.carleton.pvz.level.LevelThree;
 import ca.carleton.pvz.level.LevelTwo;
@@ -58,9 +59,12 @@ public class PlantsVZombies extends Application {
 	public PlantsVZombies() {
 		gameWorld = new World();
 		actionProcessor = new ActionProcessor(this);
-		gameWorld.addLevel(new LevelThree());
-		gameWorld.addLevel(new LevelTwo());
-		gameWorld.addLevel(new LevelOne());
+		Level[] levels = {
+				new LevelOne(),
+				new LevelTwo(),
+				new LevelThree()
+		};
+		gameWorld.addLevels(levels);
 		gameOver = false;
 		undoStack = new Stack<World>();
 		redoStack = new Stack<World>();

@@ -21,7 +21,7 @@ public abstract class Level implements Serializable {
 
 	public static final int PASSIVE_SUNPOINT_BOOST = 25; // every two turns
 
-	/** The name of this level; e.g., "Level 1". */
+	/** The number of this level. */
 	private int levelNum;
 
 	/**
