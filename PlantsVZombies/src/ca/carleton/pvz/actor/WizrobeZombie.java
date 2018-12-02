@@ -1,6 +1,6 @@
 package ca.carleton.pvz.actor;
 
-import ca.carleton.pvz.level.Level.Climate;
+import ca.carleton.pvz.level.Level.Terrain;
 import javafx.scene.image.Image;
 
 /**
@@ -31,16 +31,16 @@ public class WizrobeZombie extends TeleportingZombie {
 	 *
 	 * @return The WizrobeZombie sprite.
 	 */
-	public Image getSprite(Climate climate) {
+	public Image getSprite(Terrain climate) {
 
-		if (climate == Climate.NORMAL)
-			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/wizard_zombie_normal.png"));
+		if (climate == Terrain.GRASS)
+			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/wizard_zombie.png"));
 
-		if (climate == Climate.DESERT)
-			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/wizard_zombie_desert.png"));
+		if (climate == Terrain.SAND)
+			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/tomb_raiser_zombie.png"));
 
-		if (climate == Climate.WINTER)
-			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/wizard_zombie_winter.png"));
+		if (climate == Terrain.ICE)
+			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/dodo_zombie.png"));
 
 		return null;
 

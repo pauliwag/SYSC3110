@@ -54,16 +54,16 @@ public abstract class Level implements Serializable {
 	private boolean zombieSpawned;
 
 	/**
-	 * Climate type options (determines grid background colour)
+	 * Tileset options.
 	 */
-	public enum Climate {
+	public enum Terrain {
 
-		NORMAL, DESERT, WINTER
+		GRASS, SAND, ICE
 
 	};
 
 	/** Levels climate type **/
-	private Climate climate;
+	private Terrain climate;
 
 	/**
 	 * Initializes the fields of a level object.
@@ -73,8 +73,9 @@ public abstract class Level implements Serializable {
 	 * @param height The height (number of vertical cells) of the level.
 	 * @param startingSunPoints The sun points the player has at the start of
 	 *            the level.
+	 * @param terrain This level's terrain or tileset.
 	 */
-	public Level(int levelNum, int width, int height, int startingSunPoints, Climate climate) {
+	public Level(int levelNum, int width, int height, int startingSunPoints, Terrain terrain) {
 
 		this.levelNum = levelNum;
 		levelDimension = new Dimension(width, height);
@@ -82,7 +83,8 @@ public abstract class Level implements Serializable {
 		grid = new Actor[width][height];
 		turn = 0;
 		zombieSpawned = false;
-		this.climate = climate;
+		this.climate = terrain;
+
 		// initialize waves queue such that a lower wave number is prioritized
 		waves = new PriorityQueue<>(11,
 				(Comparator<Wave> & Serializable) (wave1, wave2) -> wave1.getNum() - wave2.getNum());
@@ -195,7 +197,7 @@ public abstract class Level implements Serializable {
 	 *
 	 * @return
 	 */
-	public Climate getClimate() {
+	public Terrain getClimate() {
 		return climate;
 	}
 
@@ -338,11 +340,11 @@ public abstract class Level implements Serializable {
 	}
 
 	public Image getSprite() {
-		if (climate == Climate.NORMAL)
+		if (climate == Terrain.GRASS)
 			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/grass.png"));
-		if (climate == Climate.DESERT)
+		if (climate == Terrain.SAND)
 			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/sand.png"));
-		if (climate == Climate.WINTER)
+		if (climate == Terrain.ICE)
 			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/snow.png"));
 		return null;
 	}

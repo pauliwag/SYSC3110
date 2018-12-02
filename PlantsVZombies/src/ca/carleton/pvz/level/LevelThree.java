@@ -19,7 +19,7 @@ public class LevelThree extends Level {
 	 */
 	public LevelThree() {
 
-		super(3, WIDTH, HEIGHT, STARTING_SUNPOINTS, Climate.WINTER);
+		super(3, WIDTH, HEIGHT, STARTING_SUNPOINTS, Terrain.SAND);
 
 	}
 
@@ -43,7 +43,7 @@ public class LevelThree extends Level {
 				new Wave(6, Difficulty.RAMPED,       0,     0,     2,     1,     0,     1,     0),
 				new Wave(7, Difficulty.RAMPED,       2,     1,     0,     0,     0,     0,     0),
 				new Wave(8, Difficulty.SUPER_RAMPED, 0,     0,     0,     0,     3,     0,     0),
-				new Wave(9, Difficulty.RAMPED,       0,     0,     0,     0,     0,     1,     1)
+				new Wave(9, Difficulty.RAMPED,       0,     0,     0,     0,     0,     2,     1)
 
 		};
 

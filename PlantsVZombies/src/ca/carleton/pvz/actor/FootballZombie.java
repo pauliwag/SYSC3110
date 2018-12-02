@@ -1,6 +1,6 @@
 package ca.carleton.pvz.actor;
 
-import ca.carleton.pvz.level.Level.Climate;
+import ca.carleton.pvz.level.Level.Terrain;
 import javafx.scene.image.Image;
 
 /**
@@ -29,16 +29,16 @@ public class FootballZombie extends Zombie {
 	 *
 	 * @return The FootballZombie sprite.
 	 */
-	public Image getSprite(Climate climate) {
+	public Image getSprite(Terrain climate) {
 
-		if (climate == Climate.NORMAL)
+		if (climate == Terrain.GRASS)
 			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/football_zombie_normal.png"));
 
-		if (climate == Climate.DESERT)
-			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/football_zombie_desert.png"));
+		if (climate == Terrain.SAND)
+			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/boss_zombie_desert.png"));
 
-		if (climate == Climate.WINTER)
-			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/football_zombie_winter.png"));
+		if (climate == Terrain.ICE)
+			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/tuskmaster_zombie.png"));
 
 		return null;
 

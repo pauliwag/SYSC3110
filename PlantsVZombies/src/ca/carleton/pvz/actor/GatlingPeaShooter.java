@@ -1,6 +1,6 @@
 package ca.carleton.pvz.actor;
 
-import ca.carleton.pvz.level.Level.Climate;
+import ca.carleton.pvz.level.Level.Terrain;
 import javafx.scene.image.Image;
 
 /**
@@ -30,15 +30,15 @@ public class GatlingPeaShooter extends PeaShooter {
 	 * @return The gatling pea shooter sprite.
 	 */
 	@Override
-	public Image getSprite(Climate climate) {
+	public Image getSprite(Terrain climate) {
 
-		if (climate == Climate.NORMAL)
+		if (climate == Terrain.GRASS)
 			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/threepeater.png"));
 
-		if (climate == Climate.DESERT)
+		if (climate == Terrain.SAND)
 			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/threepeater_desert.png"));
 
-		if (climate == Climate.WINTER)
+		if (climate == Terrain.ICE)
 			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/threepeater_winter.png"));
 
 		return null;
