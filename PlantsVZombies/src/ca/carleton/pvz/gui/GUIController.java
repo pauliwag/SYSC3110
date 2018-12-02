@@ -2,8 +2,8 @@ package ca.carleton.pvz.gui;
 
 import java.io.InputStream;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
-
 import ca.carleton.pvz.PlantsVZombies;
 import ca.carleton.pvz.World;
 import ca.carleton.pvz.actor.Actor;
@@ -23,6 +23,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
@@ -241,31 +242,52 @@ public class GUIController {
 	}
 
 	/**
-	 * Called when game is over. Disables buttons we don't want pressed and
-	 * alerts user.
+	 * Called when the user loses. The user can then either retry the current
+	 * level or quit.
 	 */
 	public void notifyGameOver() {
+		showAlert("Game Over", "Game over! You failed to protect your home from the zombies :(", "Retry level?",
+				AlertType.CONFIRMATION).ifPresent(response -> {
+					if (response == ButtonType.OK) {
+						World world = game.getWorld();
+						Class<? extends Level> currLevelClass = (Class<? extends Level>) world.getCurrentLevel()
+								.getClass();
+						world.nextLevel();
+						try {
+							world.addLevels(currLevelClass.newInstance());
+						} catch (InstantiationException | IllegalAccessException e) {
+							System.out.println("Could not restart level; exception details below:");
+							e.printStackTrace();
+							System.exit(1);
+						}
+						game.unsetGameOver();
+						CooldownManager.resetCDs();
+						game.emptyUndoRedo();
+						updateGameGrid();
+					} else {
+						disableButtonsForGameOver();
+					}
+				});
+	}
+
+	/**
+	 * Disable buttons for a game over.
+	 */
+	private void disableButtonsForGameOver() {
 		nextTurnButton.setDisable(true);
 		gameGrid.setDisable(true);
 		plantGroup.setDisable(true);
 		redoButton.setDisable(true);
 		undoButton.setDisable(true);
 		allowUndoRedo.setDisable(true);
-		showAlert("Game Over", null, "Game over! You failed to protect your home from the zombies :(",
-				AlertType.INFORMATION);
 	}
 
 	/**
 	 * Called when all levels in the game are beat.
 	 */
 	private void notifyGameBeat() {
-		nextTurnButton.setDisable(true);
-		gameGrid.setDisable(true);
-		plantGroup.setDisable(true);
-		redoButton.setDisable(true);
-		undoButton.setDisable(true);
-		allowUndoRedo.setDisable(true);
-		showAlert("You beat the game!", null, "Congrats! You beat all levels in the game!", AlertType.INFORMATION);
+		disableButtonsForGameOver();
+		showAlert("You beat the game!", null, "Congrats! You beat all levels in the game! :)", AlertType.INFORMATION);
 	}
 
 	private void setupUndoRedo() {
@@ -412,7 +434,7 @@ public class GUIController {
 					column = GridPane.getColumnIndex(imgView);
 					Actor actor = game.getWorld().getCurrentLevel().getCell(column, row);
 					if (actor != null) {
-						imgView.setImage(actor.getSprite(game.getWorld().getCurrentLevel().getClimate()));
+						imgView.setImage(actor.getSprite(game.getWorld().getCurrentLevel().getTerrain()));
 					} else {
 						imgView.setImage(texture);
 					}
@@ -429,19 +451,20 @@ public class GUIController {
 	}
 
 	/**
-	 * Shows the user a pop-up alert dialog
+	 * Shows the user a pop-up alert dialog.
 	 *
 	 * @param title Title of the alert dialog
 	 * @param header Header of the alert dialog (can be null for no header)
 	 * @param content Content of the alert dialog
 	 * @param type Type of alert - see AlertType documentation
+	 * @return The user's selection.
 	 */
-	public void showAlert(String title, String header, String content, AlertType type) {
+	public Optional<ButtonType> showAlert(String title, String header, String content, AlertType type) {
 		Alert alert = new Alert(type);
 		alert.setTitle(title);
 		alert.setHeaderText(header);
 		alert.setContentText(content);
-		alert.showAndWait();
+		return alert.showAndWait();
 	}
 
 	/**

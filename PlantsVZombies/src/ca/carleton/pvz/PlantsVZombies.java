@@ -82,6 +82,13 @@ public class PlantsVZombies extends Application {
 	}
 
 	/**
+	 * Sets gameOver to false.
+	 */
+	public void unsetGameOver() {
+		gameOver = false;
+	}
+
+	/**
 	 * Returns whether this game is over; i.e., whether the player has lost.
 	 *
 	 * @return true if this game is over, false otherwise.
