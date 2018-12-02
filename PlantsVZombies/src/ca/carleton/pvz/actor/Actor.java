@@ -2,7 +2,7 @@ package ca.carleton.pvz.actor;
 
 import java.io.Serializable;
 
-import ca.carleton.pvz.level.Level.Climate;
+import ca.carleton.pvz.level.Level.Terrain;
 import javafx.scene.image.Image;
 
 /**
@@ -13,6 +13,6 @@ public abstract class Actor implements Serializable {
 
 	private static final long serialVersionUID = -5281040453260756337L;
 
-	public abstract Image getSprite(Climate climate);
+	public abstract Image getSprite(Terrain climate);
 
 }

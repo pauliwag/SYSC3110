@@ -19,7 +19,7 @@ public class LevelOne extends Level {
 	 */
 	public LevelOne() {
 
-		super(1, WIDTH, HEIGHT, STARTING_SUNPOINTS, Climate.NORMAL);
+		super(1, WIDTH, HEIGHT, STARTING_SUNPOINTS, Terrain.GRASS);
 
 	}
 
@@ -42,7 +42,7 @@ public class LevelOne extends Level {
 				new Wave(5, Difficulty.NORMAL,       0,     1,     1,     0,     0,     0,     0),
 				new Wave(6, Difficulty.RAMPED,       0,     0,     2,     1,     0,     0,     0),
 				new Wave(7, Difficulty.SUPER_RAMPED, 0,     2,     2,     0,     0,     0,     0),
-				new Wave(8, Difficulty.RAMPED,       0,     0,     0,     0,     0,     2,     0)
+				new Wave(8, Difficulty.SUPER_RAMPED, 0,     0,     0,     0,     0,     3,     0)
 
 		};
 

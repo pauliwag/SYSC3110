@@ -1,6 +1,6 @@
 package ca.carleton.pvz.actor;
 
-import ca.carleton.pvz.level.Level.Climate;
+import ca.carleton.pvz.level.Level.Terrain;
 import javafx.scene.image.Image;
 
 /**
@@ -31,15 +31,15 @@ public class Sunflower extends Plant {
 	 * @return The sunflower sprite.
 	 */
 	@Override
-	public Image getSprite(Climate climate) {
+	public Image getSprite(Terrain climate) {
 
-		if (climate == Climate.NORMAL)
+		if (climate == Terrain.GRASS)
 			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/sunflower.png"));
 
-		if (climate == Climate.DESERT)
+		if (climate == Terrain.SAND)
 			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/sunflower_desert.png"));
 
-		if (climate == Climate.WINTER)
+		if (climate == Terrain.ICE)
 			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/sunflower_winter.png"));
 
 		return null;

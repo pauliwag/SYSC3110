@@ -224,8 +224,8 @@ public class GUIController {
 		World gameWorld = game.getWorld();
 		int beatLevelNum = gameWorld.getCurrentLevel().getNum();
 
-		// pop the current (beat) level and
-		// check if the next level is null
+		// remove the current (beat) level from the head of the
+		// priority queue and check whether the next level is null
 		if (gameWorld.nextLevel() == null) {
 			notifyGameBeat();
 		}

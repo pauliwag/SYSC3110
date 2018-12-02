@@ -1,19 +1,18 @@
 package ca.carleton.pvz.actor;
 
-import ca.carleton.pvz.level.Level.Climate;
+import ca.carleton.pvz.level.Level.Terrain;
 import javafx.scene.image.Image;
 
 /**
- * A subtype of Zombie that moves thrice as fast as a normal zombie and has lots
- * of health.
+ * A subtype of Zombie that has a crapton of health! :p
  *
  */
 public class GigaZombie extends Zombie {
 
 	private static final long serialVersionUID = 2794406455409047062L;
 
-	public static final int GIGA_ZOMBIE_HEALTH = 900;
-	public static final int GIGA_ZOMBIE_SPEED = 3;
+	public static final int GIGA_ZOMBIE_HEALTH = 2000;
+	public static final int GIGA_ZOMBIE_SPEED = 1;
 
 	/**
 	 * Constructs a GigaZombie.
@@ -29,16 +28,16 @@ public class GigaZombie extends Zombie {
 	 *
 	 * @return The GigaZombie sprite.
 	 */
-	public Image getSprite(Climate climate) {
+	public Image getSprite(Terrain climate) {
 
-		if (climate == Climate.NORMAL)
-			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/giga_zombie_normal.png"));
+		if (climate == Terrain.GRASS)
+			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/pig_zombie.png"));
 
-		if (climate == Climate.DESERT)
-			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/giga_zombie_desert.png"));
+		if (climate == Terrain.SAND)
+			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/pyramid_head_zombie.png"));
 
-		if (climate == Climate.WINTER)
-			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/giga_zombie_winter.png"));
+		if (climate == Terrain.ICE)
+			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/walrus_zombie.png"));
 
 		return null;
 
