@@ -265,27 +265,29 @@ public class GUIController {
 						game.emptyUndoRedo();
 						updateGameGrid();
 					} else {
-						nextTurnButton.setDisable(true);
-						gameGrid.setDisable(true);
-						plantGroup.setDisable(true);
-						redoButton.setDisable(true);
-						undoButton.setDisable(true);
-						allowUndoRedo.setDisable(true);
+						disableButtonsForGameOver();
 					}
 				});
 	}
 
 	/**
-	 * Called when all levels in the game are beat.
+	 * Disable buttons for a game over.
 	 */
-	private void notifyGameBeat() {
+	private void disableButtonsForGameOver() {
 		nextTurnButton.setDisable(true);
 		gameGrid.setDisable(true);
 		plantGroup.setDisable(true);
 		redoButton.setDisable(true);
 		undoButton.setDisable(true);
 		allowUndoRedo.setDisable(true);
-		showAlert("You beat the game!", null, "Congrats! You beat all levels in the game!", AlertType.INFORMATION);
+	}
+
+	/**
+	 * Called when all levels in the game are beat.
+	 */
+	private void notifyGameBeat() {
+		disableButtonsForGameOver();
+		showAlert("You beat the game!", null, "Congrats! You beat all levels in the game! :)", AlertType.INFORMATION);
 	}
 
 	private void setupUndoRedo() {
