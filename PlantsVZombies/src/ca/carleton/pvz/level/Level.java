@@ -62,8 +62,8 @@ public abstract class Level implements Serializable {
 
 	};
 
-	/** Levels climate type **/
-	private Terrain climate;
+	/** This level's terrain or tileset. */
+	private Terrain terrain;
 
 	/**
 	 * Initializes the fields of a level object.
@@ -83,7 +83,7 @@ public abstract class Level implements Serializable {
 		grid = new Actor[width][height];
 		turn = 0;
 		zombieSpawned = false;
-		this.climate = terrain;
+		this.terrain = terrain;
 
 		// initialize waves queue such that a lower wave number is prioritized
 		waves = new PriorityQueue<>(11,
@@ -193,12 +193,12 @@ public abstract class Level implements Serializable {
 	}
 
 	/**
-	 * Get the current level's climate
+	 * Gets this level's terrain.
 	 *
-	 * @return
+	 * @return This level's terrain.
 	 */
-	public Terrain getClimate() {
-		return climate;
+	public Terrain getTerrain() {
+		return terrain;
 	}
 
 	/**
@@ -339,14 +339,18 @@ public abstract class Level implements Serializable {
 		return sunpoints;
 	}
 
+	/**
+	 * Gets a sprite of this level's terrain.
+	 *
+	 * @return A sprite of this level's terrain.
+	 */
 	public Image getSprite() {
-		if (climate == Terrain.GRASS)
+		if (terrain == Terrain.GRASS)
 			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/grass.png"));
-		if (climate == Terrain.SAND)
+		if (terrain == Terrain.SAND)
 			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/sand.png"));
-		if (climate == Terrain.ICE)
+		if (terrain == Terrain.ICE)
 			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/snow.png"));
 		return null;
 	}
-
 }

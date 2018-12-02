@@ -34,15 +34,15 @@ public class LevelOne extends Level {
 
 		// specify this level's waves
 		Wave[] waves = {
-				//                               normal  heavy   fast    wiz  fball   giga   boss
-				new Wave(1, Difficulty.NORMAL,       1,     0,     0,     0,     0,     0,     0),
-				new Wave(2, Difficulty.NORMAL,       0,     0,     0,     1,     0,     0,     0),
-				new Wave(3, Difficulty.NORMAL,       1,     1,     0,     0,     0,     0,     0),
-				new Wave(4, Difficulty.NORMAL,       1,     1,     1,     0,     0,     0,     0),
-				new Wave(5, Difficulty.NORMAL,       0,     1,     1,     0,     0,     0,     0),
-				new Wave(6, Difficulty.RAMPED,       0,     0,     2,     1,     0,     0,     0),
-				new Wave(7, Difficulty.SUPER_RAMPED, 0,     2,     2,     0,     0,     0,     0),
-				new Wave(8, Difficulty.SUPER_RAMPED, 0,     0,     0,     0,     0,     3,     0)
+				//                                normal  heavy   fast    wiz  fball   giga   boss
+				new Wave(1, Difficulty.NORMAL,        1,     0,     0,     0,     0,     0,     0),
+				new Wave(2, Difficulty.NORMAL,        0,     0,     0,     1,     0,     0,     0),
+				new Wave(3, Difficulty.NORMAL,        1,     1,     0,     0,     0,     0,     0),
+				new Wave(4, Difficulty.NORMAL,        1,     1,     1,     0,     0,     0,     0),
+				new Wave(5, Difficulty.NORMAL,        0,     1,     1,     0,     0,     0,     0),
+				new Wave(6, Difficulty.RAMPED,        0,     0,     2,     1,     0,     0,     0),
+				new Wave(7, Difficulty.SUPER_RAMPED,  0,     2,     2,     0,     0,     0,     0),
+				new Wave(8, Difficulty.SUPER_RAMPED,  0,     0,     0,     0,     0,     3,     0)
 
 		};
 
