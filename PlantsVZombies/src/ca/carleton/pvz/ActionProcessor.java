@@ -16,6 +16,7 @@ import ca.carleton.pvz.actor.Plant;
 import ca.carleton.pvz.actor.Sunflower;
 import ca.carleton.pvz.actor.TeleportingZombie;
 import ca.carleton.pvz.actor.Zombie;
+import ca.carleton.pvz.gui.GUIController;
 import ca.carleton.pvz.level.Level;
 import javafx.scene.control.Alert.AlertType;
 
@@ -297,8 +298,7 @@ public class ActionProcessor {
 			}
 		} else {
 			// alert the user that the specified cell is already occupied
-			game.getController().showAlert("No room!", null, "There's already something placed here!",
-					AlertType.INFORMATION);
+			GUIController.showAlert("No room!", null, "There's already something placed here!", AlertType.INFORMATION);
 		}
 
 	}

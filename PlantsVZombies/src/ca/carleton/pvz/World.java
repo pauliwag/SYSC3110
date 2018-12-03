@@ -48,7 +48,7 @@ public class World implements Serializable {
 	 * @return The current level.
 	 */
 	public Level getCurrentLevel() {
-		if(levels.size() > 0) {
+		if (levels.size() > 0) {
 			return levels.peek();
 		} else {
 			return null;
@@ -92,10 +92,8 @@ public class World implements Serializable {
 			ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(bos.toByteArray()));
 			copy = (World) in.readObject();
 			in.close();
-		} catch (IOException e) {
+		} catch (ClassNotFoundException | IOException e) {
 			e.printStackTrace();
-		} catch (ClassNotFoundException cnfe) {
-			cnfe.printStackTrace();
 		}
 		return copy;
 	}

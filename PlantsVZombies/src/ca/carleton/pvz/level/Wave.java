@@ -1,5 +1,10 @@
 package ca.carleton.pvz.level;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.HashMap;
 
@@ -13,12 +18,13 @@ import ca.carleton.pvz.actor.WizrobeZombie;
 import ca.carleton.pvz.actor.Zombie;
 
 /**
- * Stores a wave of zombies.
+ * Comprises a hash table of zombies and has a difficulty setting which dictates
+ * zombie spawn rate.
  *
  */
 public class Wave implements Serializable {
 
-	private static final long serialVersionUID = -714596874847714954L;
+	private static final long serialVersionUID = -2718072975646634711L;
 
 	/**
 	 * This wave's number; determines when this wave will be deployed via the
@@ -63,7 +69,6 @@ public class Wave implements Serializable {
 			int numWizrobeZombies, int numFootballZombies, int numGigaZombies, int numBossZombies) {
 
 		this.waveNum = waveNum;
-
 		this.difficulty = difficulty;
 
 		zombies = new HashMap<>();
@@ -83,9 +88,7 @@ public class Wave implements Serializable {
 	 * @return true if this wave is ramped, false otherwise.
 	 */
 	public boolean isRamped() {
-
 		return difficulty != Difficulty.NORMAL;
-
 	}
 
 	/**
@@ -94,9 +97,7 @@ public class Wave implements Serializable {
 	 * @return true if this wave is super ramped, false otherwise.
 	 */
 	public boolean isSuperRamped() {
-
 		return difficulty == Difficulty.SUPER_RAMPED;
-
 	}
 
 	/**
@@ -105,9 +106,7 @@ public class Wave implements Serializable {
 	 * @return true if this wave is defeated, false otherwise.
 	 */
 	public boolean isEmpty() {
-
 		return getTotalNumZombies() == 0;
-
 	}
 
 	/**
@@ -116,14 +115,11 @@ public class Wave implements Serializable {
 	 * @return The total number of zombies in this wave.
 	 */
 	public int getTotalNumZombies() {
-
 		int totalNumZombies = 0;
-
-		for (int num : zombies.values())
+		for (int num : zombies.values()) {
 			totalNumZombies += num;
-
+		}
 		return totalNumZombies;
-
 	}
 
 	/**
@@ -132,9 +128,7 @@ public class Wave implements Serializable {
 	 * @return This wave's number.
 	 */
 	public int getNum() {
-
 		return waveNum;
-
 	}
 
 	/**
@@ -143,9 +137,7 @@ public class Wave implements Serializable {
 	 * @return This wave's hash table of zombies.
 	 */
 	public HashMap<Class<? extends Zombie>, Integer> getZombies() {
-
 		return zombies;
-
 	}
 
 	/**
@@ -154,9 +146,7 @@ public class Wave implements Serializable {
 	 * @param waveNum The number to be assigned to this wave.
 	 */
 	public void setWaveNum(int waveNum) {
-
 		this.waveNum = waveNum;
-
 	}
 
 	/**
@@ -165,9 +155,7 @@ public class Wave implements Serializable {
 	 * @param zombieType The zombie type whose quantity will be returned.
 	 */
 	public int getNumZombies(Class<? extends Zombie> zombieType) {
-
 		return zombies.containsKey(zombieType) ? zombies.get(zombieType) : 0;
-
 	}
 
 	/**
@@ -177,18 +165,43 @@ public class Wave implements Serializable {
 	 * @param num The new quantity of the specified zombie type.
 	 */
 	public void setNumZombies(Class<? extends Zombie> zombieType, int num) {
-
-		if (zombies.containsKey(zombieType))
+		if (zombies.containsKey(zombieType)) {
 			zombies.replace(zombieType, num);
-
+		}
 	}
-	
+
 	/**
-	 * toString for Wave object - used by LevelBuilder when displaying ListView of Waves.
-	 * @return Wave 1..n
+	 * Returns a String representation of this wave incl. its number; used by
+	 * LevelBuilder in displaying a ListView of user-specified waves.
+	 *
+	 * @return A String representation of this wave incl. its number.
 	 */
 	public String toString() {
 		return "Wave " + waveNum;
+	}
+
+	/**
+	 * Returns a clone (i.e., deep copy) of this wave, or null if this wave
+	 * cannot be serialized.
+	 */
+	public Wave clone() {
+		Wave clone = null;
+		try {
+			// write this wave out to a byte array
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			ObjectOutputStream out = new ObjectOutputStream(bos);
+			out.writeObject(this);
+			out.flush();
+			out.close();
+			// make an input stream from the byte array
+			// and read a copy of this wave back in
+			ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(bos.toByteArray()));
+			clone = (Wave) in.readObject();
+			in.close();
+		} catch (ClassNotFoundException | IOException e) {
+			e.printStackTrace();
+		}
+		return clone;
 	}
 
 }

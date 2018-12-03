@@ -1,7 +1,9 @@
 package ca.carleton.pvz.gui;
 
 import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
+import java.util.Collection;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import ca.carleton.pvz.PlantsVZombies;
@@ -12,15 +14,16 @@ import ca.carleton.pvz.actor.GatlingPeaShooter;
 import ca.carleton.pvz.actor.NormalPeaShooter;
 import ca.carleton.pvz.actor.Plant;
 import ca.carleton.pvz.actor.Sunflower;
+import ca.carleton.pvz.level.CustomLevel;
 import ca.carleton.pvz.level.Level;
+import ca.carleton.pvz.level.Level.Terrain;
+import ca.carleton.pvz.level.Wave;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.DoubleProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
@@ -111,36 +114,37 @@ public class GUIController {
 
 	@FXML
 	private MenuItem quitButton;
-	
+
 	@FXML
 	private MenuItem openLevelBuilder;
-	
+
 	@FXML
 	private MenuItem newWorldButton;
-	
+
 	@FXML
 	private MenuItem aboutButton;
-	
+
 	@FXML
 	private MenuItem addCustomLevel;
-	
+
 	@FXML
 	private CheckBox allowUndoRedo;
-	
-	@FXML 
+
+	@FXML
 	private VBox plantVBox;
-	
-	@FXML 
+
+	@FXML
 	private ImageView threepeaterIcon;
-	
-	@FXML 
+
+	@FXML
 	private ImageView peashooterIcon;
-	
-	@FXML 
+
+	@FXML
 	private ImageView sunflowerIcon;
-	
+
 	@FXML
 	public void initialize() {
+
 		assert addCustomLevel != null : "fx:id=\"addCustomLevel\" was not injected: check your FXML file 'pvzgui.fxml'.";
 		assert newWorldButton != null : "fx:id=\"newWorldButton\" was not injected: check your FXML file 'pvzgui.fxml'.";
 		assert peashooterCooldown != null : "fx:id=\"peashooterCooldown\" was not injected: check your FXML file 'pvzgui.fxml'.";
@@ -169,7 +173,7 @@ public class GUIController {
 		assert threepeaterIcon != null : "fx:id=\"threepeaterIcon\" was not injected: check your FXML file 'pvzgui.fxml'.";
 		assert peashooterIcon != null : "fx:id=\"peashooterIcon\" was not injected: check your FXML file 'pvzgui.fxml'.";
 		assert sunflowerIcon != null : "fx:id=\"sunflowerIcon\" was not injected: check your FXML file 'pvzgui.fxml'.";
-		
+
 		setupUndoRedo();
 		setupMenuButtons();
 		setupPlantSelectionButtons();
@@ -177,9 +181,9 @@ public class GUIController {
 		updateCostDisplay();
 		initGameGrid();
 
-		
 		redoButton.setDisable(true);
 		undoButton.setDisable(true);
+
 	}
 
 	/**
@@ -194,38 +198,39 @@ public class GUIController {
 	 * currently selected plant object to correct type.
 	 */
 	private void setupPlantSelectionButtons() {
-		sunflowerIcon.setImage(new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/sunflower_icon.png")));
-		peashooterIcon.setImage(new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/peashooter_icon.png")));
-		threepeaterIcon.setImage(new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/threepeater_icon.png")));
-		
+		sunflowerIcon
+				.setImage(new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/sunflower_icon.png")));
+		peashooterIcon
+				.setImage(new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/peashooter_icon.png")));
+		threepeaterIcon
+				.setImage(new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/threepeater_icon.png")));
+
 		selectedPlant = new Sunflower();
-		sunflowerButton.setOnMouseClicked(( e ) ->
-        {
-        	sunflowerButton.requestFocus();
-        	selectedPlant = new Sunflower();
-        });
-		
-		peashooterButton.setOnMouseClicked(( e ) ->
-        {
-        	peashooterButton.requestFocus();
-        	selectedPlant = new NormalPeaShooter();
-        });
-		
-		threepeaterButton.setOnMouseClicked(( e ) ->
-        {
-        	threepeaterButton.requestFocus();
-        	selectedPlant = new GatlingPeaShooter();
-        });
-		
-		for(Node child : plantVBox.getChildren()) {
-			if(child instanceof HBox) {
-				HBox button = (HBox)child;
+		sunflowerButton.setOnMouseClicked((e) -> {
+			sunflowerButton.requestFocus();
+			selectedPlant = new Sunflower();
+		});
+
+		peashooterButton.setOnMouseClicked((e) -> {
+			peashooterButton.requestFocus();
+			selectedPlant = new NormalPeaShooter();
+		});
+
+		threepeaterButton.setOnMouseClicked((e) -> {
+			threepeaterButton.requestFocus();
+			selectedPlant = new GatlingPeaShooter();
+		});
+
+		for (Node child : plantVBox.getChildren()) {
+			if (child instanceof HBox) {
+				HBox button = (HBox) child;
 				button.opacityProperty().bind(Bindings.when(button.focusedProperty()).then(1).otherwise(0.75));
-				button.styleProperty().bind(Bindings.when(button.hoverProperty()).then("-fx-background-color: #dbdbdb").otherwise("-fx-background-color: #f4f4f4"));
+				button.styleProperty().bind(Bindings.when(button.hoverProperty()).then("-fx-background-color: #dbdbdb")
+						.otherwise("-fx-background-color: #f4f4f4"));
 			}
 		}
 	}
-	
+
 	/**
 	 * Update the undo/redo buttons to represent if undo/redo is possible.
 	 */
@@ -291,32 +296,78 @@ public class GUIController {
 	 * level or quit.
 	 */
 	public void notifyGameOver() {
+
 		showAlert("Game Over", "Game over! You failed to protect your home from the zombies :(", "Retry level?",
 				AlertType.CONFIRMATION).ifPresent(response -> {
+
 					if (response == ButtonType.OK) {
-						World world = game.getWorld();
-						Class<? extends Level> currLevelClass = (Class<? extends Level>) world.getCurrentLevel()
-								.getClass();
-						world.nextLevel();
-						try {
-							world.addLevels(currLevelClass.newInstance());
-						} catch (InstantiationException | IllegalAccessException e) {
-							System.out.println("Could not restart level; exception details below:");
-							e.printStackTrace();
-							System.exit(1);
+
+						World gameWorld = game.getWorld();
+
+						// store active level before polling levels queue
+						Level currLevel = gameWorld.getCurrentLevel();
+						Class<? extends Level> currLevelClass = (Class<? extends Level>) currLevel.getClass();
+
+						gameWorld.nextLevel(); // poll levels queue
+
+						// accommodate custom 4-arg constructor
+						if (currLevelClass == CustomLevel.class) {
+							CustomLevel ctomLevel = (CustomLevel) currLevel;
+							Class<?>[] cArg = { int.class, int.class, Terrain.class, Collection.class };
+							int levelNum = ctomLevel.getNum();
+							int startingSunpoints = ctomLevel.getStartingSunpoints();
+							Terrain terrain = ctomLevel.getTerrain();
+							Collection<Wave> wavesClone = ctomLevel.getWavesClone();
+							try {
+								gameWorld.addLevels(currLevelClass.getDeclaredConstructor(cArg).newInstance(levelNum,
+										startingSunpoints, terrain, wavesClone));
+							} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+									| InvocationTargetException | NoSuchMethodException | SecurityException e) {
+								levelReloadFailureProtocol(e);
+							}
+							finalizeLevelReload();
 						}
-						game.unsetGameOver();
-						CooldownManager.resetCDs();
-						game.emptyUndoRedo();
-						updateGameGrid();
-					} else {
+
+						else { // can invoke 0-arg constructor
+							try {
+								gameWorld.addLevels(currLevelClass.newInstance());
+							} catch (InstantiationException | IllegalAccessException e) {
+								levelReloadFailureProtocol(e);
+							}
+							finalizeLevelReload();
+						}
+
+					} else { // user clicked cancel
 						disableButtons();
 					}
+
 				});
+
 	}
 
 	/**
-	 * Disable buttons for a game over.
+	 * The protocol for level reload failure.
+	 *
+	 * @param e The thrown exception.
+	 */
+	public void levelReloadFailureProtocol(Exception e) {
+		System.out.println("Could not reload level; exception details below:");
+		e.printStackTrace();
+		System.exit(1);
+	}
+
+	/**
+	 * Finalizes a level reload.
+	 */
+	public void finalizeLevelReload() {
+		game.unsetGameOver();
+		CooldownManager.resetCDs();
+		game.emptyUndoRedo();
+		updateGameGrid();
+	}
+
+	/**
+	 * Disable buttons; e.g., for a game over.
 	 */
 	private void disableButtons() {
 		nextTurnButton.setDisable(true);
@@ -325,9 +376,9 @@ public class GUIController {
 		undoButton.setDisable(true);
 		allowUndoRedo.setDisable(true);
 	}
-	
+
 	/**
-	 * Enable buttons disabled with disableButtons
+	 * Enable those buttons disabled via disableButtons().
 	 */
 	private void enableButtons() {
 		nextTurnButton.setDisable(false);
@@ -336,7 +387,7 @@ public class GUIController {
 		undoButton.setDisable(false);
 		allowUndoRedo.setDisable(false);
 	}
-	
+
 	/**
 	 * Called when all levels in the game are beat.
 	 */
@@ -402,12 +453,12 @@ public class GUIController {
 			public void handle(ActionEvent arg0) {
 				new LevelBuilder(game.getPrimaryStage());
 			}
-			
+
 		});
-		
 		newWorldButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent arg0) {
+				CooldownManager.resetCDs();
 				game.setGameWorld(new World());
 				game.emptyUndoRedo();
 				game.setGameOver();
@@ -416,8 +467,9 @@ public class GUIController {
 				updateLevelLabel();
 				updateSunpointLabel();
 				updateWaveNumber();
+				updateCooldownDisplay();
 			}
-			
+
 		});
 		addCustomLevel.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -426,18 +478,18 @@ public class GUIController {
 				dialog.setTitle("Load Custom Level");
 				dialog.setContentText("Please enter the level name:");
 				Optional<String> result = dialog.showAndWait();
-				if (result.isPresent()){
-				    Object o = PlantsVZombies.loadObject(result.get() + ".level");
-				    if(o instanceof Level) {
-				    	Level lvl = (Level)o;
-				    	game.getWorld().addLevels(lvl);
-				    	enableButtons();
-				    	updateGameGrid();
-				    	game.unsetGameOver();
-				    }
+				if (result.isPresent()) {
+					Object o = PlantsVZombies.loadObject(result.get() + ".level");
+					if (o instanceof Level) {
+						Level lvl = (Level) o;
+						game.getWorld().addLevels(lvl);
+						enableButtons();
+						updateGameGrid();
+						game.unsetGameOver();
+					}
 				}
 			}
-			
+
 		});
 	}
 
@@ -473,7 +525,7 @@ public class GUIController {
 			}
 		}
 	}
-	
+
 	private void emptyGameGrid() {
 		gameGrid.setDisable(true);
 		ObservableList<Node> children = gameGrid.getChildren();
@@ -507,7 +559,7 @@ public class GUIController {
 	 * Updates sunpoint label on UI.
 	 */
 	private void updateSunpointLabel() {
-		if(game.getWorld().getCurrentLevel() != null) {
+		if (game.getWorld().getCurrentLevel() != null) {
 			sunpointLabel.setText("  Sunpoints: " + Integer.toString(game.getWorld().getCurrentLevel().getSunpoints()));
 		} else {
 			sunpointLabel.setText("  Sunpoints: none");
@@ -518,11 +570,11 @@ public class GUIController {
 	 * Updates level label on UI.
 	 */
 	private void updateLevelLabel() {
-		if(game.getWorld().getCurrentLevel() != null) {
+		if (game.getWorld().getCurrentLevel() != null) {
 			int levelNum = game.getWorld().getCurrentLevel().getNum();
 			levelLabel.setText("  Level: " + levelNum);
 		} else {
-			levelLabel.setText("  Level: none" );
+			levelLabel.setText("  Level: none");
 		}
 	}
 
@@ -531,7 +583,7 @@ public class GUIController {
 	 */
 	private void updateWaveNumber() {
 		Level lvl = game.getWorld().getCurrentLevel();
-		if(lvl != null) {
+		if (lvl != null) {
 			if (lvl.getNumWaves() > 0) { // failsafe: prevent NPE
 				waveLabel.setText("  Wave: " + Integer.toString(lvl.getHeadWave().getNum()));
 			}
