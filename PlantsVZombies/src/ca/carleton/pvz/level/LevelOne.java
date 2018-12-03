@@ -18,9 +18,8 @@ public class LevelOne extends Level {
 	 * Constructs level 1 with the specified dimensions (8 x 5).
 	 */
 	public LevelOne() {
-
 		super(1, WIDTH, HEIGHT, STARTING_SUNPOINTS, Terrain.GRASS);
-
+		initWaves();
 	}
 
 	/**
