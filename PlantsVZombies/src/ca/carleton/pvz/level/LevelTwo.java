@@ -32,7 +32,6 @@ public class LevelTwo extends Level {
 		clearWaves();
 
 		// specify this level's waves
-
 		Wave[] waves = {
 				//                                normal  heavy   fast    wiz  fball   giga   boss
 				new Wave(1, Difficulty.NORMAL,        2,     2,     0,     0,     0,     0,     0),
@@ -43,8 +42,7 @@ public class LevelTwo extends Level {
 				new Wave(6, Difficulty.RAMPED,        0,     0,     2,     1,     0,     0,     0),
 				new Wave(7, Difficulty.RAMPED,        2,     1,     0,     0,     0,     0,     0),
 				new Wave(8, Difficulty.SUPER_RAMPED,  0,     0,     0,     0,     2,     0,     0),
-				new Wave(9, Difficulty.SUPER_RAMPED,  0,     0,     0,     0,     0,     3,     0),
-				new Wave(10, Difficulty.NORMAL,       0,     0,     0,     0,     0,     0,     1),
+				new Wave(9, Difficulty.SUPER_RAMPED,  0,     0,     0,     0,     0,     4,     0)
 
 		};
 
