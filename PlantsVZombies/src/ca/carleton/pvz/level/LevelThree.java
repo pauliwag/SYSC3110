@@ -18,9 +18,8 @@ public class LevelThree extends Level {
 	 * Constructs level 3 with the specified dimensions (8 x 5).
 	 */
 	public LevelThree() {
-
 		super(3, WIDTH, HEIGHT, STARTING_SUNPOINTS, Terrain.SAND);
-
+		initWaves();
 	}
 
 	/**

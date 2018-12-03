@@ -48,7 +48,11 @@ public class World implements Serializable {
 	 * @return The current level.
 	 */
 	public Level getCurrentLevel() {
-		return levels.peek();
+		if(levels.size() > 0) {
+			return levels.peek();
+		} else {
+			return null;
+		}
 	}
 
 	/**

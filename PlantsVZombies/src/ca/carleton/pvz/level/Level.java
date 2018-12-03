@@ -88,7 +88,7 @@ public abstract class Level implements Serializable {
 		// initialize waves queue such that a lower wave number is prioritized
 		waves = new PriorityQueue<>(11,
 				(Comparator<Wave> & Serializable) (wave1, wave2) -> wave1.getNum() - wave2.getNum());
-		initWaves();
+		
 
 		// initialize grid (playable area)
 		for (Actor[] row : grid) {

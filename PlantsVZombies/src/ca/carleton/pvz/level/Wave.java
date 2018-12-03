@@ -182,5 +182,13 @@ public class Wave implements Serializable {
 			zombies.replace(zombieType, num);
 
 	}
+	
+	/**
+	 * toString for Wave object - used by LevelBuilder when displaying ListView of Waves.
+	 * @return Wave 1..n
+	 */
+	public String toString() {
+		return "Wave " + waveNum;
+	}
 
 }

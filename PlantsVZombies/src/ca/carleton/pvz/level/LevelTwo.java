@@ -18,9 +18,8 @@ public class LevelTwo extends Level {
 	 * Constructs level 2 with the specified dimensions (8 x 5).
 	 */
 	public LevelTwo() {
-
 		super(2, WIDTH, HEIGHT, STARTING_SUNPOINTS, Terrain.ICE);
-
+		initWaves();
 	}
 
 	/**
