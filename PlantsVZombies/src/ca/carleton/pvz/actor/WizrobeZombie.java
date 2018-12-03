@@ -14,7 +14,7 @@ public class WizrobeZombie extends TeleportingZombie {
 
 	private static final long serialVersionUID = 2131337503393053904L;
 
-	public static final int WIZROBE_ZOMBIE_HEALTH = 300 + 300; // health + forcefield
+	public static final int WIZROBE_ZOMBIE_HEALTH = 200 + 300; // health + forcefield
 	public static final int WIZROBE_ZOMBIE_SPEED = 1;
 
 	/**

@@ -282,8 +282,8 @@ public class GUIController {
 		}
 
 		else {
-			showAlert("You won!", null, "Congrats! You beat Level " + beatLevelNum + " of Plants vs. Zombies!",
-					AlertType.INFORMATION);
+			showAlert("Level Beat!", "Woohoo! You beat Level " + beatLevelNum + "!",
+					"Click \"OK\" to proceed to the next level.", AlertType.INFORMATION);
 			CooldownManager.resetCDs();
 			game.emptyUndoRedo();
 			updateGameGrid(); // reset grid for next level
@@ -348,12 +348,14 @@ public class GUIController {
 	/**
 	 * The protocol for level reload failure.
 	 *
-	 * @param e The thrown exception.
+	 * @param e The caught exception.
 	 */
 	public void levelReloadFailureProtocol(Exception e) {
 		System.out.println("Could not reload level; exception details below:");
 		e.printStackTrace();
-		System.exit(1);
+		showAlert("Level Reload Failure", "Could not reload level", "You must load the level manually (via the menu).",
+				AlertType.INFORMATION);
+		disableButtons();
 	}
 
 	/**
@@ -393,7 +395,7 @@ public class GUIController {
 	 */
 	private void notifyGameBeat() {
 		disableButtons();
-		showAlert("You beat the game!", null, "Congrats! You beat all levels in the game! :)", AlertType.INFORMATION);
+		showAlert("You Won!", "Wow! You beat all levels in the game! :)", null, AlertType.INFORMATION);
 	}
 
 	private void setupUndoRedo() {
@@ -453,7 +455,6 @@ public class GUIController {
 			public void handle(ActionEvent arg0) {
 				new LevelBuilder(game.getPrimaryStage());
 			}
-
 		});
 		newWorldButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -469,7 +470,6 @@ public class GUIController {
 				updateWaveNumber();
 				updateCooldownDisplay();
 			}
-
 		});
 		addCustomLevel.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -489,7 +489,6 @@ public class GUIController {
 					}
 				}
 			}
-
 		});
 	}
 
@@ -753,4 +752,5 @@ public class GUIController {
 	public Button getRedoButton() {
 		return redoButton;
 	}
+
 }
