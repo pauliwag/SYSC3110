@@ -175,7 +175,7 @@ class WaveDialog extends Dialog<Wave> {
 
 				if (b == buttonTypeOk) {
 
-					return new Wave(waveNum, Difficulty.SUPER_RAMPED, numNormalSpinner.getValue(),
+					return new Wave(waveNum, difficultySpinner.getValue(), numNormalSpinner.getValue(),
 							numShieldSpinner.getValue(), numFastSpinner.getValue(), numWizardSpinner.getValue(),
 							numFootballSpinner.getValue(), numGigaSpinner.getValue(), numBossSpinner.getValue());
 				}
