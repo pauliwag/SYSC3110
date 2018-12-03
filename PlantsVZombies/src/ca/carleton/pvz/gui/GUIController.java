@@ -15,12 +15,10 @@ import ca.carleton.pvz.actor.Sunflower;
 import ca.carleton.pvz.level.Level;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.DoubleProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
@@ -116,19 +114,19 @@ public class GUIController {
 
 	@FXML
 	private CheckBox allowUndoRedo;
-	
-	@FXML 
+
+	@FXML
 	private VBox plantVBox;
-	
-	@FXML 
+
+	@FXML
 	private ImageView threepeaterIcon;
-	
-	@FXML 
+
+	@FXML
 	private ImageView peashooterIcon;
-	
-	@FXML 
+
+	@FXML
 	private ImageView sunflowerIcon;
-	
+
 	@FXML
 	public void initialize() {
 		assert peashooterCooldown != null : "fx:id=\"peashooterCooldown\" was not injected: check your FXML file 'pvzgui.fxml'.";
@@ -156,7 +154,7 @@ public class GUIController {
 		assert threepeaterIcon != null : "fx:id=\"threepeaterIcon\" was not injected: check your FXML file 'pvzgui.fxml'.";
 		assert peashooterIcon != null : "fx:id=\"peashooterIcon\" was not injected: check your FXML file 'pvzgui.fxml'.";
 		assert sunflowerIcon != null : "fx:id=\"sunflowerIcon\" was not injected: check your FXML file 'pvzgui.fxml'.";
-		
+
 		setupUndoRedo();
 		setupMenuButtons();
 		setupPlantSelectionButtons();
@@ -164,7 +162,6 @@ public class GUIController {
 		updateCostDisplay();
 		initGameGrid();
 
-		
 		redoButton.setDisable(true);
 		undoButton.setDisable(true);
 	}
@@ -181,38 +178,39 @@ public class GUIController {
 	 * currently selected plant object to correct type.
 	 */
 	private void setupPlantSelectionButtons() {
-		sunflowerIcon.setImage(new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/sunflower_icon.png")));
-		peashooterIcon.setImage(new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/peashooter_icon.png")));
-		threepeaterIcon.setImage(new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/threepeater_icon.png")));
-		
+		sunflowerIcon
+				.setImage(new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/sunflower_icon.png")));
+		peashooterIcon
+				.setImage(new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/peashooter_icon.png")));
+		threepeaterIcon
+				.setImage(new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/threepeater_icon.png")));
+
 		selectedPlant = new Sunflower();
-		sunflowerButton.setOnMouseClicked(( e ) ->
-        {
-        	sunflowerButton.requestFocus();
-        	selectedPlant = new Sunflower();
-        });
-		
-		peashooterButton.setOnMouseClicked(( e ) ->
-        {
-        	peashooterButton.requestFocus();
-        	selectedPlant = new NormalPeaShooter();
-        });
-		
-		threepeaterButton.setOnMouseClicked(( e ) ->
-        {
-        	threepeaterButton.requestFocus();
-        	selectedPlant = new GatlingPeaShooter();
-        });
-		
-		for(Node child : plantVBox.getChildren()) {
-			if(child instanceof HBox) {
-				HBox button = (HBox)child;
+		sunflowerButton.setOnMouseClicked((e) -> {
+			sunflowerButton.requestFocus();
+			selectedPlant = new Sunflower();
+		});
+
+		peashooterButton.setOnMouseClicked((e) -> {
+			peashooterButton.requestFocus();
+			selectedPlant = new NormalPeaShooter();
+		});
+
+		threepeaterButton.setOnMouseClicked((e) -> {
+			threepeaterButton.requestFocus();
+			selectedPlant = new GatlingPeaShooter();
+		});
+
+		for (Node child : plantVBox.getChildren()) {
+			if (child instanceof HBox) {
+				HBox button = (HBox) child;
 				button.opacityProperty().bind(Bindings.when(button.focusedProperty()).then(1).otherwise(0.75));
-				button.styleProperty().bind(Bindings.when(button.hoverProperty()).then("-fx-background-color: #dbdbdb").otherwise("-fx-background-color: #f4f4f4"));
+				button.styleProperty().bind(Bindings.when(button.hoverProperty()).then("-fx-background-color: #dbdbdb")
+						.otherwise("-fx-background-color: #f4f4f4"));
 			}
 		}
 	}
-	
+
 	/**
 	 * Update the undo/redo buttons to represent if undo/redo is possible.
 	 */
