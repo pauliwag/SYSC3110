@@ -30,6 +30,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -110,10 +111,19 @@ public class GUIController {
 
 	@FXML
 	private MenuItem quitButton;
-
+	
+	@FXML
+	private MenuItem openLevelBuilder;
+	
+	@FXML
+	private MenuItem newWorldButton;
+	
 	@FXML
 	private MenuItem aboutButton;
-
+	
+	@FXML
+	private MenuItem addCustomLevel;
+	
 	@FXML
 	private CheckBox allowUndoRedo;
 	
@@ -131,7 +141,10 @@ public class GUIController {
 	
 	@FXML
 	public void initialize() {
+		assert addCustomLevel != null : "fx:id=\"addCustomLevel\" was not injected: check your FXML file 'pvzgui.fxml'.";
+		assert newWorldButton != null : "fx:id=\"newWorldButton\" was not injected: check your FXML file 'pvzgui.fxml'.";
 		assert peashooterCooldown != null : "fx:id=\"peashooterCooldown\" was not injected: check your FXML file 'pvzgui.fxml'.";
+		assert openLevelBuilder != null : "fx:id=\"openLevelBuilder\" was not injected: check your FXML file 'pvzgui.fxml'.";
 		assert nextTurnButton != null : "fx:id=\"nextTurnButton\" was not injected: check your FXML file 'pvzgui.fxml'.";
 		assert sunflowerCooldown != null : "fx:id=\"sunflowerCooldown\" was not injected: check your FXML file 'pvzgui.fxml'.";
 		assert peashooterButton != null : "fx:id=\"peashooterButton\" was not injected: check your FXML file 'pvzgui.fxml'.";
@@ -297,7 +310,7 @@ public class GUIController {
 						game.emptyUndoRedo();
 						updateGameGrid();
 					} else {
-						disableButtonsForGameOver();
+						disableButtons();
 					}
 				});
 	}
@@ -305,20 +318,30 @@ public class GUIController {
 	/**
 	 * Disable buttons for a game over.
 	 */
-	private void disableButtonsForGameOver() {
+	private void disableButtons() {
 		nextTurnButton.setDisable(true);
 		gameGrid.setDisable(true);
-		plantGroup.setDisable(true);
 		redoButton.setDisable(true);
 		undoButton.setDisable(true);
 		allowUndoRedo.setDisable(true);
 	}
-
+	
+	/**
+	 * Enable buttons disabled with disableButtons
+	 */
+	private void enableButtons() {
+		nextTurnButton.setDisable(false);
+		gameGrid.setDisable(false);
+		redoButton.setDisable(false);
+		undoButton.setDisable(false);
+		allowUndoRedo.setDisable(false);
+	}
+	
 	/**
 	 * Called when all levels in the game are beat.
 	 */
 	private void notifyGameBeat() {
-		disableButtonsForGameOver();
+		disableButtons();
 		showAlert("You beat the game!", null, "Congrats! You beat all levels in the game! :)", AlertType.INFORMATION);
 	}
 
@@ -374,6 +397,48 @@ public class GUIController {
 						AlertType.INFORMATION);
 			}
 		});
+		openLevelBuilder.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent arg0) {
+				new LevelBuilder(game.getPrimaryStage());
+			}
+			
+		});
+		
+		newWorldButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent arg0) {
+				game.setGameWorld(new World());
+				game.emptyUndoRedo();
+				game.setGameOver();
+				disableButtons();
+				emptyGameGrid();
+				updateLevelLabel();
+				updateSunpointLabel();
+				updateWaveNumber();
+			}
+			
+		});
+		addCustomLevel.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent arg0) {
+				TextInputDialog dialog = new TextInputDialog();
+				dialog.setTitle("Load Custom Level");
+				dialog.setContentText("Please enter the level name:");
+				Optional<String> result = dialog.showAndWait();
+				if (result.isPresent()){
+				    Object o = PlantsVZombies.loadObject(result.get() + ".level");
+				    if(o instanceof Level) {
+				    	Level lvl = (Level)o;
+				    	game.getWorld().addLevels(lvl);
+				    	enableButtons();
+				    	updateGameGrid();
+				    	game.unsetGameOver();
+				    }
+				}
+			}
+			
+		});
 	}
 
 	/**
@@ -381,6 +446,7 @@ public class GUIController {
 	 * grid slot.
 	 */
 	private void initGameGrid() {
+		gameGrid.setDisable(false);
 		ObservableList<Node> children = gameGrid.getChildren();
 		InputStream stream = getClass().getResourceAsStream("/ca/carleton/pvz/resources/grass.png");
 		Image grass = new Image(stream);
@@ -407,6 +473,17 @@ public class GUIController {
 			}
 		}
 	}
+	
+	private void emptyGameGrid() {
+		gameGrid.setDisable(true);
+		ObservableList<Node> children = gameGrid.getChildren();
+		for (Node child : children) {
+			if (child instanceof ImageView) {
+				ImageView imgView = (ImageView) child;
+				imgView.setImage(null);
+			}
+		}
+	}
 
 	/**
 	 * Update the plant cooldown labels to represent CooldownManager values
@@ -430,15 +507,23 @@ public class GUIController {
 	 * Updates sunpoint label on UI.
 	 */
 	private void updateSunpointLabel() {
-		sunpointLabel.setText("  Sunpoints: " + Integer.toString(game.getWorld().getCurrentLevel().getSunpoints()));
+		if(game.getWorld().getCurrentLevel() != null) {
+			sunpointLabel.setText("  Sunpoints: " + Integer.toString(game.getWorld().getCurrentLevel().getSunpoints()));
+		} else {
+			sunpointLabel.setText("  Sunpoints: none");
+		}
 	}
 
 	/**
 	 * Updates level label on UI.
 	 */
 	private void updateLevelLabel() {
-		int levelNum = game.getWorld().getCurrentLevel().getNum();
-		levelLabel.setText("  Level: " + levelNum);
+		if(game.getWorld().getCurrentLevel() != null) {
+			int levelNum = game.getWorld().getCurrentLevel().getNum();
+			levelLabel.setText("  Level: " + levelNum);
+		} else {
+			levelLabel.setText("  Level: none" );
+		}
 	}
 
 	/**
@@ -446,8 +531,12 @@ public class GUIController {
 	 */
 	private void updateWaveNumber() {
 		Level lvl = game.getWorld().getCurrentLevel();
-		if (lvl.getNumWaves() > 0) { // failsafe: prevent NPE
-			waveLabel.setText("  Wave: " + Integer.toString(lvl.getHeadWave().getNum()));
+		if(lvl != null) {
+			if (lvl.getNumWaves() > 0) { // failsafe: prevent NPE
+				waveLabel.setText("  Wave: " + Integer.toString(lvl.getHeadWave().getNum()));
+			}
+		} else {
+			waveLabel.setText("  Wave: none");
 		}
 	}
 
@@ -491,7 +580,7 @@ public class GUIController {
 	 * @param type Type of alert - see AlertType documentation
 	 * @return The user's selection.
 	 */
-	public Optional<ButtonType> showAlert(String title, String header, String content, AlertType type) {
+	public static Optional<ButtonType> showAlert(String title, String header, String content, AlertType type) {
 		Alert alert = new Alert(type);
 		alert.setTitle(title);
 		alert.setHeaderText(header);

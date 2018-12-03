@@ -1,5 +1,10 @@
 package ca.carleton.pvz;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Stack;
 
 import ca.carleton.pvz.gui.GUIController;
@@ -24,7 +29,8 @@ public class PlantsVZombies extends Application {
 	private static GUIController controller;
 	private Stack<World> undoStack;
 	private Stack<World> redoStack;
-
+	private Stage primaryStage;
+	
 	/**
 	 * The start method for the JavaFX GUI. Loads GUI from .fxml file and
 	 * creates/shows a scene containing it.
@@ -40,6 +46,7 @@ public class PlantsVZombies extends Application {
 		primaryStage.setTitle("Plants VS Zombies Group 5");
 		primaryStage.setResizable(false);
 		primaryStage.setScene(scene);
+		this.primaryStage = primaryStage;
 		primaryStage.show();
 	}
 
@@ -73,7 +80,15 @@ public class PlantsVZombies extends Application {
 	public World getWorld() {
 		return gameWorld;
 	}
-
+	
+	/**
+	 * Returns the primary stage. Used to add more stages on top of primary.
+	 * @return
+	 */
+	public Stage getPrimaryStage() {
+		return primaryStage;
+	}
+	
 	/**
 	 * Sets gameOver to true.
 	 */
@@ -176,5 +191,35 @@ public class PlantsVZombies extends Application {
 	public void setGameWorld(World world) {
 		gameWorld = world;
 	}
-
+	
+	public static void saveObject(Object o, String path) {
+		try {
+			FileOutputStream fileOut = new FileOutputStream(path);
+			ObjectOutputStream out = new ObjectOutputStream(fileOut);
+			out.writeObject(o);
+			out.close();
+			fileOut.close();
+			System.out.printf("Serialized data is saved in " + path);
+		} catch (IOException i) {
+			i.printStackTrace();
+		}
+	}
+	
+	public static Object loadObject(String path) {
+		Object o = null;
+		try {
+			FileInputStream fileIn = new FileInputStream(path);
+			ObjectInputStream in = new ObjectInputStream(fileIn);
+			o = in.readObject();
+			in.close();
+			fileIn.close();
+			return o;
+		} catch (IOException i) {
+			i.printStackTrace();
+			return o;
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			return o;
+		}
+	}
 }
