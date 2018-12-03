@@ -30,7 +30,7 @@ public class PlantsVZombies extends Application {
 	private Stack<World> undoStack;
 	private Stack<World> redoStack;
 	private Stage primaryStage;
-	
+
 	/**
 	 * The start method for the JavaFX GUI. Loads GUI from .fxml file and
 	 * creates/shows a scene containing it.
@@ -80,15 +80,16 @@ public class PlantsVZombies extends Application {
 	public World getWorld() {
 		return gameWorld;
 	}
-	
+
 	/**
 	 * Returns the primary stage. Used to add more stages on top of primary.
+	 *
 	 * @return
 	 */
 	public Stage getPrimaryStage() {
 		return primaryStage;
 	}
-	
+
 	/**
 	 * Sets gameOver to true.
 	 */
@@ -191,7 +192,7 @@ public class PlantsVZombies extends Application {
 	public void setGameWorld(World world) {
 		gameWorld = world;
 	}
-	
+
 	public static void saveObject(Object o, String path) {
 		try {
 			FileOutputStream fileOut = new FileOutputStream(path);
@@ -199,12 +200,12 @@ public class PlantsVZombies extends Application {
 			out.writeObject(o);
 			out.close();
 			fileOut.close();
-			System.out.printf("Serialized data is saved in " + path);
+			System.out.printf("Serialized data is saved in " + path + "\n");
 		} catch (IOException i) {
 			i.printStackTrace();
 		}
 	}
-	
+
 	public static Object loadObject(String path) {
 		Object o = null;
 		try {

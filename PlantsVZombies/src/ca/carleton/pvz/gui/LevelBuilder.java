@@ -36,7 +36,7 @@ import javafx.util.Callback;
 
 public class LevelBuilder extends Stage {
 	private ObservableList<Wave> waves;
-	
+
 	public LevelBuilder(Stage owner) {
 		initModality(Modality.APPLICATION_MODAL);
 		initOwner(owner);
@@ -45,7 +45,7 @@ public class LevelBuilder extends Stage {
 		Pane levelNumPane = new HBox();
 		Pane sunPane = new HBox();
 		Pane terrainPane = new HBox();
-		
+
 		ListView<Wave> list = new ListView<Wave>();
 		waves = FXCollections.observableArrayList();
 		list.setItems(waves);
@@ -69,51 +69,52 @@ public class LevelBuilder extends Stage {
 			}
 
 		});
-		
+
 		menuFile.getItems().add(saveLevel);
 		menuEdit.getItems().add(addWave);
 		menuBar.getMenus().addAll(menuFile, menuEdit);
-		
+
 		Label sunPoint = new Label("Starting sunpoints: ");
 		TextField sunPointField = new TextField();
 		sunPointField.textProperty().addListener(new ChangeListener<String>() {
-		    @Override
-		    public void changed(ObservableValue<? extends String> observable, String oldValue, 
-		        String newValue) {
-		        if (!newValue.matches("\\d*")) {
-		        	sunPointField.setText(newValue.replaceAll("[^\\d]", ""));
-		        }
-		    }
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				if (!newValue.matches("\\d*")) {
+					sunPointField.setText(newValue.replaceAll("[^\\d]", ""));
+				}
+			}
 		});
 		sunPane.getChildren().addAll(sunPoint, sunPointField);
-		
+
 		Label terrainLabel = new Label("Terrain Type: ");
 		Spinner<Terrain> terrainPicker = new Spinner<Terrain>(FXCollections.observableArrayList(Terrain.values()));
 		terrainPane.getChildren().addAll(terrainLabel, terrainPicker);
-		
+
 		Label numLabel = new Label("Level Number: ");
 		Spinner<Integer> numPicker = new Spinner<Integer>(0, 50, 0);
 		levelNumPane.getChildren().addAll(numLabel, numPicker);
-		
+
 		Label nameLabel = new Label("Level name: ");
 		TextField nameField = new TextField();
 		levelNamePane.getChildren().addAll(nameLabel, nameField);
-		
+
 		rootPane.getChildren().addAll(menuBar, levelNumPane, levelNamePane, sunPane, terrainPane, list);
-		
+
 		saveLevel.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent arg0) {
-				if(!nameField.getText().equals("") && !sunPointField.getText().equals("")) {
-					Level level = new CustomLevel(numPicker.getValue(), Integer.parseInt(sunPointField.getText()), terrainPicker.getValue(), waves);
+				if (!nameField.getText().equals("") && !sunPointField.getText().equals("")) {
+					Level level = new CustomLevel(numPicker.getValue(), Integer.parseInt(sunPointField.getText()),
+							terrainPicker.getValue(), waves);
 					PlantsVZombies.saveObject(level, nameField.getText() + ".level");
 				} else {
-					GUIController.showAlert("Missing parameters!", null, "Please specify level name and number of sunpoints.", AlertType.ERROR);
+					GUIController.showAlert("Missing parameters!", null,
+							"Please specify level name and number of sunpoints.", AlertType.ERROR);
 				}
 			}
 
 		});
-		
+
 		Scene scene = new Scene(rootPane, 500, 500);
 		setTitle("Level Builder");
 		setScene(scene);
@@ -146,7 +147,8 @@ class WaveDialog extends Dialog<Wave> {
 		grid.add(numGigaLabel, 1, 7);
 		grid.add(numBossLabel, 1, 8);
 
-		Spinner<Difficulty> difficultySpinner = new Spinner<Difficulty>(FXCollections.observableArrayList(Difficulty.values()));
+		Spinner<Difficulty> difficultySpinner = new Spinner<Difficulty>(
+				FXCollections.observableArrayList(Difficulty.values()));
 		Spinner<Integer> numNormalSpinner = new Spinner<Integer>(0, 50, 0);
 		Spinner<Integer> numShieldSpinner = new Spinner<Integer>(0, 50, 0);
 		Spinner<Integer> numFastSpinner = new Spinner<Integer>(0, 50, 0);
