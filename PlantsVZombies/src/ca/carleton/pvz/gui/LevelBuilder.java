@@ -150,7 +150,6 @@ public class LevelBuilder extends Stage {
 class WaveDialog extends Dialog<Wave> {
 	public WaveDialog(int waveNum, Wave... waves) {
 		setTitle("Add/Edit Wave");
-		setHeaderText("Add/Edit Wave");
 		setResizable(false);
 		GridPane grid = new GridPane();
 		Label difficultyLabel = new Label("Difficulty: ");
