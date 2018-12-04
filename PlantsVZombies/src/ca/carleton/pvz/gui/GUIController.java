@@ -6,6 +6,8 @@ import java.net.URL;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.ResourceBundle;
+
+import ca.carleton.pvz.FileFactory;
 import ca.carleton.pvz.PlantsVZombies;
 import ca.carleton.pvz.World;
 import ca.carleton.pvz.actor.Actor;
@@ -120,7 +122,13 @@ public class GUIController {
 
 	@FXML
 	private MenuItem newWorldButton;
-
+	
+	@FXML
+	private MenuItem loadWorld;
+	
+	@FXML
+	private MenuItem saveWorld;
+	
 	@FXML
 	private MenuItem aboutButton;
 
@@ -144,7 +152,8 @@ public class GUIController {
 
 	@FXML
 	public void initialize() {
-
+		assert saveWorld != null : "fx:id=\"saveWorld\" was not injected: check your FXML file 'pvzgui.fxml'.";
+		assert loadWorld != null : "fx:id=\"loadWorld\" was not injected: check your FXML file 'pvzgui.fxml'.";
 		assert addCustomLevel != null : "fx:id=\"addCustomLevel\" was not injected: check your FXML file 'pvzgui.fxml'.";
 		assert newWorldButton != null : "fx:id=\"newWorldButton\" was not injected: check your FXML file 'pvzgui.fxml'.";
 		assert peashooterCooldown != null : "fx:id=\"peashooterCooldown\" was not injected: check your FXML file 'pvzgui.fxml'.";
@@ -456,7 +465,7 @@ public class GUIController {
 				dialog.setContentText("Please enter the level name:");
 				Optional<String> result = dialog.showAndWait();
 				if (result.isPresent()) {
-					Object o = PlantsVZombies.loadObject(result.get() + ".level");
+					Object o = FileFactory.loadObject(result.get() + ".level");
 					if (o instanceof Level) {
 						Level lvl = (Level) o;
 						game.getWorld().addLevels(lvl);
@@ -464,6 +473,39 @@ public class GUIController {
 						updateGameGrid();
 						game.unsetGameOver();
 					}
+				}
+			}
+		});
+		
+		saveWorld.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent arg0) {
+				TextInputDialog dialog = new TextInputDialog();
+				dialog.setTitle("Save World");
+				dialog.setContentText("Please enter world name:");
+				Optional<String> result = dialog.showAndWait();
+				if (result.isPresent()) {
+					FileFactory.saveObject(game.getWorld(), result.get() + ".world");
+				}
+			}
+		});
+		
+		loadWorld.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent arg0) {
+				TextInputDialog dialog = new TextInputDialog();
+				dialog.setTitle("Load World");
+				dialog.setContentText("Please enter world name:");
+				Optional<String> result = dialog.showAndWait();
+				if (result.isPresent()) {
+					World newWorld = (World)FileFactory.loadObject(result.get() + ".world");
+					game.setGameWorld(newWorld);
+					updateLevelLabel();
+					updateSunpointLabel();
+					updateWaveNumber();
+					updateCooldownDisplay();
+					updateGameGrid();
+					game.unsetGameOver();
 				}
 			}
 		});

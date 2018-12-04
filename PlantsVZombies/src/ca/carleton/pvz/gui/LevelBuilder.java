@@ -3,6 +3,7 @@ package ca.carleton.pvz.gui;
 import java.util.Optional;
 
 import ca.carleton.pvz.level.Level;
+import ca.carleton.pvz.FileFactory;
 import ca.carleton.pvz.PlantsVZombies;
 import ca.carleton.pvz.actor.BossZombie;
 import ca.carleton.pvz.actor.FastZombie;
@@ -62,20 +63,22 @@ public class LevelBuilder extends Stage {
 			@Override
 			public void handle(MouseEvent arg0) {
 				Wave selectedWave = list.getSelectionModel().getSelectedItem();
-				if(selectedWave != null) {
+				if (selectedWave != null) {
 					WaveDialog dialog = new WaveDialog(selectedWave.getNum(), selectedWave);
 					Optional<Wave> result = dialog.showAndWait();
-	
+
 					if (result.isPresent() && result.get() != null) {
 						Platform.runLater(new Runnable() {
-						    @Override public void run() {
-						    	waves.set(selectedWave.getNum()-1, result.get());
-						}});
-						
+							@Override
+							public void run() {
+								waves.set(selectedWave.getNum() - 1, result.get());
+							}
+						});
+
 					}
 				}
 			}
-			
+
 		});
 		// setup menu bar
 		MenuBar menuBar = new MenuBar();
@@ -132,7 +135,7 @@ public class LevelBuilder extends Stage {
 				if (!nameField.getText().equals("") && !sunPointField.getText().equals("")) {
 					Level level = new CustomLevel(numPicker.getValue(), Integer.parseInt(sunPointField.getText()),
 							terrainPicker.getValue(), waves);
-					PlantsVZombies.saveObject(level, nameField.getText() + ".level");
+					FileFactory.saveObject(level, nameField.getText() + ".level");
 				} else {
 					GUIController.showAlert("Missing parameters!", null,
 							"Please specify level name and number of sunpoints.", AlertType.ERROR);
@@ -171,7 +174,7 @@ class WaveDialog extends Dialog<Wave> {
 		grid.add(numFootballLabel, 1, 6);
 		grid.add(numGigaLabel, 1, 7);
 		grid.add(numBossLabel, 1, 8);
-		
+
 		Spinner<Difficulty> difficultySpinner = new Spinner<Difficulty>(
 				FXCollections.observableArrayList(Difficulty.values()));
 		Spinner<Integer> numNormalSpinner;
@@ -181,7 +184,7 @@ class WaveDialog extends Dialog<Wave> {
 		Spinner<Integer> numFootballSpinner;
 		Spinner<Integer> numGigaSpinner;
 		Spinner<Integer> numBossSpinner;
-		if(waves.length == 0) {
+		if (waves.length == 0) {
 			numNormalSpinner = new Spinner<Integer>(0, 50, 0);
 			numShieldSpinner = new Spinner<Integer>(0, 50, 0);
 			numFastSpinner = new Spinner<Integer>(0, 50, 0);
@@ -200,7 +203,7 @@ class WaveDialog extends Dialog<Wave> {
 			numGigaSpinner = new Spinner<Integer>(0, 50, wave.getNumZombies(GigaZombie.class));
 			numBossSpinner = new Spinner<Integer>(0, 50, wave.getNumZombies(BossZombie.class));
 		}
-		
+
 		grid.add(difficultySpinner, 2, 1);
 		grid.add(numNormalSpinner, 2, 2);
 		grid.add(numShieldSpinner, 2, 3);
@@ -211,7 +214,7 @@ class WaveDialog extends Dialog<Wave> {
 		grid.add(numBossSpinner, 2, 8);
 
 		getDialogPane().setContent(grid);
-		
+
 		ButtonType buttonTypeOk = new ButtonType("Done", ButtonData.OK_DONE);
 		getDialogPane().getButtonTypes().add(buttonTypeOk);
 
