@@ -1,10 +1,5 @@
 package ca.carleton.pvz;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.Stack;
 
 import ca.carleton.pvz.actor.CooldownManager;
@@ -32,7 +27,7 @@ public class PlantsVZombies extends Application {
 	private Stack<World> undoStack;
 	private Stack<World> redoStack;
 	private Stage primaryStage;
-
+	private World defaultWorld;
 	/**
 	 * The start method for the JavaFX GUI. Loads GUI from .fxml file and
 	 * creates/shows a scene containing it.
@@ -68,6 +63,7 @@ public class PlantsVZombies extends Application {
 		gameWorld = new World();
 		actionProcessor = new ActionProcessor(this);
 		gameWorld.addLevels(new LevelOne(), new LevelTwo(), new LevelThree());
+		defaultWorld = World.copy(gameWorld);
 		gameOver = false;
 		undoStack = new Stack<World>();
 		redoStack = new Stack<World>();
@@ -81,6 +77,14 @@ public class PlantsVZombies extends Application {
 	 */
 	public World getWorld() {
 		return gameWorld;
+	}
+	
+	/**
+	 * Gets the default game world.
+	 * @return The default game world.
+	 */
+	public World getDefaultWorld() {
+		return defaultWorld;
 	}
 
 	/**
