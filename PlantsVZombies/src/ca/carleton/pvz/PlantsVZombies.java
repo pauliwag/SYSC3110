@@ -192,37 +192,8 @@ public class PlantsVZombies extends Application {
 	 * @param world The new game world.
 	 */
 	public void setGameWorld(World world) {
-		gameWorld = world;
-	}
-
-	public static void saveObject(Object o, String path) {
-		try {
-			FileOutputStream fileOut = new FileOutputStream(path);
-			ObjectOutputStream out = new ObjectOutputStream(fileOut);
-			out.writeObject(o);
-			out.close();
-			fileOut.close();
-			System.out.printf("Serialized data is saved in " + path + "\n");
-		} catch (IOException i) {
-			i.printStackTrace();
-		}
-	}
-
-	public static Object loadObject(String path) {
-		Object o = null;
-		try {
-			FileInputStream fileIn = new FileInputStream(path);
-			ObjectInputStream in = new ObjectInputStream(fileIn);
-			o = in.readObject();
-			in.close();
-			fileIn.close();
-			return o;
-		} catch (IOException i) {
-			i.printStackTrace();
-			return o;
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-			return o;
+		if(world != null) {
+			gameWorld = world;
 		}
 	}
 	

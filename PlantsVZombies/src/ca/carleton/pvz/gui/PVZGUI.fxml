@@ -138,11 +138,17 @@
         <menus>
           <Menu mnemonicParsing="false" text="Game">
             <items>
-                  <MenuItem fx:id="newWorldButton" mnemonicParsing="false" text="New World" />
-                  <MenuItem fx:id="addCustomLevel" mnemonicParsing="false" text="Load Custom Level" />
                   <MenuItem fx:id="quitButton" mnemonicParsing="false" text="Quit" />
             </items>
           </Menu>
+            <Menu mnemonicParsing="false" text="World">
+               <items>
+                  <MenuItem fx:id="loadWorld" mnemonicParsing="false" text="Load World" />
+                  <MenuItem fx:id="saveWorld" mnemonicParsing="false" text="Save World" />
+                  <MenuItem fx:id="newWorldButton" mnemonicParsing="false" text="New Empty World" />
+                  <MenuItem fx:id="addCustomLevel" mnemonicParsing="false" text="Add Level To World" />
+               </items>
+            </Menu>
             <Menu mnemonicParsing="false" text="Level Builder">
                <items>
                   <MenuItem fx:id="openLevelBuilder" mnemonicParsing="false" text="Open" />
