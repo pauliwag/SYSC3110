@@ -7,6 +7,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Stack;
 
+import ca.carleton.pvz.actor.CooldownManager;
 import ca.carleton.pvz.gui.GUIController;
 import ca.carleton.pvz.level.LevelOne;
 import ca.carleton.pvz.level.LevelThree;
@@ -14,6 +15,7 @@ import ca.carleton.pvz.level.LevelTwo;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -222,5 +224,28 @@ public class PlantsVZombies extends Application {
 			e.printStackTrace();
 			return o;
 		}
+	}
+	
+	/**
+	 * The protocol for level reload failure.
+	 *
+	 * @param e The caught exception.
+	 */
+	public void levelReloadFailureProtocol(Exception e) {
+		System.out.println("Could not reload level; exception details below:");
+		e.printStackTrace();
+		GUIController.showAlert("Level Reload Failure", "Could not reload level", "You must load the level manually (via the menu).",
+				AlertType.INFORMATION);
+		controller.disableButtons();
+	}
+
+	/**
+	 * Finalizes a level reload.
+	 */
+	public void finalizeLevelReload() {
+		unsetGameOver();
+		CooldownManager.resetCDs();
+		emptyUndoRedo();
+		controller.updateGameGrid();
 	}
 }

@@ -240,7 +240,7 @@ public class GUIController {
 		} else {
 			redoButton.setDisable(true);
 		}
-		if (game.hasUndo()) {
+		if (game.hasUndo() && logMoves()) {
 			undoButton.setDisable(false);
 		} else {
 			undoButton.setDisable(true);
@@ -323,18 +323,18 @@ public class GUIController {
 										startingSunpoints, terrain, wavesClone));
 							} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
 									| InvocationTargetException | NoSuchMethodException | SecurityException e) {
-								levelReloadFailureProtocol(e);
+								game.levelReloadFailureProtocol(e);
 							}
-							finalizeLevelReload();
+							game.finalizeLevelReload();
 						}
 
 						else { // can invoke 0-arg constructor
 							try {
 								gameWorld.addLevels(currLevelClass.newInstance());
 							} catch (InstantiationException | IllegalAccessException e) {
-								levelReloadFailureProtocol(e);
+								game.levelReloadFailureProtocol(e);
 							}
-							finalizeLevelReload();
+							game.finalizeLevelReload();
 						}
 
 					} else { // user clicked cancel
@@ -345,33 +345,11 @@ public class GUIController {
 
 	}
 
-	/**
-	 * The protocol for level reload failure.
-	 *
-	 * @param e The caught exception.
-	 */
-	public void levelReloadFailureProtocol(Exception e) {
-		System.out.println("Could not reload level; exception details below:");
-		e.printStackTrace();
-		showAlert("Level Reload Failure", "Could not reload level", "You must load the level manually (via the menu).",
-				AlertType.INFORMATION);
-		disableButtons();
-	}
-
-	/**
-	 * Finalizes a level reload.
-	 */
-	public void finalizeLevelReload() {
-		game.unsetGameOver();
-		CooldownManager.resetCDs();
-		game.emptyUndoRedo();
-		updateGameGrid();
-	}
 
 	/**
 	 * Disable buttons; e.g., for a game over.
 	 */
-	private void disableButtons() {
+	public void disableButtons() {
 		nextTurnButton.setDisable(true);
 		gameGrid.setDisable(true);
 		redoButton.setDisable(true);
@@ -421,8 +399,7 @@ public class GUIController {
 			@Override
 			public void handle(ActionEvent event) {
 				if (allowUndoRedo.isSelected()) {
-					redoButton.setDisable(false);
-					undoButton.setDisable(false);
+					updateUndoRedo();
 				} else {
 					redoButton.setDisable(true);
 					undoButton.setDisable(true);
@@ -613,9 +590,7 @@ public class GUIController {
 				}
 			}
 		}
-		if (logMoves()) {
-			updateUndoRedo();
-		}
+		updateUndoRedo();
 		updateWaveNumber();
 		updateSunpointLabel();
 		updateLevelLabel();
