@@ -4,10 +4,18 @@ import java.util.Optional;
 
 import ca.carleton.pvz.level.Level;
 import ca.carleton.pvz.PlantsVZombies;
+import ca.carleton.pvz.actor.BossZombie;
+import ca.carleton.pvz.actor.FastZombie;
+import ca.carleton.pvz.actor.FootballZombie;
+import ca.carleton.pvz.actor.GigaZombie;
+import ca.carleton.pvz.actor.NormalZombie;
+import ca.carleton.pvz.actor.ShieldZombie;
+import ca.carleton.pvz.actor.WizrobeZombie;
 import ca.carleton.pvz.level.CustomLevel;
 import ca.carleton.pvz.level.Level.Terrain;
 import ca.carleton.pvz.level.Wave;
 import ca.carleton.pvz.level.Wave.Difficulty;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -26,6 +34,7 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -49,7 +58,23 @@ public class LevelBuilder extends Stage {
 		ListView<Wave> list = new ListView<Wave>();
 		waves = FXCollections.observableArrayList();
 		list.setItems(waves);
+		list.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent arg0) {
+				Wave selectedWave = list.getSelectionModel().getSelectedItem();
+				WaveDialog dialog = new WaveDialog(selectedWave.getNum(), selectedWave);
+				Optional<Wave> result = dialog.showAndWait();
 
+				if (result.isPresent() && result.get() != null) {
+					Platform.runLater(new Runnable() {
+					    @Override public void run() {
+					    	waves.set(selectedWave.getNum()-1, result.get());
+					}});
+					
+				}
+			}
+			
+		});
 		// setup menu bar
 		MenuBar menuBar = new MenuBar();
 		Menu menuFile = new Menu("File");
@@ -62,8 +87,7 @@ public class LevelBuilder extends Stage {
 				WaveDialog dialog = new WaveDialog(waves.size() + 1);
 				Optional<Wave> result = dialog.showAndWait();
 
-				if (result.isPresent()) {
-
+				if (result.isPresent() && result.get() != null) {
 					waves.add(result.get());
 				}
 			}
@@ -124,9 +148,9 @@ public class LevelBuilder extends Stage {
 }
 
 class WaveDialog extends Dialog<Wave> {
-	public WaveDialog(int waveNum) {
-		setTitle("Add Wave");
-		setHeaderText("Add Wave");
+	public WaveDialog(int waveNum, Wave... waves) {
+		setTitle("Add/Edit Wave");
+		setHeaderText("Add/Edit Wave");
 		setResizable(false);
 		GridPane grid = new GridPane();
 		Label difficultyLabel = new Label("Difficulty: ");
@@ -146,17 +170,36 @@ class WaveDialog extends Dialog<Wave> {
 		grid.add(numFootballLabel, 1, 6);
 		grid.add(numGigaLabel, 1, 7);
 		grid.add(numBossLabel, 1, 8);
-
+		
 		Spinner<Difficulty> difficultySpinner = new Spinner<Difficulty>(
 				FXCollections.observableArrayList(Difficulty.values()));
-		Spinner<Integer> numNormalSpinner = new Spinner<Integer>(0, 50, 0);
-		Spinner<Integer> numShieldSpinner = new Spinner<Integer>(0, 50, 0);
-		Spinner<Integer> numFastSpinner = new Spinner<Integer>(0, 50, 0);
-		Spinner<Integer> numWizardSpinner = new Spinner<Integer>(0, 50, 0);
-		Spinner<Integer> numFootballSpinner = new Spinner<Integer>(0, 50, 0);
-		Spinner<Integer> numGigaSpinner = new Spinner<Integer>(0, 50, 0);
-		Spinner<Integer> numBossSpinner = new Spinner<Integer>(0, 50, 0);
-
+		Spinner<Integer> numNormalSpinner;
+		Spinner<Integer> numShieldSpinner;
+		Spinner<Integer> numFastSpinner;
+		Spinner<Integer> numWizardSpinner;
+		Spinner<Integer> numFootballSpinner;
+		Spinner<Integer> numGigaSpinner;
+		Spinner<Integer> numBossSpinner;
+		if(waves.length == 0) {
+			numNormalSpinner = new Spinner<Integer>(0, 50, 0);
+			numShieldSpinner = new Spinner<Integer>(0, 50, 0);
+			numFastSpinner = new Spinner<Integer>(0, 50, 0);
+			numWizardSpinner = new Spinner<Integer>(0, 50, 0);
+			numFootballSpinner = new Spinner<Integer>(0, 50, 0);
+			numGigaSpinner = new Spinner<Integer>(0, 50, 0);
+			numBossSpinner = new Spinner<Integer>(0, 50, 0);
+		} else {
+			Wave wave = waves[0];
+			difficultySpinner.getValueFactory().setValue(wave.getDifficulty());
+			numNormalSpinner = new Spinner<Integer>(0, 50, wave.getNumZombies(NormalZombie.class));
+			numShieldSpinner = new Spinner<Integer>(0, 50, wave.getNumZombies(ShieldZombie.class));
+			numFastSpinner = new Spinner<Integer>(0, 50, wave.getNumZombies(FastZombie.class));
+			numWizardSpinner = new Spinner<Integer>(0, 50, wave.getNumZombies(WizrobeZombie.class));
+			numFootballSpinner = new Spinner<Integer>(0, 50, wave.getNumZombies(FootballZombie.class));
+			numGigaSpinner = new Spinner<Integer>(0, 50, wave.getNumZombies(GigaZombie.class));
+			numBossSpinner = new Spinner<Integer>(0, 50, wave.getNumZombies(BossZombie.class));
+		}
+		
 		grid.add(difficultySpinner, 2, 1);
 		grid.add(numNormalSpinner, 2, 2);
 		grid.add(numShieldSpinner, 2, 3);
@@ -167,7 +210,7 @@ class WaveDialog extends Dialog<Wave> {
 		grid.add(numBossSpinner, 2, 8);
 
 		getDialogPane().setContent(grid);
-
+		
 		ButtonType buttonTypeOk = new ButtonType("Done", ButtonData.OK_DONE);
 		getDialogPane().getButtonTypes().add(buttonTypeOk);
 

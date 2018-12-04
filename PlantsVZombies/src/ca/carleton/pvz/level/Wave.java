@@ -81,7 +81,15 @@ public class Wave implements Serializable {
 		zombies.put(BossZombie.class, numBossZombies);
 
 	}
-
+	
+	/**
+	 * Get the wave's difficulty
+	 * @return The wave's difficulty
+	 */
+	public Difficulty getDifficulty() {
+		return difficulty;
+	}
+	
 	/**
 	 * Gets whether this wave's difficulty is ramped.
 	 *
