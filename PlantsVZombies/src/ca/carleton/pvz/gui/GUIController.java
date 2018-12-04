@@ -495,10 +495,15 @@ public class GUIController {
 			public void handle(ActionEvent arg0) {
 				TextInputDialog dialog = new TextInputDialog();
 				dialog.setTitle("Load World");
-				dialog.setContentText("Please enter world name:");
+				dialog.setContentText("Please enter world name (type 'default' for default world):");
 				Optional<String> result = dialog.showAndWait();
 				if (result.isPresent()) {
-					World newWorld = (World)FileFactory.loadObject(result.get() + ".world");
+					World newWorld;
+					if(!result.get().equals("default")) {
+						newWorld = (World)FileFactory.loadObject(result.get() + ".world");
+					} else {
+						newWorld = game.getDefaultWorld();
+					}
 					game.setGameWorld(newWorld);
 					updateLevelLabel();
 					updateSunpointLabel();
