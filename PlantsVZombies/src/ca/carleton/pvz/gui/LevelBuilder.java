@@ -62,15 +62,17 @@ public class LevelBuilder extends Stage {
 			@Override
 			public void handle(MouseEvent arg0) {
 				Wave selectedWave = list.getSelectionModel().getSelectedItem();
-				WaveDialog dialog = new WaveDialog(selectedWave.getNum(), selectedWave);
-				Optional<Wave> result = dialog.showAndWait();
-
-				if (result.isPresent() && result.get() != null) {
-					Platform.runLater(new Runnable() {
-					    @Override public void run() {
-					    	waves.set(selectedWave.getNum()-1, result.get());
-					}});
-					
+				if(selectedWave != null) {
+					WaveDialog dialog = new WaveDialog(selectedWave.getNum(), selectedWave);
+					Optional<Wave> result = dialog.showAndWait();
+	
+					if (result.isPresent() && result.get() != null) {
+						Platform.runLater(new Runnable() {
+						    @Override public void run() {
+						    	waves.set(selectedWave.getNum()-1, result.get());
+						}});
+						
+					}
 				}
 			}
 			
