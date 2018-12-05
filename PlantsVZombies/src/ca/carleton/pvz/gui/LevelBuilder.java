@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import ca.carleton.pvz.level.Level;
 import ca.carleton.pvz.FileFactory;
+import ca.carleton.pvz.World;
 import ca.carleton.pvz.actor.BossZombie;
 import ca.carleton.pvz.actor.FastZombie;
 import ca.carleton.pvz.actor.FootballZombie;
@@ -22,6 +23,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonBar.ButtonData;
@@ -34,6 +36,7 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -45,17 +48,33 @@ import javafx.util.Callback;
 
 public class LevelBuilder extends Stage {
 	private ObservableList<Wave> waves;
-
+	Pane rootPane;
+	GridPane grid;
+	ListView<Wave> list;
+	MenuBar menuBar;
+	Menu menuFile;
+	Menu menuEdit;
+	MenuItem addWave;
+	MenuItem saveLevel;
+	MenuItem loadLevel;
+	Label sunPoint;
+	TextField sunPointField;
+	Label terrainLabel;
+	Spinner<Terrain> terrainPicker;
+	Label numLabel;
+	Spinner<Integer> numPicker;
+	Label nameLabel;
+	TextField nameField;
+	Scene scene;
+	
 	public LevelBuilder(Stage owner) {
 		initModality(Modality.APPLICATION_MODAL);
 		initOwner(owner);
-		Pane rootPane = new VBox();
-		Pane levelNamePane = new HBox();
-		Pane levelNumPane = new HBox();
-		Pane sunPane = new HBox();
-		Pane terrainPane = new HBox();
-
-		ListView<Wave> list = new ListView<Wave>();
+		
+		rootPane = new VBox();
+		grid = new GridPane();
+		
+		list = new ListView<Wave>();
 		waves = FXCollections.observableArrayList();
 		list.setItems(waves);
 		list.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -80,11 +99,13 @@ public class LevelBuilder extends Stage {
 
 		});
 		// setup menu bar
-		MenuBar menuBar = new MenuBar();
-		Menu menuFile = new Menu("File");
-		Menu menuEdit = new Menu("Waves");
-		MenuItem addWave = new MenuItem("Add Wave");
-		MenuItem saveLevel = new MenuItem("Save Level");
+		menuBar = new MenuBar();
+		menuFile = new Menu("File");
+		menuEdit = new Menu("Waves");
+		addWave = new MenuItem("Add Wave");
+		saveLevel = new MenuItem("Save Level");
+		loadLevel = new MenuItem("Load Level");
+		
 		addWave.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent arg0) {
@@ -99,11 +120,12 @@ public class LevelBuilder extends Stage {
 		});
 
 		menuFile.getItems().add(saveLevel);
+		menuFile.getItems().add(loadLevel);
 		menuEdit.getItems().add(addWave);
 		menuBar.getMenus().addAll(menuFile, menuEdit);
 
-		Label sunPoint = new Label("Starting sunpoints: ");
-		TextField sunPointField = new TextField();
+		sunPoint = new Label("Starting sunpoints: ");
+		sunPointField = new TextField();
 		sunPointField.textProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -112,38 +134,69 @@ public class LevelBuilder extends Stage {
 				}
 			}
 		});
-		sunPane.getChildren().addAll(sunPoint, sunPointField);
 
-		Label terrainLabel = new Label("Terrain Type: ");
-		Spinner<Terrain> terrainPicker = new Spinner<Terrain>(FXCollections.observableArrayList(Terrain.values()));
-		terrainPane.getChildren().addAll(terrainLabel, terrainPicker);
+		terrainLabel = new Label("Terrain Type: ");
+		terrainPicker = new Spinner<Terrain>(FXCollections.observableArrayList(Terrain.values()));
 
-		Label numLabel = new Label("Level Number: ");
-		Spinner<Integer> numPicker = new Spinner<Integer>(0, 50, 0);
-		levelNumPane.getChildren().addAll(numLabel, numPicker);
+		numLabel = new Label("Level Number: ");
+		numPicker = new Spinner<Integer>(1, 50, 1);
 
-		Label nameLabel = new Label("Level name: ");
-		TextField nameField = new TextField();
-		levelNamePane.getChildren().addAll(nameLabel, nameField);
-
-		rootPane.getChildren().addAll(menuBar, levelNumPane, levelNamePane, sunPane, terrainPane, list);
+		nameLabel = new Label("Level name: ");
+		nameField = new TextField();
+		
+		grid.add(numLabel, 1, 1);
+		grid.add(numPicker, 2, 1);
+		grid.add(nameLabel, 1, 2);
+		grid.add(nameField, 2, 2);
+		grid.add(sunPoint, 1, 3);
+		grid.add(sunPointField, 2, 3);
+		grid.add(terrainLabel, 1, 4);
+		grid.add(terrainPicker, 2, 4);
+		
+		rootPane.getChildren().addAll(menuBar, grid, list);
 
 		saveLevel.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent arg0) {
-				if (!nameField.getText().equals("") && !sunPointField.getText().equals("")) {
+				if (!nameField.getText().equals("") && !sunPointField.getText().equals("") && waves.size() > 0) {
 					Level level = new CustomLevel(numPicker.getValue(), Integer.parseInt(sunPointField.getText()),
 							terrainPicker.getValue(), waves);
 					FileFactory.saveObject(level, nameField.getText() + ".level");
 				} else {
 					GUIController.showAlert("Missing parameters!", null,
-							"Please specify level name and number of sunpoints.", AlertType.ERROR);
+							"You are missing parameters! Each level must have a name, starting sunpoint balance, and at least one wave.", AlertType.ERROR);
 				}
 			}
 
 		});
+		
+		loadLevel.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent arg0) {
+				TextInputDialog dialog = new TextInputDialog();
+				dialog.setTitle("Edit Existing Level");
+				dialog.setContentText("Please enter level name: ");
+				Optional<String> result = dialog.showAndWait();
+				if (result.isPresent()) {
+					Object o = FileFactory.loadObject(result.get() + ".level");
+					if(o instanceof Level) {
+						Level loadedLevel = (Level)o;
+						nameField.setText(result.get());
+						terrainPicker.getValueFactory().setValue(loadedLevel.getTerrain());
+						numPicker.getValueFactory().setValue(loadedLevel.getNum());
+						sunPointField.setText(Integer.toString(loadedLevel.getSunpoints()));
+						waves = FXCollections.observableArrayList(loadedLevel.getWaves());
+						list.setItems(waves);
+					}
+					
+				}
+			}
 
-		Scene scene = new Scene(rootPane, 500, 500);
+		});
+		grid.setVgap(4);
+		grid.setPadding(new Insets(5, 0, 5, 3));
+		list.setPadding(new Insets(0, 0, 3, 0));
+		scene = new Scene(rootPane, 270, 500);
 		setTitle("Level Builder");
 		setScene(scene);
 		setResizable(false);

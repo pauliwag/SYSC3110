@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.Point;
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 import ca.carleton.pvz.actor.Actor;
@@ -121,7 +122,15 @@ public abstract class Level implements Serializable {
 	public void clearWaves() {
 		waves.clear();
 	}
-
+	
+	/**
+	 * Get the waves that this level contains
+	 * @return Collection containing level's waves
+	 */
+	public Collection<Wave> getWaves() {
+		return waves;
+	}
+	
 	/**
 	 * Gets the wave at the head of the queue.
 	 *
