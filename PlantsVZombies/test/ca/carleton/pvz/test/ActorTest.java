@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import ca.carleton.pvz.actor.NormalZombie;
+import ca.carleton.pvz.level.Level.Terrain;
 import javafx.scene.image.Image;
 import ca.carleton.pvz.actor.Actor;
 
@@ -24,8 +25,8 @@ public class ActorTest {
 	 */
 	@Test
 	public void testActor() {
-		assertFalse(testActor.getSprite() == null);
-		assertTrue(testActor.getSprite() instanceof Image);
+		assertFalse(testActor.getSprite(Terrain.GRASS) == null);
+		assertTrue(testActor.getSprite(Terrain.GRASS) instanceof Image);
 
 	}
 
