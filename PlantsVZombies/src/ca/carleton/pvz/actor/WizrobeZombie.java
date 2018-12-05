@@ -14,7 +14,8 @@ public class WizrobeZombie extends TeleportingZombie {
 
 	private static final long serialVersionUID = 2131337503393053904L;
 
-	public static final int WIZROBE_ZOMBIE_HEALTH = 200 + 300; // health + forcefield
+	public static final int WIZROBE_ZOMBIE_HEALTH = 200 + 300; // health +
+																// forcefield
 	public static final int WIZROBE_ZOMBIE_SPEED = 1;
 
 	/**
@@ -31,16 +32,16 @@ public class WizrobeZombie extends TeleportingZombie {
 	 *
 	 * @return The WizrobeZombie sprite.
 	 */
-	public Image getSprite(Terrain climate) {
+	public Image getSprite(Terrain terrain) {
 
-		if (climate == Terrain.GRASS)
-			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/wizard_zombie.png"));
+		if (terrain == Terrain.GRASS)
+			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/wizrobe_zombie_grass.png"));
 
-		if (climate == Terrain.SAND)
-			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/tomb_raiser_zombie.png"));
+		if (terrain == Terrain.SAND)
+			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/wizrobe_zombie_sand.png"));
 
-		if (climate == Terrain.ICE)
-			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/dodo_zombie.png"));
+		if (terrain == Terrain.ICE)
+			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/wizrobe_zombie_ice.png"));
 
 		return null;
 

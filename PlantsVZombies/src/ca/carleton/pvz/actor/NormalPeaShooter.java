@@ -30,16 +30,16 @@ public class NormalPeaShooter extends PeaShooter {
 	 * @return The peashooter sprite.
 	 */
 	@Override
-	public Image getSprite(Terrain climate) {
+	public Image getSprite(Terrain terrain) {
 
-		if (climate == Terrain.GRASS)
-			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/peashooter.png"));
+		if (terrain == Terrain.GRASS)
+			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/peashooter_grass.png"));
 
-		if (climate == Terrain.SAND)
-			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/peashooter_desert.png"));
+		if (terrain == Terrain.SAND)
+			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/peashooter_sand.png"));
 
-		if (climate == Terrain.ICE)
-			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/peashooter_winter.png"));
+		if (terrain == Terrain.ICE)
+			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/peashooter_ice.png"));
 
 		return null;
 

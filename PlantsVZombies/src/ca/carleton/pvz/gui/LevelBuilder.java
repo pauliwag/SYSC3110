@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import ca.carleton.pvz.level.Level;
 import ca.carleton.pvz.FileFactory;
-import ca.carleton.pvz.PlantsVZombies;
 import ca.carleton.pvz.actor.BossZombie;
 import ca.carleton.pvz.actor.FastZombie;
 import ca.carleton.pvz.actor.FootballZombie;

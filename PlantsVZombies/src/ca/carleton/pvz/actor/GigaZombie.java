@@ -28,16 +28,16 @@ public class GigaZombie extends Zombie {
 	 *
 	 * @return The GigaZombie sprite.
 	 */
-	public Image getSprite(Terrain climate) {
+	public Image getSprite(Terrain terrain) {
 
-		if (climate == Terrain.GRASS)
-			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/pig_zombie.png"));
+		if (terrain == Terrain.GRASS)
+			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/giga_zombie_grass.png"));
 
-		if (climate == Terrain.SAND)
-			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/pyramid_head_zombie.png"));
+		if (terrain == Terrain.SAND)
+			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/giga_zombie_sand.png"));
 
-		if (climate == Terrain.ICE)
-			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/walrus_zombie.png"));
+		if (terrain == Terrain.ICE)
+			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/giga_zombie_ice.png"));
 
 		return null;
 

@@ -29,16 +29,16 @@ public class FootballZombie extends Zombie {
 	 *
 	 * @return The FootballZombie sprite.
 	 */
-	public Image getSprite(Terrain climate) {
+	public Image getSprite(Terrain terrain) {
 
-		if (climate == Terrain.GRASS)
-			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/football_zombie_normal.png"));
+		if (terrain == Terrain.GRASS)
+			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/football_zombie_grass.png"));
 
-		if (climate == Terrain.SAND)
-			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/boss_zombie_desert.png"));
+		if (terrain == Terrain.SAND)
+			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/football_zombie_sand.png"));
 
-		if (climate == Terrain.ICE)
-			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/tuskmaster_zombie.png"));
+		if (terrain == Terrain.ICE)
+			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/football_zombie_ice.png"));
 
 		return null;
 

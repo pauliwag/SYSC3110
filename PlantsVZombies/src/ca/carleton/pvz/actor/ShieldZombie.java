@@ -28,16 +28,16 @@ public class ShieldZombie extends Zombie {
 	 *
 	 * @return The shield zombie sprite.
 	 */
-	public Image getSprite(Terrain climate) {
+	public Image getSprite(Terrain terrain) {
 
-		if (climate == Terrain.GRASS)
-			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/shield_zombie.png"));
+		if (terrain == Terrain.GRASS)
+			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/shield_zombie_grass.png"));
 
-		if (climate == Terrain.SAND)
-			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/shield_zombie_desert.png"));
+		if (terrain == Terrain.SAND)
+			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/shield_zombie_sand.png"));
 
-		if (climate == Terrain.ICE)
-			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/shield_zombie_winter.png"));
+		if (terrain == Terrain.ICE)
+			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/shield_zombie_ice.png"));
 
 		return null;
 
