@@ -9,6 +9,7 @@ import ca.carleton.pvz.actor.Zombie;
 import ca.carleton.pvz.actor.NormalZombie;
 
 import ca.carleton.pvz.level.LevelOne;
+import ca.carleton.pvz.level.Level.Terrain;
 import javafx.scene.image.Image;
 
 public class NormalZombieTest {
@@ -47,8 +48,8 @@ public class NormalZombieTest {
 	 */
 	@Test
 	public void testSprite() {
-		assertFalse(testZombie.getSprite() == null);
-		assertTrue(testZombie.getSprite() instanceof Image);
+		assertFalse(testZombie.getSprite(Terrain.GRASS) == null);
+		assertTrue(testZombie.getSprite(Terrain.GRASS) instanceof Image);
 	}
 
 }
