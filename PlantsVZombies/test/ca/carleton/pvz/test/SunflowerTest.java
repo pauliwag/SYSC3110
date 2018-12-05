@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ca.carleton.pvz.actor.Sunflower;
+import ca.carleton.pvz.level.Level.Terrain;
 
 public class SunflowerTest {
 	
@@ -32,7 +33,7 @@ public class SunflowerTest {
 	 */
 	@Test
 	public void testSprite() {
-		assertTrue(testSunflower.getSprite() instanceof Image);
+		assertTrue(testSunflower.getSprite(Terrain.GRASS) instanceof Image);
 	}
 
 }
