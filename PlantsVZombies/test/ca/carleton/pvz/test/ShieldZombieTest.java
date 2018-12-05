@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ca.carleton.pvz.actor.Zombie;
+import ca.carleton.pvz.level.Level.Terrain;
 import ca.carleton.pvz.actor.ShieldZombie;
 import javafx.scene.image.Image;
 
@@ -44,8 +45,8 @@ public class ShieldZombieTest {
 	 */
 	@Test
 	public void testSprite() {
-		assertFalse(testZombie.getSprite() == null);
-		assertTrue(testZombie.getSprite() instanceof Image);
+		assertFalse(testZombie.getSprite(Terrain.GRASS) == null);
+		assertTrue(testZombie.getSprite(Terrain.GRASS) instanceof Image);
 	}
 
 }
