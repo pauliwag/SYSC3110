@@ -88,7 +88,6 @@ public abstract class Level implements Serializable {
 		// initialize waves queue such that a lower wave number is prioritized
 		waves = new PriorityQueue<>(11,
 				(Comparator<Wave> & Serializable) (wave1, wave2) -> wave1.getNum() - wave2.getNum());
-		
 
 		// initialize grid (playable area)
 		for (Actor[] row : grid) {
@@ -345,12 +344,15 @@ public abstract class Level implements Serializable {
 	 * @return A sprite of this level's terrain.
 	 */
 	public Image getSprite() {
-		if (terrain == Terrain.GRASS)
+		if (terrain == Terrain.GRASS) {
 			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/grass.png"));
-		if (terrain == Terrain.SAND)
+		}
+		if (terrain == Terrain.SAND) {
 			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/sand.png"));
-		if (terrain == Terrain.ICE)
-			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/snow.png"));
+		}
+		if (terrain == Terrain.ICE) {
+			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/ice.png"));
+		}
 		return null;
 	}
 }
