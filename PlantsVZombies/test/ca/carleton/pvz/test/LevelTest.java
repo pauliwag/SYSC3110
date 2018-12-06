@@ -59,15 +59,15 @@ public class LevelTest {
 		assertNotEquals(null, testLevel.getCell(2, 2));
 	}
 
-	/**
-	 * Testing the name of Level
-	 * 
-	 * @result The name of testLevelOne should be "Level 1"
-	 */
-	@Test
-	public void testName() {
-		assertEquals("Level 1", testLevel.getLevelName());
-	}
+	///**
+	// * Testing the name of Level
+	// * 
+	// * @result The name of testLevelOne should be "Level 1"
+	// */
+	//@Test
+	//public void testName() {
+	//	assertEquals("Level 1", testLevel.getLevelName());
+	//}
 
 	/**
 	 * Testing the isPointValid() method

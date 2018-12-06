@@ -27,16 +27,16 @@ public class LevelOneTest {
 		Wave testWave;
 		
 		testLevelOne.initWaves();
-		testWave = new Wave(1, Difficulty.NORMAL, 3, 1, 0);
+		testWave = new Wave(1, Difficulty.NORMAL, 0, 1, 0, 0, 0, 0, 0);
 		assertEquals(testWave.getNum(), testLevelOne.getHeadWave().getNum());
 		assertEquals(testWave.getTotalNumZombies(), testLevelOne.getHeadWave().getTotalNumZombies());
 		
-		testWave = new Wave(2, Difficulty.RAMPED, 2, 2, 0);
+		testWave = new Wave(2, Difficulty.RAMPED, 0, 0, 0, 0, 1, 0, 0);
 		testLevelOne.dequeueHeadWave();
 		assertEquals(testWave.getNum(), testLevelOne.getHeadWave().getNum());
 		assertEquals(testWave.getTotalNumZombies(), testLevelOne.getHeadWave().getTotalNumZombies());
 		
-		testWave = new Wave(3, Difficulty.SUPER_RAMPED, 0, 2, 20);
+		testWave = new Wave(3, Difficulty.SUPER_RAMPED, 0, 0, 1, 0, 0, 0, 0);
 		testLevelOne.dequeueHeadWave();
 		assertEquals(testWave.getNum(), testLevelOne.getHeadWave().getNum());
 		assertEquals(testWave.getTotalNumZombies(), testLevelOne.getHeadWave().getTotalNumZombies());

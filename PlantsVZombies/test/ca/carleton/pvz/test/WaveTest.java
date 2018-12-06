@@ -19,7 +19,7 @@ public class WaveTest {
 
 	@Before
 	public void setUp() throws Exception {
-		testWave = new Wave(1, Difficulty.NORMAL, 3, 1, 0);
+		testWave = new Wave(1, Difficulty.NORMAL, 3, 1, 0, 0, 0, 0, 0);
 	}
 
 	/**
