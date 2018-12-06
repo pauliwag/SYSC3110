@@ -15,6 +15,7 @@ public class Sunflower extends Plant {
 
 	public static final int SUNFLOWER_COST = 100;
 	public static final int SUNFLOWER_SUNPOINT_BOOST = 50; // every turn
+	public static final int SUNFLOWER_CD = 2; // cooldown
 
 	/**
 	 * Creates a new sunflower.

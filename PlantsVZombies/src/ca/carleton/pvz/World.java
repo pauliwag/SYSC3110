@@ -25,6 +25,7 @@ public class World implements Serializable {
 
 	private static final long serialVersionUID = -1136085713229155895L;
 	private PriorityQueue<Level> levels; // low level number is prioritized
+	private CooldownManager cooldownManager;
 
 	/**
 	 * Constructs a new game world.
@@ -32,10 +33,14 @@ public class World implements Serializable {
 	public World() {
 		levels = new PriorityQueue<>(11,
 				(Comparator<Level> & Serializable) (level1, level2) -> level1.getNum() - level2.getNum());
+		cooldownManager = new CooldownManager();
 	}
 
 	/**
-	 * Adds the given level(s) to this world's priority queue of levels.
+	 * Adds the given level(s) to this world's priority queue of levels. Each
+	 * level in this world must have a unique level number; if an attempt is
+	 * made to add a level that would violate this rule, then said level is not
+	 * added (other, valid levels in the varargs still get added, though).
 	 *
 	 * @param levels The level(s) to be added to this world's priority queue of
 	 *            levels.
@@ -133,6 +138,15 @@ public class World implements Serializable {
 			e.printStackTrace();
 		}
 		return copy;
+	}
+
+	/**
+	 * Gets this world's CooldownManager.
+	 *
+	 * @return This world's CooldownManager.
+	 */
+	public CooldownManager getCooldownManager() {
+		return cooldownManager;
 	}
 
 }

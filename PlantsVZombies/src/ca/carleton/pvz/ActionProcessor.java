@@ -8,7 +8,6 @@ import java.util.Random;
 import java.util.function.Predicate;
 
 import ca.carleton.pvz.actor.Actor;
-import ca.carleton.pvz.actor.CooldownManager;
 import ca.carleton.pvz.actor.GatlingPeaShooter;
 import ca.carleton.pvz.actor.NormalPeaShooter;
 import ca.carleton.pvz.actor.PeaShooter;
@@ -58,7 +57,7 @@ public class ActionProcessor {
 		lvl.incTurn();
 
 		// decrement global cooldowns by one
-		CooldownManager.decTimeOnCD();
+		game.getWorld().getCooldownManager().decTimeOnCD();
 
 		// boost sunpoints every turn based on
 		// the number of sunflowers on the map
@@ -270,37 +269,31 @@ public class ActionProcessor {
 		if (game.getController().logMoves()) {
 			game.addToUndoStack(game.getWorld());
 		}
-
 		if (lvl.getCell(xPos, yPos) == null) {
-
+			CooldownManager cooldownManager = game.getWorld().getCooldownManager();
 			if (plant.getClass() == Sunflower.class) {
-				if (!CooldownManager.isSunOnCD() && lvl.getSunpoints() - Sunflower.SUNFLOWER_COST >= 0) {
+				if (!cooldownManager.isSunOnCD() && lvl.getSunpoints() - Sunflower.SUNFLOWER_COST >= 0) {
 					lvl.placeActor(new Sunflower(), new Point(xPos, yPos));
 					lvl.subtractFromSunpoints(Sunflower.SUNFLOWER_COST);
-					CooldownManager.startSunCD();
+					cooldownManager.startSunCD();
 				}
-
 			} else if (plant.getClass() == NormalPeaShooter.class) {
-				if (!CooldownManager.isNormalPeaOnCD() && lvl.getSunpoints() - NormalPeaShooter.NORMAL_PEA_COST >= 0) {
+				if (!cooldownManager.isNormalPeaOnCD() && lvl.getSunpoints() - NormalPeaShooter.NORMAL_PEA_COST >= 0) {
 					lvl.placeActor(new NormalPeaShooter(), new Point(xPos, yPos));
 					lvl.subtractFromSunpoints(NormalPeaShooter.NORMAL_PEA_COST);
-					CooldownManager.startNormalPeaCD();
+					cooldownManager.startNormalPeaCD();
 				}
-
 			} else if (plant.getClass() == GatlingPeaShooter.class) {
-				if (!CooldownManager.isGatlingPeaOnCD()
+				if (!cooldownManager.isGatlingPeaOnCD()
 						&& lvl.getSunpoints() - GatlingPeaShooter.GATLING_PEA_COST >= 0) {
 					lvl.placeActor(new GatlingPeaShooter(), new Point(xPos, yPos));
 					lvl.subtractFromSunpoints(GatlingPeaShooter.GATLING_PEA_COST);
-					CooldownManager.startGatlingPeaCD();
+					cooldownManager.startGatlingPeaCD();
 				}
-
 			}
-		} else {
-			// alert the user that the specified cell is already occupied
+		} else { // alert the user that the specified cell is already occupied
 			GUIController.showAlert("No room!", null, "There's already something placed here!", AlertType.INFORMATION);
 		}
-
 	}
 
 }

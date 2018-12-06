@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import ca.carleton.pvz.level.Level;
 import ca.carleton.pvz.FileFactory;
-import ca.carleton.pvz.World;
 import ca.carleton.pvz.actor.BossZombie;
 import ca.carleton.pvz.actor.FastZombie;
 import ca.carleton.pvz.actor.FootballZombie;
@@ -39,7 +38,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -66,14 +64,14 @@ public class LevelBuilder extends Stage {
 	Label nameLabel;
 	TextField nameField;
 	Scene scene;
-	
+
 	public LevelBuilder(Stage owner) {
 		initModality(Modality.APPLICATION_MODAL);
 		initOwner(owner);
-		
+
 		rootPane = new VBox();
 		grid = new GridPane();
-		
+
 		list = new ListView<Wave>();
 		waves = FXCollections.observableArrayList();
 		list.setItems(waves);
@@ -105,7 +103,7 @@ public class LevelBuilder extends Stage {
 		addWave = new MenuItem("Add Wave");
 		saveLevel = new MenuItem("Save Level");
 		loadLevel = new MenuItem("Load Level");
-		
+
 		addWave.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent arg0) {
@@ -143,7 +141,7 @@ public class LevelBuilder extends Stage {
 
 		nameLabel = new Label("Level name: ");
 		nameField = new TextField();
-		
+
 		grid.add(numLabel, 1, 1);
 		grid.add(numPicker, 2, 1);
 		grid.add(nameLabel, 1, 2);
@@ -152,7 +150,7 @@ public class LevelBuilder extends Stage {
 		grid.add(sunPointField, 2, 3);
 		grid.add(terrainLabel, 1, 4);
 		grid.add(terrainPicker, 2, 4);
-		
+
 		rootPane.getChildren().addAll(menuBar, grid, list);
 
 		saveLevel.setOnAction(new EventHandler<ActionEvent>() {
@@ -164,12 +162,13 @@ public class LevelBuilder extends Stage {
 					FileFactory.saveObject(level, nameField.getText() + ".level");
 				} else {
 					GUIController.showAlert("Missing parameters!", null,
-							"You are missing parameters! Each level must have a name, starting sunpoint balance, and at least one wave.", AlertType.ERROR);
+							"You are missing parameters! Each level must have a name, starting sunpoint balance, and at least one wave.",
+							AlertType.ERROR);
 				}
 			}
 
 		});
-		
+
 		loadLevel.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent arg0) {
@@ -179,8 +178,8 @@ public class LevelBuilder extends Stage {
 				Optional<String> result = dialog.showAndWait();
 				if (result.isPresent()) {
 					Object o = FileFactory.loadObject(result.get() + ".level");
-					if(o instanceof Level) {
-						Level loadedLevel = (Level)o;
+					if (o instanceof Level) {
+						Level loadedLevel = (Level) o;
 						nameField.setText(result.get());
 						terrainPicker.getValueFactory().setValue(loadedLevel.getTerrain());
 						numPicker.getValueFactory().setValue(loadedLevel.getNum());
@@ -188,7 +187,7 @@ public class LevelBuilder extends Stage {
 						waves = FXCollections.observableArrayList(loadedLevel.getWaves());
 						list.setItems(waves);
 					}
-					
+
 				}
 			}
 
