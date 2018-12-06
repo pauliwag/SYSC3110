@@ -7,11 +7,11 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import ca.carleton.pvz.CooldownManager;
 import ca.carleton.pvz.FileFactory;
 import ca.carleton.pvz.PlantsVZombies;
 import ca.carleton.pvz.World;
 import ca.carleton.pvz.actor.Actor;
-import ca.carleton.pvz.actor.CooldownManager;
 import ca.carleton.pvz.actor.GatlingPeaShooter;
 import ca.carleton.pvz.actor.NormalPeaShooter;
 import ca.carleton.pvz.actor.Plant;
@@ -122,13 +122,13 @@ public class GUIController {
 
 	@FXML
 	private MenuItem newWorldButton;
-	
+
 	@FXML
 	private MenuItem loadWorld;
-	
+
 	@FXML
 	private MenuItem saveWorld;
-	
+
 	@FXML
 	private MenuItem aboutButton;
 
@@ -293,7 +293,7 @@ public class GUIController {
 		else {
 			showAlert("Level Beat!", "Woohoo! You beat Level " + beatLevelNum + "!",
 					"Click \"OK\" to proceed to the next level.", AlertType.INFORMATION);
-			CooldownManager.resetCDs();
+			game.getWorld().getCooldownManager().resetCDs();
 			game.emptyUndoRedo();
 			updateGameGrid(); // reset grid for next level
 		}
@@ -337,7 +337,7 @@ public class GUIController {
 							game.finalizeLevelReload();
 						}
 
-						else { // can invoke 0-arg constructor
+				else { // can invoke 0-arg constructor
 							try {
 								gameWorld.addLevels(currLevelClass.newInstance());
 							} catch (InstantiationException | IllegalAccessException e) {
@@ -353,7 +353,6 @@ public class GUIController {
 				});
 
 	}
-
 
 	/**
 	 * Disable buttons; e.g., for a game over.
@@ -445,7 +444,7 @@ public class GUIController {
 		newWorldButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent arg0) {
-				CooldownManager.resetCDs();
+				game.getWorld().getCooldownManager().resetCDs();
 				game.setGameWorld(new World());
 				game.emptyUndoRedo();
 				game.setGameOver();
@@ -476,7 +475,7 @@ public class GUIController {
 				}
 			}
 		});
-		
+
 		saveWorld.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent arg0) {
@@ -489,7 +488,7 @@ public class GUIController {
 				}
 			}
 		});
-		
+
 		loadWorld.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent arg0) {
@@ -499,8 +498,8 @@ public class GUIController {
 				Optional<String> result = dialog.showAndWait();
 				if (result.isPresent()) {
 					World newWorld;
-					if(!result.get().equals("default")) {
-						newWorld = (World)FileFactory.loadObject(result.get() + ".world");
+					if (!result.get().equals("default")) {
+						newWorld = (World) FileFactory.loadObject(result.get() + ".world");
 					} else {
 						newWorld = game.getDefaultWorld();
 					}
@@ -564,9 +563,10 @@ public class GUIController {
 	 * Update the plant cooldown labels to represent CooldownManager values
 	 */
 	private void updateCooldownDisplay() {
-		peashooterCooldown.setText(Integer.toString(CooldownManager.getNormalPeaTimeLeftOnCD()));
-		sunflowerCooldown.setText(Integer.toString(CooldownManager.getSunTimeLeftOnCD()));
-		threepeaterCooldown.setText(Integer.toString(CooldownManager.getGatlingPeaTimeLeftOnCD()));
+		CooldownManager cooldownManager = game.getWorld().getCooldownManager();
+		peashooterCooldown.setText(Integer.toString(cooldownManager.getNormalPeaTimeLeftOnCD()));
+		sunflowerCooldown.setText(Integer.toString(cooldownManager.getSunTimeLeftOnCD()));
+		threepeaterCooldown.setText(Integer.toString(cooldownManager.getGatlingPeaTimeLeftOnCD()));
 	}
 
 	/**

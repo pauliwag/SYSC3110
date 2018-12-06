@@ -6,7 +6,7 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 
-import ca.carleton.pvz.actor.CooldownManager;
+import ca.carleton.pvz.CooldownManager;
 
 
 public class CooldownManagerTest {

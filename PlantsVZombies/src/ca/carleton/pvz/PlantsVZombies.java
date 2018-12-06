@@ -2,7 +2,6 @@ package ca.carleton.pvz;
 
 import java.util.Stack;
 
-import ca.carleton.pvz.actor.CooldownManager;
 import ca.carleton.pvz.gui.GUIController;
 import ca.carleton.pvz.level.LevelOne;
 import ca.carleton.pvz.level.LevelThree;
@@ -221,8 +220,9 @@ public class PlantsVZombies extends Application {
 	 */
 	public void finalizeLevelReload() {
 		unsetGameOver();
-		CooldownManager.resetCDs();
+		gameWorld.getCooldownManager().resetCDs();
 		emptyUndoRedo();
 		controller.updateGameGrid();
 	}
+
 }

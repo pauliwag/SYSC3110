@@ -13,6 +13,7 @@ public class NormalPeaShooter extends PeaShooter {
 
 	public static final int NORMAL_PEA_COST = 200;
 	public static final int NORMAL_PEA_DAMAGE = 200;
+	public static final int NORMAL_PEA_CD = 2; // cooldown
 
 	/**
 	 * Creates a new normal pea-shooting plant. This type of plant can shoot and

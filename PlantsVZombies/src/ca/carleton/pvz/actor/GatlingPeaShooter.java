@@ -13,6 +13,7 @@ public class GatlingPeaShooter extends PeaShooter {
 
 	public static final int GATLING_PEA_COST = 300;
 	public static final int GATLING_PEA_DAMAGE = 350;
+	public static final int GATLING_PEA_CD = 2; // cooldown
 
 	/**
 	 * Constructs a new gatling pea-shooting plant, which deals more damage per
