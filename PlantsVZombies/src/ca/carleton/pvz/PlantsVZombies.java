@@ -28,6 +28,7 @@ public class PlantsVZombies extends Application {
 	private Stack<World> redoStack;
 	private Stage primaryStage;
 	private World defaultWorld;
+
 	/**
 	 * The start method for the JavaFX GUI. Loads GUI from .fxml file and
 	 * creates/shows a scene containing it.
@@ -78,9 +79,10 @@ public class PlantsVZombies extends Application {
 	public World getWorld() {
 		return gameWorld;
 	}
-	
+
 	/**
 	 * Gets the default game world.
+	 *
 	 * @return The default game world.
 	 */
 	public World getDefaultWorld() {
@@ -196,11 +198,11 @@ public class PlantsVZombies extends Application {
 	 * @param world The new game world.
 	 */
 	public void setGameWorld(World world) {
-		if(world != null) {
+		if (world != null) {
 			gameWorld = world;
 		}
 	}
-	
+
 	/**
 	 * The protocol for level reload failure.
 	 *
@@ -209,8 +211,8 @@ public class PlantsVZombies extends Application {
 	public void levelReloadFailureProtocol(Exception e) {
 		System.out.println("Could not reload level; exception details below:");
 		e.printStackTrace();
-		GUIController.showAlert("Level Reload Failure", "Could not reload level", "You must load the level manually (via the menu).",
-				AlertType.INFORMATION);
+		GUIController.showAlert("Level Reload Failure", "Could not reload level",
+				"You must load the level manually (via the menu).", AlertType.INFORMATION);
 		controller.disableButtons();
 	}
 

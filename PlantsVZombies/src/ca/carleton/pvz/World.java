@@ -9,14 +9,14 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.PriorityQueue;
-import java.util.stream.Stream;
-
+import java.util.function.Supplier;
+import java.util.stream.IntStream;
 import ca.carleton.pvz.gui.GUIController;
 import ca.carleton.pvz.level.Level;
 import javafx.scene.control.Alert.AlertType;
 
 /**
- * A class to store the levels in the game.
+ * A means of storing, mutating and deploying a collection of levels.
  *
  */
 public class World implements Serializable {
@@ -40,14 +40,16 @@ public class World implements Serializable {
 	 */
 	public void addLevels(Level... levels) {
 		if (levels.length > 0) {
-			Arrays.stream(levels).filter(lvl -> !hasLevel(lvl.getNum())).forEach(lvl -> this.levels.add(lvl));
-			Stream<Level> invalidLevels = Arrays.stream(levels).filter(lvl -> hasLevel(lvl.getNum()));
-			if (invalidLevels.findAny().isPresent()) {
+			int[] levelNums = new int[levels.length];
+			IntStream.range(0, levels.length).forEach(i -> levelNums[i] = levels[i].getNum());
+			Supplier<IntStream> invalidLevelNums = () -> Arrays.stream(levelNums).filter(num -> hasLevel(num));
+			if (invalidLevelNums.get().findAny().isPresent()) {
 				GUIController.showAlert("Cannot Load Levels",
-						"Cannot load levels " + Arrays.toString(invalidLevels.toArray(Integer[]::new)),
-						"Some levels could not be loaded because this world already contains levels having those level numbers.",
+						"Cannot load levels having numbers " + Arrays.toString(invalidLevelNums.get().toArray()),
+						"Some levels cannot be loaded because this world already contains levels having those level numbers.",
 						AlertType.INFORMATION);
 			}
+			Arrays.stream(levels).filter(lvl -> !hasLevel(lvl.getNum())).forEach(lvl -> this.levels.add(lvl));
 		}
 	}
 
