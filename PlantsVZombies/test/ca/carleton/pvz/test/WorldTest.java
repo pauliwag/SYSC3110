@@ -8,13 +8,14 @@ import org.junit.Test;
 
 import ca.carleton.pvz.World;
 import ca.carleton.pvz.level.Level;
+import ca.carleton.pvz.level.LevelOne;
+import ca.carleton.pvz.level.LevelTwo;
 
 public class WorldTest {
 
 	World testWorld;
-	Level testLevel1;
-	Level testLevel2;
-	Level testLevel3;
+	LevelOne testLevel1;
+	LevelTwo testLevel2;
 	
 	@Before
 	public void setUp() throws Exception {
@@ -32,8 +33,7 @@ public class WorldTest {
 		} catch (Exception e) {
 			assertTrue(e instanceof EmptyStackException);
 		}
-		testWorld.addLevel(testLevel1);
-		testWorld.addLevel(testLevel2);
+		testWorld.addLevels(testLevel1, testLevel2);
 	}
 
 }

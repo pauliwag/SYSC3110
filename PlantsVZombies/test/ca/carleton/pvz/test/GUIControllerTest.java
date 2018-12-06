@@ -2,6 +2,8 @@ package ca.carleton.pvz.test;
 
 import static org.junit.Assert.*;
 
+
+import javafx.scene.input.MouseEvent;
 import java.io.IOException;
 
 import org.junit.BeforeClass;
@@ -13,12 +15,15 @@ import ca.carleton.pvz.actor.Plant;
 import ca.carleton.pvz.actor.Sunflower;
 import ca.carleton.pvz.gui.GUIController;
 import javafx.application.Application;
+import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.input.MouseButton;
 
 import javafx.stage.Stage;
 
 public class GUIControllerTest {
 	private static GUIController controller;
+	//private MouseEvent testEvent;
 
 	public static class FakeApp extends Application {
 		@Override
@@ -50,7 +55,10 @@ public class GUIControllerTest {
 
 	@Test
 	public void testSunflowerButton() {
-		controller.getSunflowerButton().fire();
+		MouseEvent testEvent = new MouseEvent(MouseEvent.MOUSE_CLICKED, 0,
+                0, 0, 0, MouseButton.PRIMARY, 1, true, true, true, true,
+                true, true, true, true, true, true, null);
+		controller.getSunflowerButton().fireEvent(testEvent);
 		assertTrue(controller.getSelectedPlant() instanceof Plant);
 		assertTrue(controller.getSelectedPlant() instanceof Sunflower);
 		assertFalse(controller.getSelectedPlant() instanceof PeaShooter);
@@ -65,8 +73,11 @@ public class GUIControllerTest {
 	 *         subtype
 	 */
 	@Test
-	public void testPeaShooterButton() {
-		controller.getPeaShooterButton().fire();
+	public void testPeaShooterButton() {		
+		MouseEvent testEvent = new MouseEvent(MouseEvent.MOUSE_CLICKED, 0,
+                0, 0, 0, MouseButton.PRIMARY, 1, true, true, true, true,
+                true, true, true, true, true, true, null);
+		controller.getPeaShooterButton().fireEvent(testEvent);
 		assertTrue(controller.getSelectedPlant() instanceof Plant);
 		assertTrue(controller.getSelectedPlant() instanceof PeaShooter);
 		assertFalse(controller.getSelectedPlant() instanceof Sunflower);
@@ -82,7 +93,12 @@ public class GUIControllerTest {
 	 */
 	@Test
 	public void testThreepeaterButton() {
-		controller.getThreepeaterButton().fire();
+		int sceneX = (int) controller.getThreepeaterButton().getLayoutX();
+		int sceneY = (int) controller.getThreepeaterButton().getLayoutY();
+		MouseEvent testEvent = new MouseEvent(MouseEvent.MOUSE_CLICKED, sceneX,
+                sceneY, sceneX, sceneY, MouseButton.PRIMARY, 1, true, true, true, true,
+                true, true, true, true, true, true, null);
+		Event.fireEvent(controller.getThreepeaterButton(), testEvent);
 		assertTrue(controller.getSelectedPlant() instanceof Plant);
 		assertTrue(controller.getSelectedPlant() instanceof PeaShooter);
 		assertTrue(controller.getSelectedPlant() instanceof GatlingPeaShooter);
