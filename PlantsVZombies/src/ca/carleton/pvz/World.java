@@ -7,9 +7,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import ca.carleton.pvz.gui.GUIController;
 import ca.carleton.pvz.level.Level;
@@ -39,18 +41,34 @@ public class World implements Serializable {
 	 *            levels.
 	 */
 	public void addLevels(Level... levels) {
+
 		if (levels.length > 0) {
+
+			// store the numbers of the given levels in an array
 			int[] levelNums = new int[levels.length];
 			IntStream.range(0, levels.length).forEach(i -> levelNums[i] = levels[i].getNum());
-			Supplier<IntStream> invalidLevelNums = () -> Arrays.stream(levelNums).filter(num -> hasLevel(num));
+
+			// wrap a stream comprising invalid level numbers in a
+			// Supplier, thereby rendering said stream as "reusable"
+			Supplier<IntStream> invalidLevelNums = () -> Arrays.stream(levelNums).filter(num -> hasLevel(num)
+					|| Collections.frequency(Arrays.stream(levelNums).boxed().collect(Collectors.toList()), num) > 1);
+
+			// inform the user of the invalid levels
 			if (invalidLevelNums.get().findAny().isPresent()) {
-				GUIController.showAlert("Cannot Load Levels",
-						"Cannot load levels having numbers " + Arrays.toString(invalidLevelNums.get().toArray()),
-						"Some levels cannot be loaded because this world already contains levels having those level numbers.",
+				GUIController.showAlert("Unaddable Levels",
+						"Could not add levels " + Arrays.toString(invalidLevelNums.get().distinct().toArray()),
+						"Some levels could not be added because they share level numbers or "
+								+ "this world already contains levels having those level numbers.",
 						AlertType.INFORMATION);
 			}
-			Arrays.stream(levels).filter(lvl -> !hasLevel(lvl.getNum())).forEach(lvl -> this.levels.add(lvl));
+
+			// add the valid levels to this world
+			Arrays.stream(levels).filter(lvl -> !hasLevel(lvl.getNum()) && Collections
+					.frequency(Arrays.stream(levelNums).boxed().collect(Collectors.toList()), lvl.getNum()) == 1)
+					.forEach(lvl -> this.levels.add(lvl));
+
 		}
+
 	}
 
 	/**
