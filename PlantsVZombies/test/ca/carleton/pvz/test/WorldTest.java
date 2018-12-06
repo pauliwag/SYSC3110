@@ -7,7 +7,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ca.carleton.pvz.World;
-import ca.carleton.pvz.level.Level;
 import ca.carleton.pvz.level.LevelOne;
 import ca.carleton.pvz.level.LevelTwo;
 
@@ -33,7 +32,7 @@ public class WorldTest {
 		} catch (Exception e) {
 			assertTrue(e instanceof EmptyStackException);
 		}
-		testWorld.addLevels(testLevel1, testLevel2);
+		testWorld.addLevels(new LevelOne(), new LevelTwo());
 	}
 
 }
