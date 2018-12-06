@@ -28,12 +28,12 @@ public class WorldTest {
 	 */
 	@Test
 	public void testWorld() {
-		testWorld.addLevels(testLevel1, testLevel2);
 		try {
 			testWorld.getCurrentLevel();
 		} catch (Exception e) {
 			assertTrue(e instanceof EmptyStackException);
 		}
+		testWorld.addLevels(testLevel1, testLevel2);
 	}
 
 }
