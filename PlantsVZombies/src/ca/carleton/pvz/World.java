@@ -6,18 +6,22 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.PriorityQueue;
+import java.util.function.Supplier;
+import java.util.stream.IntStream;
+import ca.carleton.pvz.gui.GUIController;
 import ca.carleton.pvz.level.Level;
+import javafx.scene.control.Alert.AlertType;
 
 /**
- * A class to store the levels in the game.
+ * A means of storing, mutating and deploying a collection of levels.
  *
  */
 public class World implements Serializable {
 
 	private static final long serialVersionUID = -1136085713229155895L;
-
 	private PriorityQueue<Level> levels; // low level number is prioritized
 
 	/**
@@ -36,10 +40,29 @@ public class World implements Serializable {
 	 */
 	public void addLevels(Level... levels) {
 		if (levels.length > 0) {
-			for (Level level : levels) {
-				this.levels.add(level);
+			int[] levelNums = new int[levels.length];
+			IntStream.range(0, levels.length).forEach(i -> levelNums[i] = levels[i].getNum());
+			Supplier<IntStream> invalidLevelNums = () -> Arrays.stream(levelNums).filter(num -> hasLevel(num));
+			if (invalidLevelNums.get().findAny().isPresent()) {
+				GUIController.showAlert("Cannot Load Levels",
+						"Cannot load levels having numbers " + Arrays.toString(invalidLevelNums.get().toArray()),
+						"Some levels cannot be loaded because this world already contains levels having those level numbers.",
+						AlertType.INFORMATION);
 			}
+			Arrays.stream(levels).filter(lvl -> !hasLevel(lvl.getNum())).forEach(lvl -> this.levels.add(lvl));
 		}
+	}
+
+	/**
+	 * Returns whether this world contains a level having the given level
+	 * number.
+	 *
+	 * @param levelNum The level number to find.
+	 * @return true if this world contains a level having the given level
+	 *         number, false otherwise.
+	 */
+	public boolean hasLevel(int levelNum) {
+		return levels.stream().filter(lvl -> lvl.getNum() == levelNum).findAny().isPresent();
 	}
 
 	/**
@@ -48,11 +71,7 @@ public class World implements Serializable {
 	 * @return The current level.
 	 */
 	public Level getCurrentLevel() {
-		if (levels.size() > 0) {
-			return levels.peek();
-		} else {
-			return null;
-		}
+		return levels.peek();
 	}
 
 	/**
@@ -97,6 +116,5 @@ public class World implements Serializable {
 		}
 		return copy;
 	}
-	
-	
+
 }
