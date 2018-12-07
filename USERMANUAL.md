@@ -110,22 +110,22 @@ When on, the game state will be saved whenever it's changed, so the player can r
 
 New in version 4.0! The level builder allows you to create and edit game levels. To launch the level builder, select open from the level builder menu.
 
-You should give your level a name, a number, a starting number of sunpoints, a terrain type, and some waves. Waves can be added using the "Add Waves" button.You can edit waves that have been added by clicking on them.
+You should give your level a name, a number, a starting number of sunpoints, a terrain type, and some waves. Waves can be added using the "Add Waves" button. You can edit waves that have been added by clicking on them.
 
 Here's what a sample level will look like:
 
 ![](images/levelbuilder.png?raw=true)
 
-When you save a level from the level builder, it will be saved in the game's directory in a file titled **<levelname>.level**
-You can load level files into the level builder by entering the <levelname> into the "Load Level" dialog.
+When you save a level from the level builder, it will be saved in the game's directory in a file titled **'levelname'.level**
+You can load level files into the level builder by entering the 'levelname' into the "Load Level" dialog.
 
 ## Saving/loading the game 
 
 Also new in version 4.0 is the ability to save/load the game world (the game world contains multiple levels). Save your current world by clicking World->Save World and entering a <worldname>. 
 
-The world will be saved in the game directory with a file name of **"<worldname>.world"**.
+The world will be saved in the game directory with a file name of **'worldname'.world**.
 
-Worlds can be loaded from World->Load World and entering <worldname> into the dialog. Enter "default" to load back the default game world.
+Worlds can be loaded from World->Load World and entering <worldname> into the dialog. Enter 'default' to load back the default game world.
 
 You can create a new empty world (world with no levels) using World->New Empty World.
-After creating an empty world, you can add custom levels to it using the World->Add Level To World button and entering <levelname>.
+After creating an empty world, you can add custom levels to it using the World->Add Level To World button and entering 'levelname'.
