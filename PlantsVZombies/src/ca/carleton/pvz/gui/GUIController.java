@@ -494,6 +494,7 @@ public class GUIController {
 						newWorld = (World) FileFactory.loadObject(result.get() + ".world");
 					} else {
 						newWorld = game.getDefaultWorld();
+						enableButtons();
 					}
 					game.setGameWorld(newWorld);
 					updateLevelLabel();
