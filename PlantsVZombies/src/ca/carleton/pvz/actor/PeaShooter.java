@@ -18,11 +18,8 @@ public abstract class PeaShooter extends Plant {
 	 * @param peaDamage The damage a pea inflicts (each hit).
 	 */
 	public PeaShooter(int cost, int peaDamage) {
-
 		super(cost);
-
 		this.peaDamage = peaDamage;
-
 	}
 
 	/**
@@ -31,9 +28,7 @@ public abstract class PeaShooter extends Plant {
 	 * @return The damage inflicted by each pea shot by this plant.
 	 */
 	public int getPeaDamage() {
-
 		return peaDamage;
-
 	}
 
 }

@@ -11,17 +11,17 @@ import javafx.scene.image.Image;
 public class FootballZombie extends Zombie {
 
 	private static final long serialVersionUID = 6214923633339415829L;
-
 	public static final int FOOTBALL_ZOMBIE_HEALTH = 900;
 	public static final int FOOTBALL_ZOMBIE_SPEED = 2;
+	public static final String FOOTBALL_ZOMBIE_GRASS_SPRITE = "/ca/carleton/pvz/resources/football_zombie_grass.png";
+	public static final String FOOTBALL_ZOMBIE_SAND_SPRITE = "/ca/carleton/pvz/resources/football_zombie_sand.png";
+	public static final String FOOTBALL_ZOMBIE_ICE_SPRITE = "/ca/carleton/pvz/resources/football_zombie_ice.png";
 
 	/**
 	 * Constructs a FootballZombie.
 	 */
 	public FootballZombie() {
-
 		super(FOOTBALL_ZOMBIE_HEALTH, FOOTBALL_ZOMBIE_SPEED);
-
 	}
 
 	/**
@@ -29,19 +29,15 @@ public class FootballZombie extends Zombie {
 	 *
 	 * @return The FootballZombie sprite.
 	 */
+	@Override
 	public Image getSprite(Terrain terrain) {
-
 		if (terrain == Terrain.GRASS)
-			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/football_zombie_grass.png"));
-
+			return new Image(getClass().getResourceAsStream(FOOTBALL_ZOMBIE_GRASS_SPRITE));
 		if (terrain == Terrain.SAND)
-			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/football_zombie_sand.png"));
-
+			return new Image(getClass().getResourceAsStream(FOOTBALL_ZOMBIE_SAND_SPRITE));
 		if (terrain == Terrain.ICE)
-			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/football_zombie_ice.png"));
-
+			return new Image(getClass().getResourceAsStream(FOOTBALL_ZOMBIE_ICE_SPRITE));
 		return null;
-
 	}
 
 }

@@ -46,7 +46,7 @@ import javafx.scene.layout.VBox;
 /**
  * This class controls the JavaFX fxml user interface.
  *
- * @author Group 5
+ * @author Team 5
  *
  */
 public class GUIController {
@@ -152,6 +152,7 @@ public class GUIController {
 
 	@FXML
 	public void initialize() {
+
 		assert saveWorld != null : "fx:id=\"saveWorld\" was not injected: check your FXML file 'pvzgui.fxml'.";
 		assert loadWorld != null : "fx:id=\"loadWorld\" was not injected: check your FXML file 'pvzgui.fxml'.";
 		assert addCustomLevel != null : "fx:id=\"addCustomLevel\" was not injected: check your FXML file 'pvzgui.fxml'.";
@@ -197,7 +198,7 @@ public class GUIController {
 
 	/**
 	 * This empty constructor is required for proper loading of the JavaFX GUI
-	 * controller
+	 * controller.
 	 */
 	public GUIController() {
 	}
@@ -207,25 +208,24 @@ public class GUIController {
 	 * currently selected plant object to correct type.
 	 */
 	private void setupPlantSelectionButtons() {
-		sunflowerIcon
-				.setImage(new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/sunflower_icon.png")));
-		peashooterIcon
-				.setImage(new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/peashooter_icon.png")));
-		threepeaterIcon
-				.setImage(new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/threepeater_icon.png")));
+
+		sunflowerIcon.setImage(new Image(getClass().getResourceAsStream(Sunflower.SUNFLOWER_ICON)));
+		peashooterIcon.setImage(new Image(getClass().getResourceAsStream(NormalPeaShooter.NORMAL_PEA_ICON)));
+		threepeaterIcon.setImage(new Image(getClass().getResourceAsStream(GatlingPeaShooter.GATLING_PEA_ICON)));
 
 		selectedPlant = new Sunflower();
-		sunflowerButton.setOnMouseClicked((e) -> {
+
+		sunflowerButton.setOnMouseClicked(e -> {
 			sunflowerButton.requestFocus();
 			selectedPlant = new Sunflower();
 		});
 
-		peashooterButton.setOnMouseClicked((e) -> {
+		peashooterButton.setOnMouseClicked(e -> {
 			peashooterButton.requestFocus();
 			selectedPlant = new NormalPeaShooter();
 		});
 
-		threepeaterButton.setOnMouseClicked((e) -> {
+		threepeaterButton.setOnMouseClicked(e -> {
 			threepeaterButton.requestFocus();
 			selectedPlant = new GatlingPeaShooter();
 		});
@@ -238,6 +238,7 @@ public class GUIController {
 						.otherwise("-fx-background-color: #f4f4f4"));
 			}
 		}
+
 	}
 
 	/**
@@ -257,7 +258,7 @@ public class GUIController {
 	}
 
 	/**
-	 * Sets up the next turn button's event handler
+	 * Sets up the next turn button's event handler.
 	 */
 	private void setupNextTurnButton() {
 		nextTurnButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -337,7 +338,8 @@ public class GUIController {
 							game.finalizeLevelReload();
 						}
 
-				else { // can invoke 0-arg constructor
+						// can invoke 0-arg constructor
+						else {
 							try {
 								gameWorld.addLevels(currLevelClass.newInstance());
 							} catch (InstantiationException | IllegalAccessException e) {
@@ -418,7 +420,7 @@ public class GUIController {
 	}
 
 	/**
-	 * Sets up menu button actions
+	 * Sets up menu button actions.
 	 */
 	private void setupMenuButtons() {
 		quitButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -475,7 +477,6 @@ public class GUIController {
 				}
 			}
 		});
-
 		saveWorld.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent arg0) {
@@ -488,7 +489,6 @@ public class GUIController {
 				}
 			}
 		});
-
 		loadWorld.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent arg0) {
@@ -516,13 +516,13 @@ public class GUIController {
 	}
 
 	/**
-	 * Initializes the game grid to grass images and adds event handlers to each
-	 * grid slot.
+	 * Initializes the game grid to grass sprite images and adds event handlers
+	 * to each grid slot.
 	 */
 	private void initGameGrid() {
 		gameGrid.setDisable(false);
 		ObservableList<Node> children = gameGrid.getChildren();
-		InputStream stream = getClass().getResourceAsStream("/ca/carleton/pvz/resources/grass.png");
+		InputStream stream = getClass().getResourceAsStream(Level.GRASS_TILE_SPRITE);
 		Image grass = new Image(stream);
 		for (Node child : children) {
 			if (child instanceof ImageView) {
@@ -560,7 +560,7 @@ public class GUIController {
 	}
 
 	/**
-	 * Update the plant cooldown labels to represent CooldownManager values
+	 * Update the plant cooldown labels to represent CooldownManager values.
 	 */
 	private void updateCooldownDisplay() {
 		CooldownManager cooldownManager = game.getWorld().getCooldownManager();
@@ -570,7 +570,7 @@ public class GUIController {
 	}
 
 	/**
-	 * Update the plant cooldown labels to represent CooldownManager values
+	 * Update the plant cooldown labels to represent CooldownManager values.
 	 */
 	private void updateCostDisplay() {
 		peashooterCost.setText(Integer.toString(NormalPeaShooter.NORMAL_PEA_COST));
@@ -647,10 +647,10 @@ public class GUIController {
 	/**
 	 * Shows the user a pop-up alert dialog.
 	 *
-	 * @param title Title of the alert dialog
-	 * @param header Header of the alert dialog (can be null for no header)
-	 * @param content Content of the alert dialog
-	 * @param type Type of alert - see AlertType documentation
+	 * @param title Title of the alert dialog.
+	 * @param header Header of the alert dialog (can be null for no header).
+	 * @param content Content of the alert dialog.
+	 * @param type Type of alert - see AlertType documentation.
 	 * @return The user's selection.
 	 */
 	public static Optional<ButtonType> showAlert(String title, String header, String content, AlertType type) {
@@ -662,114 +662,114 @@ public class GUIController {
 	}
 
 	/**
-	 * Disable the next turn button
+	 * Disable the next turn button.
 	 */
 	public void disableNextTurn() {
 		nextTurnButton.setDisable(true);
 	}
 
 	/**
-	 * Enable the next turn button
+	 * Enable the next turn button.
 	 */
 	public void enableNextTurn() {
 		nextTurnButton.setDisable(false);
 	}
 
 	/**
-	 * Set the game that this controller controls
+	 * Set the game that this controller controls.
 	 *
-	 * @param game to control
+	 * @param game to control.
 	 */
 	public void setGame(PlantsVZombies game) {
 		this.game = game;
 	}
 
 	/**
-	 * Returns boolean letting user know if allowUndoRedo checkbox is selected
+	 * Returns boolean letting user know if allowUndoRedo checkbox is selected.
 	 *
-	 * @return allowUndoRedo.isSelected(); Boolean letting user know if
-	 *         allowUndoRedo checkbox is selected
+	 * @return allowUndoRedo.isSelected(); boolean letting user know if
+	 *         allowUndoRedo checkbox is selected.
 	 */
 	public boolean logMoves() {
 		return allowUndoRedo.isSelected();
 	}
 
 	/**
-	 * Returns plant selected by user
+	 * Returns plant selected by user.
 	 *
-	 * @return selectedPlant plant selected by user
+	 * @return selectedPlant plant selected by user.
 	 */
 	public Plant getSelectedPlant() {
 		return selectedPlant;
 	}
 
 	/**
-	 * Returns sunflower button on GUI
+	 * Returns sunflower button on GUI.
 	 *
-	 * @return sunflowerButton sunflower button on GUI
+	 * @return sunflowerButton sunflower button on GUI.
 	 */
 	public HBox getSunflowerButton() {
 		return sunflowerButton;
 	}
 
 	/**
-	 * Returns next turn button on GUI
+	 * Returns next turn button on GUI.
 	 *
-	 * @return nextTurnButton sunflower button on GUI
+	 * @return nextTurnButton sunflower button on GUI.
 	 */
 	public Button getNextTurnButton() {
 		return nextTurnButton;
 	}
 
 	/**
-	 * Returns PeaShooter button on GUI
+	 * Returns PeaShooter button on GUI.
 	 *
-	 * @return peashooterButton sunflower button on GUI
+	 * @return peashooterButton sunflower button on GUI.
 	 */
 	public HBox getPeaShooterButton() {
 		return peashooterButton;
 	}
 
 	/**
-	 * Returns Threepeater button on GUI
+	 * Returns Threepeater button on GUI.
 	 *
-	 * @return peashooterButton sunflower button on GUI
+	 * @return peashooterButton sunflower button on GUI.
 	 */
 	public HBox getThreepeaterButton() {
 		return threepeaterButton;
 	}
 
 	/**
-	 * Returns game modified by controller
+	 * Returns game modified by controller.
 	 *
-	 * @return game game modified by controller
+	 * @return game game modified by controller.
 	 */
 	public PlantsVZombies getGame() {
 		return game;
 	}
 
 	/**
-	 * Returns undo/redo checkbox on GUI
+	 * Returns undo/redo checkbox on GUI.
 	 *
-	 * @return allowUndoRedo undo/redo checkbox on GUI
+	 * @return allowUndoRedo undo/redo checkbox on GUI.
 	 */
 	public CheckBox getCheckbox() {
 		return allowUndoRedo;
 	}
 
 	/**
-	 * Returns undo button on GUI
+	 * Returns undo button on GUI.
 	 *
-	 * @return undoButton undo button on GUI
+	 * @return undoButton undo button on GUI.
 	 */
 	public Button getUndoButton() {
 		return undoButton;
 	}
 
 	/**
-	 * Returns redo button on GUI
+	 * Returns redo button on GUI.
 	 *
-	 * @return redoButton undo button on GUI
+	 * @return redoButton undo button on GUI.
 	 */
 	public Button getRedoButton() {
 		return redoButton;
