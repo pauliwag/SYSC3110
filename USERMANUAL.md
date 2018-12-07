@@ -1,6 +1,6 @@
 # Welcome to Plants Vs Zombies!
 
-In this document, simple instructions on how to play Group 5's Plants Vs Zombies v3.0 will be given.
+In this document, simple instructions on how to play Group 5's Plants Vs Zombies v4.0 will be given.
 
 
 ## Launching the game
