@@ -79,9 +79,6 @@ public class GUIController {
 	private HBox sunflowerButton;
 
 	@FXML
-	private Button nextLevelButton;
-
-	@FXML
 	private HBox peashooterButton;
 
 	@FXML
@@ -110,9 +107,6 @@ public class GUIController {
 
 	@FXML
 	private GridPane gameGrid;
-
-	@FXML
-	private Group plantGroup;
 
 	@FXML
 	private MenuItem quitButton;
@@ -164,11 +158,9 @@ public class GUIController {
 		assert peashooterButton != null : "fx:id=\"peashooterButton\" was not injected: check your FXML file 'pvzgui.fxml'.";
 		assert sunflowerButton != null : "fx:id=\"sunflowerButton\" was not injected: check your FXML file 'pvzgui.fxml'.";
 		assert gameGrid != null : "fx:id=\"gameGrid\" was not injected: check your FXML file 'pvzgui.fxml'.";
-		assert plantGroup != null : "fx:id=\"gameGrid\" was not injected: check your FXML file 'pvzgui.fxml'.";
 		assert levelLabel != null : "fx:id=\"levelLabel\" was not injected: check your FXML file 'pvzgui.fxml'.";
 		assert waveLabel != null : "fx:id=\"waveLabel\" was not injected: check your FXML file 'pvzgui.fxml'.";
 		assert sunpointLabel != null : "fx:id=\"sunpointLabel\" was not injected: check your FXML file 'pvzgui.fxml'.";
-		assert nextLevelButton != null : "fx:id=\"nextLevelButton\" was not injected: check your FXML file 'pvzgui.fxml'.";
 		assert quitButton != null : "fx:id=\"quitButton\" was not injected: check your FXML file 'pvzgui.fxml'.";
 		assert aboutButton != null : "fx:id=\"aboutButton\" was not injected: check your FXML file 'pvzgui.fxml'.";
 		assert sunflowerCost != null : "fx:id=\"sunflowerCost\" was not injected: check your FXML file 'pvzgui.fxml'.";
