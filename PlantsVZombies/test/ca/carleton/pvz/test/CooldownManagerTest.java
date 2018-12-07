@@ -2,7 +2,6 @@ package ca.carleton.pvz.test;
 
 import static org.junit.Assert.*;
 
-import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -10,10 +9,12 @@ import ca.carleton.pvz.CooldownManager;
 
 
 public class CooldownManagerTest {
-
+	
+	CooldownManager testCooldownManager;
+	
 	@Before
 	public void setUp() throws Exception {
-		CooldownManager.resetCDs();
+		testCooldownManager = new CooldownManager();
 	}
 
 	/**
@@ -22,20 +23,20 @@ public class CooldownManagerTest {
 	 */
 	@Test
 	public void testSunflower() {
-		assertEquals(CooldownManager.getSunTimeLeftOnCD(), 0);
-		assertFalse(CooldownManager.isSunOnCD());
+		assertEquals(testCooldownManager.getSunTimeLeftOnCD(), 0);
+		assertFalse(testCooldownManager.isSunOnCD());
 		
-		CooldownManager.startSunCD();
-		assertEquals(CooldownManager.getSunTimeLeftOnCD(), 2);
-		assertTrue(CooldownManager.isSunOnCD());
+		testCooldownManager.startSunCD();
+		assertEquals(testCooldownManager.getSunTimeLeftOnCD(), 2);
+		assertTrue(testCooldownManager.isSunOnCD());
 		
-		CooldownManager.decTimeOnCD();
-		assertEquals(CooldownManager.getSunTimeLeftOnCD(), 1);
-		assertTrue(CooldownManager.isSunOnCD());
+		testCooldownManager.decTimeOnCD();
+		assertEquals(testCooldownManager.getSunTimeLeftOnCD(), 1);
+		assertTrue(testCooldownManager.isSunOnCD());
 		
-		CooldownManager.decTimeOnCD();
-		assertEquals(CooldownManager.getSunTimeLeftOnCD(), 0);
-		assertFalse(CooldownManager.isSunOnCD());
+		testCooldownManager.decTimeOnCD();
+		assertEquals(testCooldownManager.getSunTimeLeftOnCD(), 0);
+		assertFalse(testCooldownManager.isSunOnCD());
 	}
 	
 	/**
@@ -44,20 +45,20 @@ public class CooldownManagerTest {
 	 */
 	@Test
 	public void testPeashooter() {
-		assertEquals(CooldownManager.getNormalPeaTimeLeftOnCD(), 0);
-		assertFalse(CooldownManager.isNormalPeaOnCD());
+		assertEquals(testCooldownManager.getNormalPeaTimeLeftOnCD(), 0);
+		assertFalse(testCooldownManager.isNormalPeaOnCD());
 		
-		CooldownManager.startNormalPeaCD();
-		assertEquals(CooldownManager.getNormalPeaTimeLeftOnCD(), 2);
-		assertTrue(CooldownManager.isNormalPeaOnCD());
+		testCooldownManager.startNormalPeaCD();
+		assertEquals(testCooldownManager.getNormalPeaTimeLeftOnCD(), 2);
+		assertTrue(testCooldownManager.isNormalPeaOnCD());
 		
-		CooldownManager.decTimeOnCD();
-		assertEquals(CooldownManager.getNormalPeaTimeLeftOnCD(), 1);
-		assertTrue(CooldownManager.isNormalPeaOnCD());
+		testCooldownManager.decTimeOnCD();
+		assertEquals(testCooldownManager.getNormalPeaTimeLeftOnCD(), 1);
+		assertTrue(testCooldownManager.isNormalPeaOnCD());
 		
-		CooldownManager.decTimeOnCD();
-		assertEquals(CooldownManager.getNormalPeaTimeLeftOnCD(), 0);
-		assertFalse(CooldownManager.isNormalPeaOnCD());
+		testCooldownManager.decTimeOnCD();
+		assertEquals(testCooldownManager.getNormalPeaTimeLeftOnCD(), 0);
+		assertFalse(testCooldownManager.isNormalPeaOnCD());
 	}
 	
 	/**
@@ -66,16 +67,16 @@ public class CooldownManagerTest {
 	 */
 	@Test
 	public void testBoth() {
-		assertFalse(CooldownManager.isSunOnCD() || CooldownManager.isNormalPeaOnCD());
+		assertFalse(testCooldownManager.isSunOnCD() || testCooldownManager.isNormalPeaOnCD());
 		
-		CooldownManager.startSunCD();
-		CooldownManager.startNormalPeaCD();
-		assertEquals(CooldownManager.getSunTimeLeftOnCD(), 2);
-		assertEquals(CooldownManager.getNormalPeaTimeLeftOnCD(), 2);
+		testCooldownManager.startSunCD();
+		testCooldownManager.startNormalPeaCD();
+		assertEquals(testCooldownManager.getSunTimeLeftOnCD(), 2);
+		assertEquals(testCooldownManager.getNormalPeaTimeLeftOnCD(), 2);
 		
-		CooldownManager.decTimeOnCD();
-		CooldownManager.decTimeOnCD();
-		assertFalse(CooldownManager.isSunOnCD() || CooldownManager.isNormalPeaOnCD());
+		testCooldownManager.decTimeOnCD();
+		testCooldownManager.decTimeOnCD();
+		assertFalse(testCooldownManager.isSunOnCD() || testCooldownManager.isNormalPeaOnCD());
 	}
 	
 	/**
@@ -84,14 +85,9 @@ public class CooldownManagerTest {
 	 */
 	@Test
 	public void testNegativeCD() {
-		assertEquals(CooldownManager.getNormalPeaTimeLeftOnCD(), 0);
+		assertEquals(testCooldownManager.getNormalPeaTimeLeftOnCD(), 0);
 		
-		CooldownManager.decTimeOnCD();
-		assertEquals(CooldownManager.getNormalPeaTimeLeftOnCD(), 0);
-	}
-
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-		CooldownManager.resetCDs();
+		testCooldownManager.decTimeOnCD();
+		assertEquals(testCooldownManager.getNormalPeaTimeLeftOnCD(), 0);
 	}
 }
