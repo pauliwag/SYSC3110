@@ -121,7 +121,7 @@ You can load level files into the level builder by entering the 'levelname' into
 
 ## Saving/loading the game 
 
-Also new in version 4.0 is the ability to save/load the game world (the game world contains multiple levels). Save your current world by clicking World->Save World and entering a <worldname>. 
+Also new in version 4.0 is the ability to save/load the game world (the game world contains multiple levels). Save your current world by clicking World->Save World and entering a 'worldname'. 
 
 The world will be saved in the game directory with a file name of **'worldname'.world**.
 
