@@ -26,7 +26,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -377,7 +376,10 @@ public class GUIController {
 		disableButtons();
 		showAlert("You Won!", "Wow! You beat all levels in the game! :)", null, AlertType.INFORMATION);
 	}
-
+	
+	/**
+	 * Sets up undo/redo buttons
+	 */
 	private void setupUndoRedo() {
 		undoButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -540,7 +542,10 @@ public class GUIController {
 			}
 		}
 	}
-
+	
+	/**
+	 * Empties game grid imageviews. Used when creating New Empty World
+	 */
 	private void emptyGameGrid() {
 		gameGrid.setDisable(true);
 		ObservableList<Node> children = gameGrid.getChildren();
