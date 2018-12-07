@@ -80,22 +80,22 @@ In this version of the game there are three different plant types.
 There are currently three different types of zombies in the game.
 
  * **Normal Zombie:**
-  The normal zombie has **500 health** and moves at a speed of *one tile per turn**
+  The normal zombie has **500 health** and moves at a speed of **one tile per turn**
   
  * **Shield Zombie:**
-  The shield zombie has **800 health** and moves at a speed of *one tile per turn**
+  The shield zombie has **800 health** and moves at a speed of **one tile per turn**
   
  * **Fast Zombie:**
-  The fast zombie has **400 health** and moves at a speed of *two tiles per turn**
+  The fast zombie has **400 health** and moves at a speed of **two tiles per turn**
   
  * **Wizard Zombie:**
-  The wizard zombie has **500 health** and moves at a speed of *1 tile per turn**. The wizard zombie has the ability to teleport between rows, and will try to teleport to the row that has the least number of plants attacking it.
+  The wizard zombie has **500 health** and moves at a speed of **1 tile per turn**. The wizard zombie has the ability to teleport between rows, and will try to teleport to the row that has the least number of plants attacking it.
   
  * **Giga Zombie:**
-  The giga zombie has **2000 health** and moves at a speed of *1 tile per turn**  
+  The giga zombie has **2000 health** and moves at a speed of **1 tile per turn**  
   
  * **Boss Zombie:**
-  The boss zombie has **1500 health** and moves at a speed of *1 tile per turn**. The boss zombie also has the same teleporting power that the wizard zombie has, making it the most challenging zombie.
+  The boss zombie has **1500 health** and moves at a speed of **1 tile per turn**. The boss zombie also has the same teleporting power that the wizard zombie has, making it the most challenging zombie.
   
 Zombies spawn on random rows to the far right of the level.
 
