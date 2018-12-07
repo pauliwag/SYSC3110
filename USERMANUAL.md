@@ -125,7 +125,7 @@ Also new in version 4.0 is the ability to save/load the game world (the game wor
 
 The world will be saved in the game directory with a file name of **'worldname'.world**.
 
-Worlds can be loaded from World->Load World and entering <worldname> into the dialog. Enter 'default' to load back the default game world.
+Worlds can be loaded from World->Load World and entering 'worldname' into the dialog. Enter 'default' to load back the default game world.
 
 You can create a new empty world (world with no levels) using World->New Empty World.
 After creating an empty world, you can add custom levels to it using the World->Add Level To World button and entering 'levelname'.
