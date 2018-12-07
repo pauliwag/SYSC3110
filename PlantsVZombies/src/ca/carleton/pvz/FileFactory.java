@@ -9,8 +9,17 @@ import java.io.ObjectOutputStream;
 import ca.carleton.pvz.gui.GUIController;
 import javafx.scene.control.Alert.AlertType;
 
+/**
+ * Abstract class to handle saving/loading from files.
+ *
+ */
 public abstract class FileFactory {
 	
+	/**
+	 * Serializes and saves an object 
+	 * @param o Object to be saved
+	 * @param path File path to save object at
+	 */
 	public static void saveObject(Object o, String path) {
 		try {
 			FileOutputStream fileOut = new FileOutputStream(path);
@@ -22,7 +31,14 @@ public abstract class FileFactory {
 			i.printStackTrace();
 		}
 	}
-
+	
+	/**
+	 * Loads and unserializes a file.
+	 * Shows an alert if file was not found.
+	 * 
+	 * @param path Path to load file from
+	 * @return Unserialized object 
+	 */
 	public static Object loadObject(String path) {
 		Object o = null;
 		try {
