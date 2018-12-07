@@ -30,7 +30,7 @@ public class ShieldZombieTest {
 	@Test
 	public void testGetters() {
 		assertTrue(testZombie instanceof Zombie);
-		assertEquals(700, testZombie.getHealth());
+		assertEquals(800, testZombie.getHealth());
 		assertEquals(1, testZombie.getSpeed());
 		testZombie.setHealth(testZombie.getHealth() - 0);
 		assertFalse(testZombie.getHealth() == 0);
