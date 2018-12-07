@@ -26,7 +26,7 @@ public class PlantsVZombies extends Application {
 	private Stack<World> undoStack;
 	private Stack<World> redoStack;
 	private Stage primaryStage;
-	private World defaultWorld;
+	private static World defaultWorld;
 
 	/**
 	 * The start method for the JavaFX GUI. Loads GUI from .fxml file and
@@ -63,7 +63,9 @@ public class PlantsVZombies extends Application {
 		gameWorld = new World();
 		actionProcessor = new ActionProcessor(this);
 		gameWorld.addLevels(new LevelOne(), new LevelTwo(), new LevelThree());
-		defaultWorld = World.copy(gameWorld);
+		if(defaultWorld == null) {
+			defaultWorld = World.copy(gameWorld);
+		}
 		gameOver = false;
 		undoStack = new Stack<World>();
 		redoStack = new Stack<World>();
