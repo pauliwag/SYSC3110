@@ -115,6 +115,15 @@ public class World implements Serializable {
 		levels.poll();
 		return levels.peek();
 	}
+	
+	/**
+	 * Returns the number of levels in the priority queue.
+	 * 
+	 * @return the number of levels in the priority queue
+	 */
+	public int getNumOfLevels() {
+		return levels.size();
+	}
 
 	/**
 	 * Returns a deep copy of the given world, or null if the given world cannot
