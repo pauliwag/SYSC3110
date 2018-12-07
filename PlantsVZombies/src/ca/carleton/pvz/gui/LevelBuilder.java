@@ -44,6 +44,12 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
+/**
+ * Level Builder Stage
+ * Allows user to create/edit levels, specifing level num, name, sunpoints, and waves.
+ * User can save levels to a *.level file
+ *
+ */
 public class LevelBuilder extends Stage {
 	private ObservableList<Wave> waves;
 	Pane rootPane;
@@ -65,6 +71,10 @@ public class LevelBuilder extends Stage {
 	TextField nameField;
 	Scene scene;
 
+	/**
+	 * Constructs a new Level Builder dialog
+	 * @param owner The main application stage
+	 */
 	public LevelBuilder(Stage owner) {
 		initModality(Modality.APPLICATION_MODAL);
 		initOwner(owner);
@@ -124,6 +134,8 @@ public class LevelBuilder extends Stage {
 
 		sunPoint = new Label("Starting sunpoints: ");
 		sunPointField = new TextField();
+		
+		// this changelistener ensures that only numbers are entered in the sunpointfield
 		sunPointField.textProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -153,6 +165,7 @@ public class LevelBuilder extends Stage {
 
 		rootPane.getChildren().addAll(menuBar, grid, list);
 
+		// saves a level using FileFactory, if all parameters are present. Otherwise, show a dialog.
 		saveLevel.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent arg0) {
@@ -169,6 +182,7 @@ public class LevelBuilder extends Stage {
 
 		});
 
+		// loads a level into level builder using FileFactory
 		loadLevel.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent arg0) {
@@ -203,10 +217,21 @@ public class LevelBuilder extends Stage {
 	}
 }
 
+/**
+ * Wave Dialog. Used to create/edit waves that exist in the Level Builder. 
+ * When clicking on a Wave in level builder, a WaveDialog is opened with that wave's values.
+ * Clicking "Add Wave" in level builder will create a new blank wave. 
+ */
 class WaveDialog extends Dialog<Wave> {
+	/**
+	 * Constructs a new WaveDialog
+	 * @param waveNum Number of wave we are working on. This value is non-editable
+	 * @param waves Optional wave parameter. Used when editing existing wave, rather than creating a new one. 
+	 */
 	public WaveDialog(int waveNum, Wave... waves) {
 		setTitle("Add/Edit Wave");
 		setResizable(false);
+		// setup all UI elements
 		GridPane grid = new GridPane();
 		Label difficultyLabel = new Label("Difficulty: ");
 		Label numNormalLabel = new Label("Normal Zombies: ");
@@ -268,7 +293,8 @@ class WaveDialog extends Dialog<Wave> {
 
 		ButtonType buttonTypeOk = new ButtonType("Done", ButtonData.OK_DONE);
 		getDialogPane().getButtonTypes().add(buttonTypeOk);
-
+		
+		// return wave with newly set values
 		setResultConverter(new Callback<ButtonType, Wave>() {
 			@Override
 			public Wave call(ButtonType b) {
