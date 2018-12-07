@@ -19,8 +19,10 @@ import javafx.scene.image.Image;
 public abstract class Level implements Serializable {
 
 	private static final long serialVersionUID = 8845013896074447924L;
-
 	public static final int PASSIVE_SUNPOINT_BOOST = 25; // every two turns
+	public static final String GRASS_TILE_SPRITE = "/ca/carleton/pvz/resources/grass.png";
+	public static final String SAND_TILE_SPRITE = "/ca/carleton/pvz/resources/sand.png";
+	public static final String ICE_TILE_SPRITE = "/ca/carleton/pvz/resources/ice.png";
 
 	/** The number of this level. */
 	private int levelNum;
@@ -58,9 +60,7 @@ public abstract class Level implements Serializable {
 	 * Tileset options.
 	 */
 	public enum Terrain {
-
 		GRASS, SAND, ICE
-
 	};
 
 	/** This level's terrain or tileset. */
@@ -122,15 +122,16 @@ public abstract class Level implements Serializable {
 	public void clearWaves() {
 		waves.clear();
 	}
-	
+
 	/**
 	 * Get the waves that this level contains
+	 *
 	 * @return Collection containing level's waves
 	 */
 	public Collection<Wave> getWaves() {
 		return waves;
 	}
-	
+
 	/**
 	 * Gets the wave at the head of the queue.
 	 *
@@ -353,15 +354,13 @@ public abstract class Level implements Serializable {
 	 * @return A sprite of this level's terrain.
 	 */
 	public Image getSprite() {
-		if (terrain == Terrain.GRASS) {
-			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/grass.png"));
-		}
-		if (terrain == Terrain.SAND) {
-			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/sand.png"));
-		}
-		if (terrain == Terrain.ICE) {
-			return new Image(getClass().getResourceAsStream("/ca/carleton/pvz/resources/ice.png"));
-		}
+		if (terrain == Terrain.GRASS)
+			return new Image(getClass().getResourceAsStream(GRASS_TILE_SPRITE));
+		if (terrain == Terrain.SAND)
+			return new Image(getClass().getResourceAsStream(SAND_TILE_SPRITE));
+		if (terrain == Terrain.ICE)
+			return new Image(getClass().getResourceAsStream(ICE_TILE_SPRITE));
 		return null;
 	}
+
 }

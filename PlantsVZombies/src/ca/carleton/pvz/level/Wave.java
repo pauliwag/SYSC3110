@@ -40,9 +40,7 @@ public class Wave implements Serializable {
 	 * greater zombie spawn rate.
 	 */
 	public enum Difficulty {
-
 		NORMAL, RAMPED, SUPER_RAMPED
-
 	};
 
 	/** This wave's difficulty level. */
@@ -81,15 +79,16 @@ public class Wave implements Serializable {
 		zombies.put(BossZombie.class, numBossZombies);
 
 	}
-	
+
 	/**
 	 * Get the wave's difficulty
+	 *
 	 * @return The wave's difficulty
 	 */
 	public Difficulty getDifficulty() {
 		return difficulty;
 	}
-	
+
 	/**
 	 * Gets whether this wave's difficulty is ramped.
 	 *
@@ -124,9 +123,8 @@ public class Wave implements Serializable {
 	 */
 	public int getTotalNumZombies() {
 		int totalNumZombies = 0;
-		for (int num : zombies.values()) {
+		for (int num : zombies.values())
 			totalNumZombies += num;
-		}
 		return totalNumZombies;
 	}
 
@@ -173,9 +171,8 @@ public class Wave implements Serializable {
 	 * @param num The new quantity of the specified zombie type.
 	 */
 	public void setNumZombies(Class<? extends Zombie> zombieType, int num) {
-		if (zombies.containsKey(zombieType)) {
+		if (zombies.containsKey(zombieType))
 			zombies.replace(zombieType, num);
-		}
 	}
 
 	/**

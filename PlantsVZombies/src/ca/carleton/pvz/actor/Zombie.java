@@ -1,7 +1,7 @@
 package ca.carleton.pvz.actor;
 
 /**
- * The parent zombie class, from which different zombie types inherit.
+ * The parent zombie class from which different zombie types inherit.
  *
  */
 public abstract class Zombie extends Actor {
@@ -21,11 +21,8 @@ public abstract class Zombie extends Actor {
 	 * Creates a new Zombie.
 	 */
 	public Zombie(int health, int speed) {
-
 		this.health = health;
-
 		this.speed = speed;
-
 	}
 
 	/**
@@ -34,9 +31,7 @@ public abstract class Zombie extends Actor {
 	 * @return The current health of this zombie.
 	 */
 	public int getHealth() {
-
 		return health;
-
 	}
 
 	/**
@@ -47,9 +42,7 @@ public abstract class Zombie extends Actor {
 	 *         left per turn.
 	 */
 	public int getSpeed() {
-
 		return speed;
-
 	}
 
 	/**
@@ -58,9 +51,7 @@ public abstract class Zombie extends Actor {
 	 * @param health This zombie's health will be assigned the given value.
 	 */
 	public void setHealth(int health) {
-
 		this.health = health;
-
 	}
 
 }
