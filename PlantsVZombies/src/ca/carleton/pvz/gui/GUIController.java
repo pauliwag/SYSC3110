@@ -493,7 +493,7 @@ public class GUIController {
 					if (!result.get().equals("default")) {
 						newWorld = (World) FileFactory.loadObject(result.get() + ".world");
 					} else {
-						newWorld = game.getDefaultWorld();
+						newWorld = World.copy(game.getDefaultWorld());
 						enableButtons();
 					}
 					game.setGameWorld(newWorld);
