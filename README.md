@@ -20,7 +20,7 @@ Jacob Laboissonniere
 <br>
 
 Sameed Mohammed
-> Worked on test classes for all classes in project, in particular, worked on the testing logic and structure for GUIController. Added testing classes required as a result from changes for iteration 3. Added Javadoc comments to testing classes. Reviewed/edited design decision justification document.
+> Worked on test classes for all classes in project, in particular for this iteration, worked on fixes for GUIController after updates, added test classes for all new Zombie types, and added thorough test classes for undo/redo features and save/load features. Added Javadoc comments to newly-made test classes. Added new utility methods to Level class that was utilized in testing of Milestone 4 features. Reviewed/edited design decision justification document.
 
 <br>
 
