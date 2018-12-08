@@ -73,10 +73,10 @@ The sequence diagram features the sequences entailing:
 
 ***User-visible changes***
 
-- Level 1 map width extended to 8 tiles (from 5) for balance purposes.
-- New sprites added for the new plant and zombie types.
-- Undo and redo buttons, which can be toggled on or off, provide the option of undoing and redoing turns ad infinitum.
-- Zombie spawn rate visibly increases or decreases depending on the difficulty setting of the active wave.
+- New terrain types on levels (grass, sand, ice)
+- Can create and edit levels in GUI
+- Plant selection GUI looks better
+- Different zombie sprites depending on terrain type
 
 ---
 
