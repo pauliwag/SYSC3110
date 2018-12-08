@@ -60,6 +60,7 @@ public class WorldTest {
 		testWorld.nextLevel();
 		assertEquals(testLevel2, testWorld.getCurrentLevel());
 		assertEquals(1, testWorld.getNumOfLevels());
+		
 	}
 	
 	// tearDown() is not necessary here, as garbage collection of objects
