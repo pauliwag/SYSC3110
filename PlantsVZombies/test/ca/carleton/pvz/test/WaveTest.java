@@ -57,6 +57,7 @@ public class WaveTest {
 		
 		assertEquals(15, testWave.getTotalNumZombies());
 	}
+	
 	// tearDown() is not necessary here, as garbage collection of objects
 	// after the test class concludes. Other things that consume system
 	// resources may need tearDown() however (like GUI).

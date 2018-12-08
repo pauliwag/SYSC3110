@@ -17,6 +17,7 @@ public class PeaShooterTest {
 
 	/**
 	 * Tests the cost functionality of PeaShooter class
+	 * 
 	 * @result All the simple getters should be working as intended and returns the proper values
 	 */
 	@Test
@@ -33,4 +34,7 @@ public class PeaShooterTest {
 		assertEquals(200, testPeaShooter.getPeaDamage());
 	}
 
+	// tearDown() is not necessary here, as garbage collection of objects
+	// after the test class concludes. Other things that consume system
+	// resources may need tearDown() however (like GUI).
 }

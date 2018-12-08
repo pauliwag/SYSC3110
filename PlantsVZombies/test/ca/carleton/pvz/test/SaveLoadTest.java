@@ -32,8 +32,9 @@ public class SaveLoadTest {
 	}
 
 	/**
-	 * Tests the methods of World class, to ensure it works as intended
-	 * @result Before the stack is populated, the expectation is that it returns an EmptyStackException. The other asserts should expect normal behaviour.
+	 * Tests the save/load functionalities to ensure it works as intended
+	 * 
+	 * @result All the save/load features should be working as intended and returns the proper values
 	 */
 	@Test
 	public void testSaveLoad() {
@@ -60,6 +61,11 @@ public class SaveLoadTest {
 		assertEquals(500, testZombie.getHealth()); //checks if the zombie is at saved hp
 	}
 	
+	/**
+	 * Tests the save/load overwrite functionalities to ensure it works as intended
+	 * 
+	 * @result All the save/load overwrite features should be working as intended and returns the proper values
+	 */
 	@Test
 	public void testOverwrite() {
 		testGame = new PlantsVZombies();
@@ -92,5 +98,9 @@ public class SaveLoadTest {
 		assertEquals(500, testZombie2.getHealth());
 		assertEquals(2, testLevel.getNumZombies());
 	}
+	
+	// tearDown() is not necessary here, as garbage collection of objects
+	// after the test class concludes. Other things that consume system
+	// resources may need tearDown() however (like GUI).
 }		
 		
