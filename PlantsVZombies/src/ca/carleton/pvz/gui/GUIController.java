@@ -498,6 +498,7 @@ public class GUIController {
 						newWorld = World.copy(game.getDefaultWorld());
 						enableButtons();
 					}
+					game.emptyUndoRedo();
 					game.setGameWorld(newWorld);
 					updateLevelLabel();
 					updateSunpointLabel();
