@@ -1,8 +1,6 @@
 package ca.carleton.pvz.test;
 
 import static org.junit.Assert.*;
-import java.util.EmptyStackException;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,7 +16,7 @@ public class WorldTest {
 	LevelTwo testLevel2;
 	LevelThree testLevel3;
 	LevelThree testLevel3secondary;
-	
+
 	@Before
 	public void setUp() throws Exception {
 		testWorld = new World();
@@ -30,7 +28,7 @@ public class WorldTest {
 
 	/**
 	 * Tests the methods of World class, to ensure it works as intended
-	 * 
+	 *
 	 * @result The world functionalities that are tested work as intended (return expected values)
 	@Test
 	public void testWorld() {
@@ -41,27 +39,27 @@ public class WorldTest {
 		}
 		testWorld.addLevels(new LevelOne(), new LevelTwo());
 	}
-	
+
 	/**
 	 * Tests the level functionalities of World class, especially the addition of levels, to ensure it works as intended
-	 * 
+	 *
 	 * @result The world level functionalities that are tested work as intended (return expected values)
 	 */
 	@Test
 	public void testWorldLevels() {
 		assertEquals(null, testWorld.getCurrentLevel());
 		assertEquals(0, testWorld.getNumOfLevels());
-		
+
 		testWorld.addLevels(testLevel1);
 		assertEquals(testLevel1, testWorld.getCurrentLevel());
-		
+
 		testWorld.addLevels(testLevel2);
 		assertEquals(testLevel1, testWorld.getCurrentLevel());
 		testWorld.nextLevel();
 		assertEquals(testLevel2, testWorld.getCurrentLevel());
 		assertEquals(1, testWorld.getNumOfLevels());
 	}
-	
+
 	// tearDown() is not necessary here, as garbage collection of objects
 	// after the test class concludes. Other things that consume system
 	// resources may need tearDown() however (like GUI).
