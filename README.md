@@ -89,9 +89,3 @@ None.
 ***Performance***
 
 There is a linear increase in memory usage if the *allow undo/redo* checkbox is selected. This is because we are storing a deep copy of the game world whenever it is changed. If playing on a computer with less than 4 GB of RAM, you may not want to use the undo/redo feature.
-
----
-
-***Roadmap for iteration 4***
-
-Our project already implements serialization (for undo/redo), thereby expediting the augmentation of save/load features in iteration 4. World::copy will be utilized to create deep copies of the game world; said copies of game states will be stored in XML data files. As for level building, the user will be able to specify level dimensions (width by height) and perhaps more.
