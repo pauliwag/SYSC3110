@@ -30,7 +30,7 @@ Abdillahi Nur
 <br>
 
 Paul Roode
-> UML class and sequence diagrams. Added new Plant and Zombie subclasses. Added zombies hash table to Wave. Revamped moveZombie() and shootZombie(). Created/implemented ActionProcessor::spawnZombie. Added Difficulty enum to Wave and melded w/ logic for zombie spawn rate control. Refactored/de-smelled model, especially ActionProcessor. Playtested, debugged, failsafed. Reformatted and contributed to README. Wrote *Data structs employed in zombie wave and spawn logic* and *About the global CooldownManager class* sections in the *Design Decisions Justifications* document.
+> UML class and sequence diagrams. Added new Zombie subtypes. Implemented TeleportingZombie logic and updated ActionProcessor::moveZombie accordingly. Added new zombie sprites for different terrains. Balanced the shipped levels. Implemented leval reload logic. Implemented World::addLevels and World::hasLevel. Refactored/de-smelled code. Playtested, debugged, failsafed. Contributed to README. Wrote *Refactoring the CooldownManager and World classes*, *Level reload logic* and *Data structs employed in zombie wave and spawn logic* sections in the *Design Decisions Justifications* document.
 
 ---
 
@@ -46,13 +46,16 @@ Paul Roode
 
 ---
 
-***A note about the UML sequence diagram***
+***A note about the UML sequence diagrams***
 
-The sequence diagram features the sequences entailing:
+There are two sequence diagrams. Sequence diagram 1 features the sequences entailing:
 
 1) launching and initializing the game
 2) pushing a deep copy of the game world onto the undo stack via serialization
 3) loading the GUI controller
+
+Sequence diagram 2 features the sequences entailing:
+
 4) selecting a plant type and placing it in a cell
 5) undoing operation 4
 
@@ -68,6 +71,7 @@ The sequence diagram features the sequences entailing:
 - can now load default world
 - can now add existing level files to world
 - plant selection GUI area made nicer
+- CooldownManager is now a member of World
 
 ---
 
