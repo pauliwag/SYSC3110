@@ -18,7 +18,7 @@ import ca.carleton.pvz.level.Level;
 import ca.carleton.pvz.level.LevelOne;
 
 
-public class UndoRedoTest {
+public class SaveLoadTest {
 	
 	private Level testLevel;
 	private NormalPeaShooter testPeaShooter;
@@ -45,9 +45,11 @@ public class UndoRedoTest {
 		testLevel.placeActor(testPeaShooter, new Point(0,2));
 		testLevel.placeActor(testZombie, new Point(4,2));
 		assertEquals(500, testZombie.getHealth());
+		//assertEquals(1, testLevel.getNumZombies()); /////////////////////////////////////////
 		
 		actionProcessor.shootZombies(testLevel);
 		assertEquals(300, testZombie.getHealth());
+		//assertEquals(1, testGame.getWorld().getCurrentLevel().getNumZombies()); /////////////////////////////////////////
 		
 		//add the current state of the game to the undoStack! Prepares it for testing.
 		testGame.addToUndoStack(testGame.getWorld());
@@ -56,6 +58,7 @@ public class UndoRedoTest {
 		
 		actionProcessor.shootZombies(testLevel);
 		assertEquals(100, testZombie.getHealth());
+		//assertEquals(1, testGame.getWorld().getCurrentLevel().getNumZombies()); /////////////////////////////////////////
 		
 		//looking for undo now, should revert zombie to 300hp.
 
