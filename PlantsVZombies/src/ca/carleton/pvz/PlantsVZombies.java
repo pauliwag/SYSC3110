@@ -192,7 +192,14 @@ public class PlantsVZombies extends Application {
 		redoStack.clear();
 		undoStack.clear();
 	}
-
+	
+	/**
+	 * Empty the redo stack
+	 */
+	public void emptyRedo() {
+		redoStack.clear();
+	}
+	
 	/**
 	 * Updates the current game world.
 	 *

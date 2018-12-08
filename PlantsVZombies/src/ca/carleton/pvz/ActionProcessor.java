@@ -49,6 +49,7 @@ public class ActionProcessor {
 		// game world (current game state) to the undo stack
 		if (game.getController().logMoves()) {
 			game.addToUndoStack(game.getWorld());
+			game.emptyRedo();
 		}
 
 		Level lvl = game.getWorld().getCurrentLevel();
@@ -268,6 +269,7 @@ public class ActionProcessor {
 	public void processPlanting(Level lvl, Plant plant, int xPos, int yPos) {
 		if (game.getController().logMoves()) {
 			game.addToUndoStack(game.getWorld());
+			game.emptyRedo();
 		}
 		if (lvl.getCell(xPos, yPos) == null) {
 			CooldownManager cooldownManager = game.getWorld().getCooldownManager();
