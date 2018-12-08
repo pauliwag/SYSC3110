@@ -30,7 +30,7 @@ Abdillahi Nur
 <br>
 
 Paul Roode
-> UML class and sequence diagrams. Added new Zombie subtypes. Implemented TeleportingZombie logic and updated ActionProcessor::moveZombie accordingly. Added new zombie sprites for different terrains. Balanced the shipped levels. Implemented leval reload logic. Implemented World::addLevels and World::hasLevel. Refactored/de-smelled code. Playtested, debugged, failsafed. Contributed to README. Wrote *Refactoring the CooldownManager and World classes*, *Level reload logic* and *Data structs employed in zombie wave and spawn logic* sections in the *Design Decisions Justifications* document.
+> UML class and sequence diagrams. Added new Zombie subtypes. Implemented TeleportingZombie logic and updated ActionProcessor::moveZombie accordingly. Added new zombie sprites for different terrains. Balanced the shipped levels. Implemented level reload logic. Implemented GUIController::notifyGameOver, World::addLevels, World::hasLevel. Refactored/de-smelled code. Playtested, debugged, failsafed. Contributed to README. Wrote *Refactoring the CooldownManager and World classes*, *Level reload logic* and *Data structs employed in zombie wave and spawn logic* sections of the *Design Decisions Justifications* document.
 
 ---
 
