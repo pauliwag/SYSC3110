@@ -1,4 +1,4 @@
-# Plants vs. Zombies v3.0
+# Plants vs. Zombies v4.0
 ## SYSC 3110 F18 – Software Design Project
 ### Team 5 – Jacob Laboissonniere, Sameed Mohammed, Abdillahi Nur, Paul Roode
 
@@ -6,7 +6,7 @@
 
 ***Welcome!***
 
-We hope that you enjoy the 3rd iteration of our GUI-based Plants vs. Zombies game.
+We hope that you enjoy the 4th iteration of our GUI-based Plants vs. Zombies game.
 
 Check out the user guide for getting started and learning how to play.
 
@@ -15,7 +15,7 @@ Check out the user guide for getting started and learning how to play.
 ***Authors and their contributions***
 
 Jacob Laboissonniere
-> Worked on inital game model classes (world, level, actor subclasses). Wrote USERMANUAL.md. Created GUI fxml file and GUIController class and integrated with existing model. Implemented undo/redo feature using serialization. Number of small changes to clean up code. Playtesting.
+> Worked on inital game model classes (world, level, actor subclasses). Wrote USERMANUAL.md. Created GUI fxml file and GUIController class and integrated with existing model. Implemented undo/redo feature using serialization. Created Level Builder & Save/Load world feature. Number of small changes to clean up code. Playtesting.
 
 <br>
 
@@ -58,20 +58,16 @@ The sequence diagram features the sequences entailing:
 
 ---
 
-***Changelog (v2.0 → 3.0)***
+***Changelog (v3.0 → 4.0)***
 
-- added waves priority queue to Level
-- added new Plant and Zombie subtypes
-- added zombies hash table to Wave
-- added Difficulty enum to Wave for zombie spawn rate control
-- revamped/refactored ActionProcessor::moveZombie and ActionProcessor::shootZombie
-- created/implemented ActionProcessor::spawnZombie
-- refactored/de-smelled entire model
-- de-centralized ActionProcessor logic; maximized abstraction, delegation and extensibility
-- added various failsafes
-- created/updated test classes in accordance with the new architecture
-- zombie health and speed, peashooter damage, and sunpoint accumulation were tuned in order to promote balance
-- turn undo/redo features were implemented via serialization
+- new zombie types
+- new level terrain types
+- level builder feature added, can create/edit existing levels
+- can now save/load world 
+- can now create a new empty world
+- can now load default world
+- can now add existing level files to world
+- plant selection GUI area made nicer
 
 ---
 
