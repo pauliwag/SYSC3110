@@ -182,6 +182,21 @@ public abstract class Level implements Serializable {
 		return true;
 
 	}
+	
+	/**
+	 * Returns whether this level is empty of zombies. 
+	 *
+	 * @return true if this level is empty of zombies, false otherwise.
+	 */
+	public boolean isEmptyZombies() {
+
+		for (Wave wave : waves) {
+			if (wave.getTotalNumZombies() != 0) {
+				return false;
+			}
+		}
+		return true;
+	}
 
 	/**
 	 * Gets the number of waves in queue.
@@ -232,6 +247,23 @@ public abstract class Level implements Serializable {
 			}
 		}
 		return numSunflowers;
+	}
+	
+	/**
+	 * Gets the number of zombies on the map.
+	 *
+	 * @return The number of zombies on the map.
+	 */
+	public int getNumZombies() {
+		int numZombies = 0;
+		for (int x = 0; x < getNumCols(); ++x) {
+			for (int y = 0; y < getNumRows(); ++y) {
+				if (getCell(x, y) instanceof Zombie) {
+					++numZombies;
+				}
+			}
+		}
+		return numZombies;
 	}
 
 	/**
