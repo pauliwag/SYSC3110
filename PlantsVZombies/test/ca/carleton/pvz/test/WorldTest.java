@@ -30,8 +30,8 @@ public class WorldTest {
 
 	/**
 	 * Tests the methods of World class, to ensure it works as intended
-	 * @result Before the stack is populated, the expectation is that it returns an EmptyStackException. The other asserts should expect normal behaviour.
-	 */
+	 * 
+	 * @result The world functionalities that are tested work as intended (return expected values)
 	@Test
 	public void testWorld() {
 		try {
@@ -42,6 +42,11 @@ public class WorldTest {
 		testWorld.addLevels(new LevelOne(), new LevelTwo());
 	}
 	
+	/**
+	 * Tests the level functionalities of World class, especially the addition of levels, to ensure it works as intended
+	 * 
+	 * @result The world level functionalities that are tested work as intended (return expected values)
+	 */
 	@Test
 	public void testWorldLevels() {
 		assertEquals(null, testWorld.getCurrentLevel());
@@ -55,10 +60,10 @@ public class WorldTest {
 		testWorld.nextLevel();
 		assertEquals(testLevel2, testWorld.getCurrentLevel());
 		assertEquals(1, testWorld.getNumOfLevels());
-		
-		//testWorld.addLevels(testLevel1, testLevel2, testLevel3, testLevel3secondary);
-		//assertEquals(2, testWorld.getNumOfLevels());
 	}
 	
+	// tearDown() is not necessary here, as garbage collection of objects
+	// after the test class concludes. Other things that consume system
+	// resources may need tearDown() however (like GUI).
 
 }

@@ -66,5 +66,9 @@ public class UndoRedoTest {
 		testZombie = (Zombie)(testLevel.getCell(4, 2));
 		assertEquals(100, testZombie.getHealth());
 	}
+
+	// tearDown() is not necessary here, as garbage collection of objects
+	// after the test class concludes. Other things that consume system
+	// resources may need tearDown() however (like GUI).
 }		
 		

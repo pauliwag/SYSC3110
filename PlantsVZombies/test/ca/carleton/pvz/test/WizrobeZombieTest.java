@@ -48,5 +48,9 @@ public class WizrobeZombieTest {
 		assertFalse(testZombie.getSprite(Terrain.GRASS) == null);
 		assertTrue(testZombie.getSprite(Terrain.GRASS) instanceof Image);
 	}
+	
+	// tearDown() is not necessary here, as garbage collection of objects
+	// after the test class concludes. Other things that consume system
+	// resources may need tearDown() however (like GUI).
 
 }

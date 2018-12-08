@@ -90,4 +90,8 @@ public class CooldownManagerTest {
 		testCooldownManager.decTimeOnCD();
 		assertEquals(testCooldownManager.getNormalPeaTimeLeftOnCD(), 0);
 	}
+	
+	// tearDown() is not necessary here, as garbage collection of objects
+	// after the test class concludes. Other things that consume system
+	// resources may need tearDown() however.
 }
