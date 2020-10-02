@@ -6,7 +6,7 @@
 
 ***Welcome!***
 
-We hope that you enjoy the 4th iteration of our GUI-based Plants vs. Zombies game.
+We hope you enjoy the 4th iteration of our JavaFX *Plants vs. Zombies* game!
 
 Check out the user guide for getting started and learning how to play.
 
